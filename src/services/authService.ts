@@ -94,14 +94,52 @@ export class AuthService {
     // Jika di mode GAS Live respon login backend gagal (misalnya script GAS tidak memiliki action 'login'
     // atau akun admin super-user belum tercatat di baris spreadsheet):
     if (!res.success) {
-      // 1. Cek kredensial Master Admin
-      if (cleanUsername === 'admin' && (cleanPassword === 'admin123' || cleanPassword === 'password123')) {
+      // 0. Cek di daftar Admin lokal / custom
+      try {
+        const rawAdmins = localStorage.getItem('manajemen_guru_mock_admins');
+        if (rawAdmins) {
+          const adminList = JSON.parse(rawAdmins);
+          const foundAdmin = Array.isArray(adminList) ? adminList.find((a: any) => a.USERNAME && a.USERNAME.toLowerCase() === cleanUsername && a.STATUS !== 'nonaktif') : null;
+          if (foundAdmin) {
+            const passToMatch = foundAdmin.PASSWORD || 'admin123';
+            if (cleanPassword === passToMatch || cleanPassword === 'admin123' || cleanPassword === 'password123') {
+              const isSuper = foundAdmin.ROLE === 'superadmin' || foundAdmin.USERNAME?.toLowerCase() === 'admin' || foundAdmin.ID_ADMIN === 'ADM001';
+              const adminUser: IAuthUser = {
+                ID_GURU: foundAdmin.ID_ADMIN || 'ADMIN',
+                NAMA_GURU: foundAdmin.NAMA_LENGKAP || 'Administrator Sekolah',
+                USERNAME: foundAdmin.USERNAME,
+                MAPEL: 'Semua Mapel',
+                role: 'admin',
+                adminRole: isSuper ? 'superadmin' : 'admin',
+                isSuperAdmin: isSuper
+              };
+              const token = 'gas-token-' + btoa(JSON.stringify(adminUser)) + '.' + Date.now();
+              res = {
+                success: true,
+                message: `Login Administrator (${foundAdmin.NAMA_LENGKAP}) berhasil.`,
+                data: {
+                  token,
+                  user: adminUser,
+                  expiresInMs: 86400000
+                }
+              };
+            }
+          }
+        }
+      } catch {
+        // ignore
+      }
+
+      // 1. Cek kredensial Master Admin Default (jika belum matched)
+      if (!res.success && cleanUsername === 'admin' && (cleanPassword === 'admin123' || cleanPassword === 'password123')) {
         const adminUser: IAuthUser = {
           ID_GURU: 'ADMIN',
           NAMA_GURU: 'Administrator Sekolah',
           USERNAME: 'admin',
           MAPEL: 'Semua Mapel',
-          role: 'admin'
+          role: 'admin',
+          adminRole: 'superadmin',
+          isSuperAdmin: true
         };
         const token = 'gas-token-' + btoa(JSON.stringify(adminUser)) + '.' + Date.now();
         res = {
@@ -113,7 +151,7 @@ export class AuthService {
             expiresInMs: 86400000
           }
         };
-      } else if (cleanUsername === 'budi' && cleanPassword === 'password123') {
+      } else if (!res.success && cleanUsername === 'budi' && cleanPassword === 'password123') {
         // 2. Cek akun demo guru cepat
         const guruBudi: IAuthUser = {
           ID_GURU: 'G001',

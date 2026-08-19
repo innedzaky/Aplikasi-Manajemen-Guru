@@ -22,6 +22,7 @@ import { KelasPage } from '../../pages/KelasPage.tsx';
 import { MapelPage } from '../../pages/MapelPage.tsx';
 import { LaporanPage } from '../../pages/LaporanPage.tsx';
 import { DatabaseSyncPage } from '../../pages/DatabaseSyncPage.tsx';
+import { PengaturanPage } from '../../pages/PengaturanPage.tsx';
 import { useAuth } from '../../context/AuthContext.tsx';
 
 export const AppShell: React.FC = () => {
@@ -60,11 +61,6 @@ export const AppShell: React.FC = () => {
   };
 
   const handleSelectPage = (page: PageRoute) => {
-    if (page === 'pengaturan') {
-      if (isAdmin) {
-        setIsSettingsOpen(true);
-      }
-    }
     setCurrentPage(page);
   };
 
@@ -164,10 +160,7 @@ export const AppShell: React.FC = () => {
                 <MapelPage onNavigateTab={handleSelectPage} />
               ) : currentPage === 'pengaturan' ? (
                 isAdmin ? (
-                  <ShellPlaceholder
-                    currentPage={currentPage}
-                    onOpenSettings={() => setIsSettingsOpen(true)}
-                  />
+                  <PengaturanPage />
                 ) : (
                   <div className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-red-200 dark:border-red-900/40 text-center max-w-lg mx-auto shadow-sm my-12">
                     <div className="w-14 h-14 rounded-2xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800/60 flex items-center justify-center text-red-600 dark:text-red-400 mx-auto mb-4">

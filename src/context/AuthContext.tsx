@@ -13,6 +13,7 @@ interface AuthContextType {
   user: IAuthUser | null;
   isAuthenticated: boolean;
   isAdmin: boolean;
+  isSuperAdmin: boolean;
   isLoading: boolean;
   login: (username: string, password: string, rememberMe?: boolean) => Promise<{ success: boolean; message: string }>;
   logout: () => Promise<void>;
@@ -24,6 +25,15 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<IAuthUser | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const isSuperAdmin = Boolean(
+    user?.role === 'admin' &&
+    (user?.adminRole === 'superadmin' ||
+     user?.isSuperAdmin === true ||
+     user?.USERNAME?.toLowerCase() === 'admin' ||
+     user?.ID_GURU === 'ADMIN' ||
+     user?.ID_GURU === 'ADM001')
+  );
 
   useEffect(() => {
     // Inisialisasi sesi dari storage
@@ -80,6 +90,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         user,
         isAuthenticated: !!user,
         isAdmin: user?.role === 'admin',
+        isSuperAdmin,
         isLoading,
         login,
         logout,

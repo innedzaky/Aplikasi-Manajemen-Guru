@@ -48,7 +48,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isOpen,
   onClose
 }) => {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, isSuperAdmin } = useAuth();
 
   const mainMenuItems = [
     { id: 'dashboard' as PageRoute, label: 'Dashboard', icon: LayoutDashboard },
@@ -89,10 +89,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
             <div>
               <span className="text-lg font-bold text-slate-900 dark:text-white font-['Outfit'] tracking-tight block leading-tight">
-                GuruApp
+                BukuGuru
               </span>
               <span className="text-[11px] text-blue-600 dark:text-blue-400 font-medium">
-                Sistem Terpadu
+                Presensi, Nilai &amp; Jurnal
               </span>
             </div>
           </div>
@@ -271,7 +271,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {user?.NAMA_GURU || 'Guru Pengajar'}
               </p>
               <p className="text-[11px] text-slate-400 truncate">
-                {isAdmin ? 'Administrator' : user?.MAPEL || 'Guru'}
+                {isSuperAdmin ? 'Super Admin' : isAdmin ? 'Administrator' : user?.MAPEL || 'Guru'}
               </p>
             </div>
           </div>

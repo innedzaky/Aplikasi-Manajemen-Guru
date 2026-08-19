@@ -172,6 +172,20 @@ export interface IAuthUser {
   USERNAME: string;
   MAPEL?: string;
   role: UserRole;
+  adminRole?: 'superadmin' | 'admin';
+  isSuperAdmin?: boolean;
+}
+
+export interface IAdminAccount {
+  ID_ADMIN: string;
+  USERNAME: string;
+  NAMA_LENGKAP: string;
+  PASSWORD?: string;
+  EMAIL?: string;
+  ROLE: 'superadmin' | 'admin';
+  CREATED_AT: string;
+  LAST_LOGIN?: string;
+  STATUS: 'aktif' | 'nonaktif';
 }
 
 export interface ISessionData {

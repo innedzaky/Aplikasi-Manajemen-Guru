@@ -15,7 +15,7 @@ import {
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
-  Sparkles,
+  Database,
   BookOpen,
   CalendarCheck2,
   Settings,
@@ -67,14 +67,9 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const handleDemoFill = (role: 'guru' | 'admin') => {
-    if (role === 'admin') {
-      setUsername('admin');
-      setPassword('admin123');
-    } else {
-      setUsername('budi');
-      setPassword('password123');
-    }
+  const handleDemoFill = () => {
+    setUsername('budi');
+    setPassword('password123');
   };
 
   return (
@@ -92,9 +87,9 @@ export const LoginPage: React.FC = () => {
           </div>
           <div>
             <h1 className="font-bold text-xl tracking-tight text-white font-['Outfit']">
-              GuruApp
+              BukuGuru
             </h1>
-            <p className="text-xs text-blue-200">Sistem Manajemen Pembelajaran Terpadu</p>
+            <p className="text-xs text-blue-200">Aplikasi Presensi, Nilai & Jurnal Kelas</p>
           </div>
         </div>
 
@@ -102,11 +97,11 @@ export const LoginPage: React.FC = () => {
         <div className="z-10 max-w-lg space-y-8 my-auto">
           <div className="space-y-3">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-blue-500/30 text-blue-100 border border-blue-400/30">
-              <Sparkles className="w-3.5 h-3.5" />
-              Sistem Cloud Google Spreadsheet
+              <Database className="w-3.5 h-3.5" />
+              Distributed Cloud Database System
             </span>
             <h2 className="text-3xl xl:text-4xl font-extrabold tracking-tight leading-tight text-white font-['Outfit']">
-              Kelola Presensi, Nilai & Jurnal Kelas Lebih Cepat dan Mudah.
+              Kelola Presensi, Nilai &amp; Jurnal Kelas Lebih Cepat dan Mudah.
             </h2>
             <p className="text-blue-100/90 text-sm leading-relaxed">
               Platform modern dan terintegrasi untuk mendukung efisiensi pengajaran guru, mulai dari presensi harian, penilaian berkala, hingga pencatatan jurnal refleksi.
@@ -129,7 +124,7 @@ export const LoginPage: React.FC = () => {
                 <BookOpen className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-white">Jurnal & Agenda Pembelajaran</h4>
+                <h4 className="text-sm font-semibold text-white">Jurnal &amp; Agenda Pembelajaran</h4>
                 <p className="text-xs text-blue-200">Dokumentasikan materi dan capaian pembelajaran secara terstruktur.</p>
               </div>
             </div>
@@ -138,10 +133,10 @@ export const LoginPage: React.FC = () => {
 
         {/* Bottom Status */}
         <div className="z-10 flex items-center justify-between text-xs text-blue-200 border-t border-white/10 pt-6">
-          <span>Google Apps Script REST Backend</span>
+          <span>High-Speed Serverless API Engine</span>
           <span className="flex items-center gap-1.5">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            Aman & Terenkripsi
+            Aman &amp; Terenkripsi
           </span>
         </div>
       </div>
@@ -156,9 +151,9 @@ export const LoginPage: React.FC = () => {
             </div>
             <div>
               <h2 className="font-bold text-lg text-slate-900 dark:text-white font-['Outfit']">
-                GuruApp
+                BukuGuru
               </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Manajemen Guru & Kelas</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Aplikasi Presensi, Nilai &amp; Jurnal Kelas</p>
             </div>
           </div>
 
@@ -265,40 +260,32 @@ export const LoginPage: React.FC = () => {
           {/* Quick Demo Credentials */}
           <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
             <p className="text-xs text-slate-500 dark:text-slate-400 font-medium text-center">
-              Pilih akun cepat untuk simulasi:
+              Simulasi cepat akun pengajar:
             </p>
-            <div className="grid grid-cols-2 gap-2.5">
+            <div>
               <button
                 type="button"
-                onClick={() => handleDemoFill('guru')}
-                className="flex items-center justify-center gap-1.5 py-2 px-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+                onClick={handleDemoFill}
+                className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
               >
                 <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-                Akun Guru (Budi)
-              </button>
-              <button
-                type="button"
-                onClick={() => handleDemoFill('admin')}
-                className="flex items-center justify-center gap-1.5 py-2 px-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                Akun Admin (admin)
+                Gunakan Akun Demo Guru
               </button>
             </div>
 
             {/* Connection Mode Indicator & Switcher */}
             <div className="flex items-center justify-between pt-2">
-              <span className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-                <Globe className={`w-3.5 h-3.5 ${apiMode === 'live' ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`} />
-                Mode: <strong className={apiMode === 'live' ? 'text-emerald-700 dark:text-emerald-300' : 'text-slate-700 dark:text-slate-200'}>{apiMode === 'live' ? 'GAS Live (Google Sheet)' : 'Demo (Lokal)'}</strong>
-              </span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700/80 text-[11px] font-mono tracking-tight shadow-2xs">
+                <span className={`w-2.5 h-2.5 rounded-full ${apiMode === 'live' ? 'bg-emerald-500 shadow-xs shadow-emerald-500/60 animate-pulse' : 'bg-amber-500'}`} />
+                <span>{apiMode === 'live' ? 'System: Online (Edge API)' : 'System: Demo (In-Memory)'}</span>
+              </div>
               <button
                 type="button"
                 onClick={() => setIsSettingsOpen(true)}
                 className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <Settings className="w-3.5 h-3.5" />
-                Ubah Mode / URL GAS
+                Ubah Mode / URL API
               </button>
             </div>
           </div>

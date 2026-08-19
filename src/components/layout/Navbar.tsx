@@ -28,7 +28,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, currentPageTitle, onOpenSettings }) => {
-  const { user, logout, isAdmin } = useAuth();
+  const { user, logout, isAdmin, isSuperAdmin } = useAuth();
   const { isDark, toggleTheme } = useTheme();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -63,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, currentPageTitl
             {currentPageTitle}
           </h1>
           <p className="hidden sm:block text-xs text-slate-400 dark:text-slate-500">
-            Aplikasi Manajemen Guru & Kelas
+            Aplikasi Presensi, Nilai &amp; Jurnal Kelas
           </p>
         </div>
       </div>
@@ -73,15 +73,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, currentPageTitl
         {/* Backend Mode Badge (Clickable to open settings) */}
         <button
           onClick={onOpenSettings}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono font-medium border transition-all cursor-pointer ${
             apiMode === 'live'
               ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/60'
               : 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/60'
           }`}
-          title="Klik untuk mengubah URL atau mode backend"
+          title="Klik untuk mengubah URL atau mode backend API"
         >
-          <Globe className={`w-3.5 h-3.5 ${apiMode === 'live' ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`} />
-          <span>{apiMode === 'live' ? 'GAS Live' : 'Demo (Lokal)'}</span>
+          <span className={`w-2 h-2 rounded-full ${apiMode === 'live' ? 'bg-emerald-500 shadow-xs shadow-emerald-500/60 animate-pulse' : 'bg-amber-500'}`} />
+          <span>{apiMode === 'live' ? 'System: Online (Edge API)' : 'System: Demo (Local)'}</span>
         </button>
 
         {/* Dark Mode Toggle */}
@@ -108,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, currentPageTitl
                 {user?.NAMA_GURU || 'Guru'}
               </p>
               <p className="text-[11px] text-slate-400 capitalize">
-                {isAdmin ? 'Administrator' : user?.MAPEL || 'Guru'}
+                {isSuperAdmin ? 'Super Admin' : isAdmin ? 'Administrator' : user?.MAPEL || 'Guru'}
               </p>
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
@@ -125,8 +125,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, currentPageTitl
                   <span className="text-[11px] text-slate-500 dark:text-slate-400">
                     @{user?.USERNAME}
                   </span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 font-medium capitalize">
-                    {user?.role}
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium capitalize ${
+                    isSuperAdmin
+                      ? 'bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300'
+                      : isAdmin
+                      ? 'bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300'
+                      : 'bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300'
+                  }`}>
+                    {isSuperAdmin ? 'Super Admin' : user?.role}
                   </span>
                 </div>
               </div>
