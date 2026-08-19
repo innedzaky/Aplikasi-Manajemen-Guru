@@ -1,0 +1,6 @@
+{
+  "name": "Aplikasi Manajemen Guru",
+  "description": "Aplikasi web responsif untuk presensi siswa, input nilai, jurnal mengajar, master data, dan pelaporan dengan integrasi arsitektur database Cloudflare D1 utama serta mirror backup otomatis Google Spreadsheet.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,41 @@
+name = "sistem-manajemen-guru-api"
+main = "src/index.ts"
+compatibility_date = "2024-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ENVIRONMENT = "development"
+CORS_ORIGIN = "http://localhost:3000,http://localhost:5173"
+
+# Default D1 Database binding (Development)
+[[d1_databases]]
+binding = "DB"
+database_name = "db_guru_dev"
+database_id = "d1-dev-local-id"
+migrations_dir = "migrations"
+
+[observability]
+enabled = true
+
+[triggers]
+crons = ["* * * * *"]
+
+# Staging Environment
+[env.staging]
+vars = { ENVIRONMENT = "staging", CORS_ORIGIN = "https://staging.smanusantara.sch.id" }
+
+[[env.staging.d1_databases]]
+binding = "DB"
+database_name = "db_guru_staging"
+database_id = "d1-staging-uuid-placeholder"
+migrations_dir = "migrations"
+
+# Production Environment
+[env.production]
+vars = { ENVIRONMENT = "production", CORS_ORIGIN = "https://app.smanusantara.sch.id" }
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "db_guru_production"
+database_id = "d1-production-uuid-placeholder"
+migrations_dir = "migrations"
