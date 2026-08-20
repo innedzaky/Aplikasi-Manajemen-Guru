@@ -3,7 +3,7 @@ name: Sync AI Studio to Cloudflare Repo
 on:
   push:
     branches:
-      - main # Ganti dengan 'master' jika branch default Anda master
+      - main
 
 jobs:
   sync-to-b:
@@ -13,9 +13,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Push to Repo B
         env:
           DEST_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
-          git push --force --prune "https://${DEST_TOKEN}@github.com/dzakyinne-gif/sistem-manajemen-guru.git" main:main
+          git remote add target "https://dzakyinne-gif:${DEST_TOKEN}@github.com/dzakyinne-gif/sistem-manajemen-guru.git"
+          git push --force --prune target main:main
