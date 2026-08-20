@@ -154,6 +154,11 @@ export const PengaturanPage: React.FC = () => {
   };
 
   const handleOpenEditAdmin = (adm: IAdminAccount) => {
+    if (!isSuperAdmin && currentAuthUser?.USERNAME !== adm.USERNAME) {
+      showToast('warning', 'Akses Ditolak: Admin biasa tidak dapat mengedit akun administrator lain maupun Super Admin.');
+      toastError('Hanya Super Admin yang berwenang mengedit akun administrator lain.', 'Hak Akses Terbatas');
+      return;
+    }
     setEditingAdmin(adm);
     setIsAdminModalOpen(true);
   };
@@ -162,6 +167,12 @@ export const PengaturanPage: React.FC = () => {
     if (!editingAdmin && !isSuperAdmin) {
       showToast('error', 'Akses ditolak: Hanya Super Admin yang dapat menambahkan akun admin baru.');
       toastError('Hanya Super Admin yang berwenang menambahkan administrator.', 'Penolakan Otorisasi');
+      return false;
+    }
+
+    if (editingAdmin && !isSuperAdmin && currentAuthUser?.USERNAME !== editingAdmin.USERNAME) {
+      showToast('error', 'Akses ditolak: Admin biasa tidak dapat mengedit akun administrator lain ataupun Super Admin.');
+      toastError('Hanya Super Admin yang berwenang mengedit administrator lain.', 'Penolakan Otorisasi');
       return false;
     }
 
@@ -205,9 +216,9 @@ export const PengaturanPage: React.FC = () => {
       return;
     }
 
-    if (adm.USERNAME === 'admin' || adm.ID_ADMIN === 'ADM001') {
-      showToast('warning', 'Akun Administrator Utama tidak dapat dihapus.');
-      toastError('Akun Administrator Utama (Superadmin) dilindungi dan tidak dapat dihapus.', 'Penolakan Sistem');
+    if (adm.ROLE === 'superadmin' || adm.USERNAME === 'innedzaky' || adm.ID_ADMIN === 'ADM001') {
+      showToast('warning', 'Akun Super Administrator tidak dapat dihapus.');
+      toastError('Akun Super Administrator (innedzaky) dilindungi dan tidak dapat dihapus.', 'Penolakan Sistem');
       return;
     }
 
@@ -470,11 +481,11 @@ export const PengaturanPage: React.FC = () => {
                   <div className="font-bold text-amber-900 dark:text-amber-200 flex items-center gap-2">
                     <span>Akses Terbatas: Administrator Biasa</span>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-600 text-white">
-                      View &amp; Edit Only
+                      Edit Profil Sendiri
                     </span>
                   </div>
                   <p className="text-amber-700/80 dark:text-amber-300/80 mt-0.5">
-                    Hanya pengguna dengan peran <strong className="text-amber-900 dark:text-amber-100">Super Admin</strong> yang dapat memasukkan administrator baru atau menghapus akun administrator.
+                    Admin biasa hanya dapat mengedit profil akun miliknya sendiri. Wewenang untuk menambah admin baru, mengedit admin lain, dan menghapus admin biasa hanya dimiliki oleh <strong className="text-amber-900 dark:text-amber-100">Super Admin</strong>.
                   </p>
                 </div>
               </div>
@@ -596,9 +607,17 @@ export const PengaturanPage: React.FC = () => {
                     </tr>
                   ) : (
                     filteredAdmins.map((adm) => {
-                      const isMasterAdmin = adm.USERNAME === 'admin' || adm.ID_ADMIN === 'ADM001';
+                      const isMasterAdmin = adm.ROLE === 'superadmin' || adm.USERNAME === 'innedzaky' || adm.ID_ADMIN === 'ADM001';
                       const isCurrentSessionUser = currentAuthUser?.USERNAME === adm.USERNAME;
 
+                      // Wewenang Edit: Super Admin boleh edit semua akun; Admin Biasa HANYA boleh edit akunnya sendiri
+                      const canEdit = isSuperAdmin || isCurrentSessionUser;
+                      let editTooltip = 'Edit profil administrator';
+                      if (!isSuperAdmin && !isCurrentSessionUser) {
+                        editTooltip = 'Admin biasa tidak memiliki wewenang mengedit akun admin lain ataupun Super Admin';
+                      }
+
+                      // Wewenang Hapus: Hanya Super Admin yang boleh hapus akun (kecuali master admin & akun sendiri)
                       let deleteTooltip = 'Hapus akun administrator';
                       let canDelete = isSuperAdmin && !isMasterAdmin && !isCurrentSessionUser;
 
@@ -682,8 +701,13 @@ export const PengaturanPage: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => handleOpenEditAdmin(adm)}
-                              title="Edit akun administrator"
-                              className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/50 rounded-lg transition-colors"
+                              disabled={!canEdit}
+                              title={editTooltip}
+                              className={`p-2 rounded-lg transition-colors ${
+                                canEdit
+                                  ? 'text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/50 cursor-pointer'
+                                  : 'text-slate-300 dark:text-slate-700 cursor-not-allowed'
+                              }`}
                             >
                               <Edit2 className="w-4 h-4" />
                             </button>
@@ -695,7 +719,7 @@ export const PengaturanPage: React.FC = () => {
                               title={deleteTooltip}
                               className={`p-2 rounded-lg transition-colors ${
                                 canDelete
-                                  ? 'text-slate-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/50'
+                                  ? 'text-slate-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/50 cursor-pointer'
                                   : 'text-slate-300 dark:text-slate-700 cursor-not-allowed'
                               }`}
                             >
@@ -932,6 +956,7 @@ export const PengaturanPage: React.FC = () => {
         onSave={handleSaveAdmin}
         admin={editingAdmin}
         isSaving={isSavingAdmin}
+        isCurrentSuperAdmin={isSuperAdmin}
       />
 
       {/* Admin Delete Confirmation Modal */}

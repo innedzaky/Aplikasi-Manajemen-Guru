@@ -30,9 +30,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     user?.role === 'admin' &&
     (user?.adminRole === 'superadmin' ||
      user?.isSuperAdmin === true ||
-     user?.USERNAME?.toLowerCase() === 'admin' ||
-     user?.ID_GURU === 'ADMIN' ||
-     user?.ID_GURU === 'ADM001')
+     user?.USERNAME?.toLowerCase() === 'innedzaky')
   );
 
   useEffect(() => {

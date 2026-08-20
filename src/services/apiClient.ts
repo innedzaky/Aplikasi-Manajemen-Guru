@@ -35,12 +35,22 @@ import {
 const DEFAULT_ADMINS: IAdminAccount[] = [
   {
     ID_ADMIN: 'ADM001',
-    USERNAME: 'admin',
-    NAMA_LENGKAP: 'Administrator Sekolah (Utama)',
-    PASSWORD: 'admin123',
-    EMAIL: 'admin@sekolah.sch.id',
+    USERNAME: 'innedzaky',
+    NAMA_LENGKAP: 'Inne Dzaky (Super Admin)',
+    PASSWORD: '1sampai7',
+    EMAIL: 'innedzaky@gmail.com',
     ROLE: 'superadmin',
     CREATED_AT: '2026-01-01',
+    STATUS: 'aktif'
+  },
+  {
+    ID_ADMIN: 'ADM002',
+    USERNAME: 'admin',
+    NAMA_LENGKAP: 'Administrator Sekolah (Admin Biasa)',
+    PASSWORD: 'admin123',
+    EMAIL: 'admin@sekolah.sch.id',
+    ROLE: 'admin',
+    CREATED_AT: '2026-01-15',
     STATUS: 'aktif'
   }
 ];
@@ -56,6 +66,43 @@ const MOCK_STORAGE_KEYS = {
   JURNAL: 'manajemen_guru_mock_jurnal',
   ADMINS: 'manajemen_guru_mock_admins'
 };
+
+function loadAdminMockData(): IAdminAccount[] {
+  try {
+    const raw = localStorage.getItem(MOCK_STORAGE_KEYS.ADMINS);
+    if (raw) {
+      const list: IAdminAccount[] = JSON.parse(raw);
+      if (Array.isArray(list) && list.length > 0) {
+        // Migrasi data otomatis: Pastikan innedzaky terdaftar sebagai Super Admin
+        let inne = list.find(a => a.USERNAME?.toLowerCase() === 'innedzaky');
+        if (!inne) {
+          list.unshift({ ...DEFAULT_ADMINS[0] });
+        } else {
+          inne.ROLE = 'superadmin';
+          if (!inne.PASSWORD || inne.PASSWORD === 'admin123') {
+            inne.PASSWORD = '1sampai7';
+          }
+        }
+
+        // Pastikan admin diatur sebagai Admin Biasa
+        let adm = list.find(a => a.USERNAME?.toLowerCase() === 'admin');
+        if (!adm) {
+          list.push({ ...DEFAULT_ADMINS[1] });
+        } else {
+          adm.ROLE = 'admin';
+          if (!adm.PASSWORD) {
+            adm.PASSWORD = 'admin123';
+          }
+        }
+
+        return list;
+      }
+    }
+  } catch (e) {
+    console.warn(`Gagal memuat local data ${MOCK_STORAGE_KEYS.ADMINS}:`, e);
+  }
+  return [...DEFAULT_ADMINS];
+}
 
 function loadMockData<T>(key: string, defaultValue: T[]): T[] {
   try {
@@ -85,7 +132,7 @@ let mockMapel: IMapel[] = loadMockData<IMapel>(MOCK_STORAGE_KEYS.MAPEL, DUMMY_MA
 let mockPresensi: IPresensi[] = loadMockData<IPresensi>(MOCK_STORAGE_KEYS.PRESENSI, DUMMY_PRESENSI);
 let mockNilai: INilai[] = loadMockData<INilai>(MOCK_STORAGE_KEYS.NILAI, DUMMY_NILAI);
 let mockJurnal: IJurnal[] = loadMockData<IJurnal>(MOCK_STORAGE_KEYS.JURNAL, DUMMY_JURNAL);
-let mockAdmins: IAdminAccount[] = loadMockData<IAdminAccount>(MOCK_STORAGE_KEYS.ADMINS, DEFAULT_ADMINS);
+let mockAdmins: IAdminAccount[] = loadAdminMockData();
 
 const GAS_URL_KEY = 'manajemen_guru_gas_url';
 const GAS_MODE_KEY = 'manajemen_guru_gas_mode';
@@ -575,16 +622,17 @@ export class ApiClient {
         // 1. Cek terlebih dahulu di daftar Admin terdaftar
         const matchedAdmin = mockAdmins.find(a => a.USERNAME.toLowerCase() === username && a.STATUS !== 'nonaktif');
         if (matchedAdmin) {
-          const passToMatch = matchedAdmin.PASSWORD || 'admin123';
+          const passToMatch = matchedAdmin.PASSWORD || (matchedAdmin.USERNAME.toLowerCase() === 'innedzaky' ? '1sampai7' : 'admin123');
           const validAdminCustomPass = SecurityUtils.constantTimeCompare(password, passToMatch);
-          const validAdminDefaultPass = SecurityUtils.constantTimeCompare(password, 'admin123');
-          const validGeneralDefaultPass = SecurityUtils.constantTimeCompare(password, 'password123');
+          const validInnePass = matchedAdmin.USERNAME.toLowerCase() === 'innedzaky' && (SecurityUtils.constantTimeCompare(password, '1sampai7') || SecurityUtils.constantTimeCompare(password, '1234567'));
+          const validAdminDefaultPass = matchedAdmin.USERNAME.toLowerCase() === 'admin' && (SecurityUtils.constantTimeCompare(password, 'admin123') || SecurityUtils.constantTimeCompare(password, 'password123'));
+          const validGeneralDefaultPass = SecurityUtils.constantTimeCompare(password, passToMatch);
 
-          if (validAdminCustomPass || validAdminDefaultPass || validGeneralDefaultPass) {
+          if (validAdminCustomPass || validInnePass || validAdminDefaultPass || validGeneralDefaultPass) {
             matchedAdmin.LAST_LOGIN = new Date().toISOString().split('T')[0];
             saveMockData(MOCK_STORAGE_KEYS.ADMINS, mockAdmins);
 
-            const isSuper = matchedAdmin.ROLE === 'superadmin' || matchedAdmin.USERNAME?.toLowerCase() === 'admin' || matchedAdmin.ID_ADMIN === 'ADM001';
+            const isSuper = matchedAdmin.ROLE === 'superadmin' || matchedAdmin.USERNAME?.toLowerCase() === 'innedzaky';
 
             const safeAdminUser: IAuthUser = {
               ID_GURU: matchedAdmin.ID_ADMIN,
@@ -604,7 +652,7 @@ export class ApiClient {
 
             return {
               success: true,
-              message: `Login berhasil sebagai ${isSuper ? 'Super Administrator' : 'Administrator'} (${matchedAdmin.NAMA_LENGKAP})`,
+              message: `Login berhasil sebagai ${isSuper ? 'Super Administrator' : 'Administrator Biasa'} (${matchedAdmin.NAMA_LENGKAP})`,
               data: sessionData as unknown as T
             };
           } else {
@@ -612,7 +660,30 @@ export class ApiClient {
           }
         }
 
-        // 2. Cari di mock guru
+        // 2. Cek akun superadmin innedzaky secara langsung
+        if (username === 'innedzaky' && (SecurityUtils.constantTimeCompare(password, '1sampai7') || SecurityUtils.constantTimeCompare(password, '1234567'))) {
+          const superAdminUser: IAuthUser = {
+            ID_GURU: 'ADM001',
+            NAMA_GURU: 'Inne Dzaky (Super Admin)',
+            USERNAME: 'innedzaky',
+            MAPEL: 'Semua Mapel',
+            role: 'admin',
+            adminRole: 'superadmin',
+            isSuperAdmin: true
+          };
+          const sessionData: ISessionData = {
+            token: 'mock-session-token-' + btoa(JSON.stringify(superAdminUser)) + '.' + Date.now(),
+            user: superAdminUser,
+            expiresInMs: 86400000
+          };
+          return {
+            success: true,
+            message: 'Login berhasil sebagai Super Administrator (Inne Dzaky)',
+            data: sessionData as unknown as T
+          };
+        }
+
+        // 3. Cari di mock guru atau admin biasa bawaan
         let matched = mockGuru.find(g => g.USERNAME.toLowerCase() === username);
         let role: 'admin' | 'guru' = 'guru';
 
@@ -620,8 +691,8 @@ export class ApiClient {
           role = 'admin';
           if (!matched) {
             matched = {
-              ID_GURU: 'G000',
-              NAMA_GURU: 'Administrator Sekolah',
+              ID_GURU: 'ADM002',
+              NAMA_GURU: 'Administrator Sekolah (Admin Biasa)',
               USERNAME: 'admin',
               MAPEL: 'Semua'
             };
@@ -646,7 +717,9 @@ export class ApiClient {
           NAMA_GURU: matched.NAMA_GURU,
           USERNAME: matched.USERNAME,
           MAPEL: matched.MAPEL,
-          role: role
+          role: role,
+          adminRole: role === 'admin' ? 'admin' : undefined,
+          isSuperAdmin: false
         };
 
         const sessionData: ISessionData = {
@@ -1188,6 +1261,18 @@ export class ApiClient {
         return { success: true, message: 'Data Administrator berhasil dimuat', data: safeList as unknown as T };
       }
       case 'createAdmin': {
+        // Validasi hak akses pemanggil: Hanya Super Admin yang boleh membuat admin baru
+        const caller = verifyToken();
+        if (caller && caller.role === 'admin') {
+          const isCallerSuper = caller.isSuperAdmin || caller.adminRole === 'superadmin' || caller.USERNAME?.toLowerCase() === 'innedzaky' || caller.ID_GURU === 'ADM001';
+          if (!isCallerSuper) {
+            return {
+              success: false,
+              message: 'Akses ditolak: Hanya Super Admin yang berwenang menambahkan administrator baru.'
+            };
+          }
+        }
+
         const cleanUsername = SecurityUtils.sanitizeString(data?.USERNAME || '').toLowerCase().trim();
         const cleanNama = SecurityUtils.sanitizeString(data?.NAMA_LENGKAP || '').trim();
         const cleanPassword = String(data?.PASSWORD || '').trim();
@@ -1236,6 +1321,23 @@ export class ApiClient {
         }
 
         const existing = mockAdmins[idx];
+
+        // Validasi hak akses pemanggil: Admin biasa dilarang mengedit admin lain atau superadmin
+        const caller = verifyToken();
+        if (caller && caller.role === 'admin') {
+          const isCallerSuper = caller.isSuperAdmin || caller.adminRole === 'superadmin' || caller.USERNAME?.toLowerCase() === 'innedzaky' || caller.ID_GURU === 'ADM001';
+          if (!isCallerSuper) {
+            // Admin biasa hanya boleh mengedit akunnya sendiri
+            const isSelf = existing.USERNAME?.toLowerCase() === caller.USERNAME?.toLowerCase() || existing.ID_ADMIN === caller.ID_GURU;
+            if (!isSelf) {
+              return {
+                success: false,
+                message: 'Akses ditolak: Administrator biasa tidak dapat mengedit akun administrator lain maupun Super Admin.'
+              };
+            }
+          }
+        }
+
         const newUsername = data.USERNAME ? SecurityUtils.sanitizeString(data.USERNAME).toLowerCase().trim() : existing.USERNAME;
 
         if (newUsername !== existing.USERNAME) {
@@ -1245,12 +1347,23 @@ export class ApiClient {
           }
         }
 
+        // Jika bukan superadmin, role tidak boleh diubah ke superadmin
+        let assignedRole = existing.ROLE;
+        if (caller) {
+          const isCallerSuper = caller.isSuperAdmin || caller.adminRole === 'superadmin' || caller.USERNAME?.toLowerCase() === 'innedzaky' || caller.ID_GURU === 'ADM001';
+          if (isCallerSuper && data.ROLE) {
+            assignedRole = data.ROLE;
+          }
+        } else if (data.ROLE) {
+          assignedRole = data.ROLE;
+        }
+
         mockAdmins[idx] = {
           ...existing,
           USERNAME: newUsername,
           NAMA_LENGKAP: data.NAMA_LENGKAP ? SecurityUtils.sanitizeString(data.NAMA_LENGKAP).trim() : existing.NAMA_LENGKAP,
           EMAIL: data.EMAIL !== undefined ? SecurityUtils.sanitizeString(data.EMAIL).trim() : existing.EMAIL,
-          ROLE: data.ROLE || existing.ROLE,
+          ROLE: assignedRole,
           STATUS: data.STATUS || existing.STATUS,
           PASSWORD: data.PASSWORD && data.PASSWORD.trim().length >= 5 ? data.PASSWORD.trim() : existing.PASSWORD
         };
@@ -1268,7 +1381,7 @@ export class ApiClient {
         // Validasi hak akses pemanggil: Admin biasa dilarang menghapus admin lain
         const caller = verifyToken();
         if (caller && caller.role === 'admin') {
-          const isCallerSuper = caller.isSuperAdmin || caller.adminRole === 'superadmin' || caller.USERNAME?.toLowerCase() === 'admin' || caller.ID_GURU === 'ADM001';
+          const isCallerSuper = caller.isSuperAdmin || caller.adminRole === 'superadmin' || caller.USERNAME?.toLowerCase() === 'innedzaky' || caller.ID_GURU === 'ADM001';
           if (!isCallerSuper) {
             return {
               success: false,
@@ -1282,8 +1395,8 @@ export class ApiClient {
           return { success: false, message: 'Akun Administrator tidak ditemukan' };
         }
 
-        if (targetAdmin.USERNAME === 'admin' || targetAdmin.ID_ADMIN === 'ADM001') {
-          return { success: false, message: 'Akun Administrator Utama (Superadmin) tidak dapat dihapus demi keamanan sistem.' };
+        if (targetAdmin.ROLE === 'superadmin' || targetAdmin.USERNAME === 'innedzaky' || targetAdmin.ID_ADMIN === 'ADM001') {
+          return { success: false, message: 'Akun Super Administrator (innedzaky) dilindungi dan tidak dapat dihapus demi keamanan sistem.' };
         }
 
         mockAdmins = mockAdmins.filter(a => a.ID_ADMIN !== targetId);

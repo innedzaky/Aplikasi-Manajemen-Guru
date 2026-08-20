@@ -101,12 +101,16 @@ export class AuthService {
           const adminList = JSON.parse(rawAdmins);
           const foundAdmin = Array.isArray(adminList) ? adminList.find((a: any) => a.USERNAME && a.USERNAME.toLowerCase() === cleanUsername && a.STATUS !== 'nonaktif') : null;
           if (foundAdmin) {
-            const passToMatch = foundAdmin.PASSWORD || 'admin123';
-            if (cleanPassword === passToMatch || cleanPassword === 'admin123' || cleanPassword === 'password123') {
-              const isSuper = foundAdmin.ROLE === 'superadmin' || foundAdmin.USERNAME?.toLowerCase() === 'admin' || foundAdmin.ID_ADMIN === 'ADM001';
+            const passToMatch = foundAdmin.PASSWORD || (foundAdmin.USERNAME?.toLowerCase() === 'innedzaky' ? '1sampai7' : 'admin123');
+            const matchInne = foundAdmin.USERNAME?.toLowerCase() === 'innedzaky' && (cleanPassword === '1sampai7' || cleanPassword === '1234567');
+            const matchAdmin = foundAdmin.USERNAME?.toLowerCase() === 'admin' && (cleanPassword === 'admin123' || cleanPassword === 'password123');
+            const matchCustom = cleanPassword === passToMatch;
+
+            if (matchInne || matchAdmin || matchCustom) {
+              const isSuper = foundAdmin.ROLE === 'superadmin' || foundAdmin.USERNAME?.toLowerCase() === 'innedzaky' || foundAdmin.ID_ADMIN === 'ADM001';
               const adminUser: IAuthUser = {
-                ID_GURU: foundAdmin.ID_ADMIN || 'ADMIN',
-                NAMA_GURU: foundAdmin.NAMA_LENGKAP || 'Administrator Sekolah',
+                ID_GURU: foundAdmin.ID_ADMIN || (isSuper ? 'ADM001' : 'ADM002'),
+                NAMA_GURU: foundAdmin.NAMA_LENGKAP || (isSuper ? 'Inne Dzaky (Super Admin)' : 'Administrator Sekolah'),
                 USERNAME: foundAdmin.USERNAME,
                 MAPEL: 'Semua Mapel',
                 role: 'admin',
@@ -130,12 +134,12 @@ export class AuthService {
         // ignore
       }
 
-      // 1. Cek kredensial Master Admin Default (jika belum matched)
-      if (!res.success && cleanUsername === 'admin' && (cleanPassword === 'admin123' || cleanPassword === 'password123')) {
+      // 1. Cek kredensial Super Admin Default innedzaky
+      if (!res.success && cleanUsername === 'innedzaky' && (cleanPassword === '1sampai7' || cleanPassword === '1234567')) {
         const adminUser: IAuthUser = {
-          ID_GURU: 'ADMIN',
-          NAMA_GURU: 'Administrator Sekolah',
-          USERNAME: 'admin',
+          ID_GURU: 'ADM001',
+          NAMA_GURU: 'Inne Dzaky (Super Admin)',
+          USERNAME: 'innedzaky',
           MAPEL: 'Semua Mapel',
           role: 'admin',
           adminRole: 'superadmin',
@@ -144,7 +148,28 @@ export class AuthService {
         const token = 'gas-token-' + btoa(JSON.stringify(adminUser)) + '.' + Date.now();
         res = {
           success: true,
-          message: 'Login Administrator berhasil.',
+          message: 'Login Super Administrator (Inne Dzaky) berhasil.',
+          data: {
+            token,
+            user: adminUser,
+            expiresInMs: 86400000
+          }
+        };
+      } else if (!res.success && cleanUsername === 'admin' && (cleanPassword === 'admin123' || cleanPassword === 'password123')) {
+        // 2. Cek kredensial Admin Biasa
+        const adminUser: IAuthUser = {
+          ID_GURU: 'ADM002',
+          NAMA_GURU: 'Administrator Sekolah (Admin Biasa)',
+          USERNAME: 'admin',
+          MAPEL: 'Semua Mapel',
+          role: 'admin',
+          adminRole: 'admin',
+          isSuperAdmin: false
+        };
+        const token = 'gas-token-' + btoa(JSON.stringify(adminUser)) + '.' + Date.now();
+        res = {
+          success: true,
+          message: 'Login Administrator Biasa berhasil.',
           data: {
             token,
             user: adminUser,
