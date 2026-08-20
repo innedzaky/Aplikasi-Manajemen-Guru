@@ -1,0 +1,21 @@
+name: Sync AI Studio to Cloudflare Repo
+
+on:
+  push:
+    branches:
+      - main # Ganti dengan 'master' jika branch default Anda master
+
+jobs:
+  sync-to-b:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to Repo B
+        env:
+          DEST_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        run: |
+          git push --force --prune "https://${DEST_TOKEN}@github.com/dzakyinne-gif/sistem-manajemen-guru.git" main:main
