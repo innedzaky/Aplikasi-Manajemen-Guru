@@ -68,10 +68,12 @@ export const ClassPerformanceWidget: React.FC<ClassPerformanceWidgetProps> = ({
 
                     <div className="flex items-center gap-2">
                       <span
-                        className={`text-xs font-extrabold px-2 py-0.5 rounded-lg ${
-                          isPassing
-                            ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60'
-                            : 'text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60'
+                        className={`text-xs font-extrabold px-2.5 py-0.5 rounded-lg border font-mono ${
+                          score >= 75
+                            ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200/60 dark:border-emerald-900/40'
+                            : score > 0
+                            ? 'text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700'
+                            : 'text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700'
                         }`}
                       >
                         {score}
@@ -83,7 +85,11 @@ export const ClassPerformanceWidget: React.FC<ClassPerformanceWidgetProps> = ({
                   <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all duration-500 ${
-                        isPassing ? 'bg-emerald-500' : 'bg-amber-500'
+                        score >= 75
+                          ? 'bg-emerald-500'
+                          : score > 0
+                          ? 'bg-emerald-500/60 dark:bg-emerald-600/60'
+                          : 'bg-transparent'
                       }`}
                       style={{ width: `${progressPct}%` }}
                     />

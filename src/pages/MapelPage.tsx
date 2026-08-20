@@ -221,7 +221,7 @@ export const MapelPage: React.FC<MapelPageProps> = ({ onNavigateTab }) => {
       <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/60 border border-amber-100 dark:border-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100 dark:border-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0">
               <BookMarked className="w-6 h-6" />
             </div>
             <div>
@@ -229,7 +229,7 @@ export const MapelPage: React.FC<MapelPageProps> = ({ onNavigateTab }) => {
                 <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white font-['Outfit']">
                   Master Mata Pelajaran
                 </h1>
-                <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300">
+                <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300">
                   {mapelList.length} Mata Pelajaran
                 </span>
               </div>
@@ -256,7 +256,7 @@ export const MapelPage: React.FC<MapelPageProps> = ({ onNavigateTab }) => {
                 setEditingMapel(null);
                 setIsModalOpen(true);
               }}
-              className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-amber-600/20 flex items-center gap-2 transition-all"
+              className="px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:scale-98 text-white text-xs sm:text-sm font-semibold shadow-xs flex items-center gap-2 transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Tambah Mapel</span>
@@ -273,7 +273,7 @@ export const MapelPage: React.FC<MapelPageProps> = ({ onNavigateTab }) => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Cari nama mata pelajaran atau kode mapel..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-slate-800 transition-all"
             />
             {search && (
               <button
@@ -291,14 +291,14 @@ export const MapelPage: React.FC<MapelPageProps> = ({ onNavigateTab }) => {
       {/* Main Table or Loading/Empty State */}
       {isLoading ? (
         <div className="py-20 text-center space-y-4">
-          <div className="w-10 h-10 border-4 border-amber-500/20 border-t-amber-600 rounded-full animate-spin mx-auto" />
+          <div className="w-10 h-10 border-4 border-emerald-500/20 border-t-emerald-600 rounded-full animate-spin mx-auto" />
           <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
             Memuat data Mata Pelajaran dari Google Sheet...
           </p>
         </div>
       ) : filteredMapel.length === 0 ? (
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-12 text-center max-w-md mx-auto shadow-sm space-y-4">
-          <div className="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 mx-auto flex items-center justify-center border border-amber-100 dark:border-amber-900">
+          <div className="w-14 h-14 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center border border-emerald-100 dark:border-emerald-900">
             <BookMarked className="w-7 h-7" />
           </div>
           <div className="space-y-1">
@@ -331,7 +331,7 @@ export const MapelPage: React.FC<MapelPageProps> = ({ onNavigateTab }) => {
                   setEditingMapel(null);
                   setIsModalOpen(true);
                 }}
-                className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-colors"
+                className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Tambah Mapel Pertama</span>

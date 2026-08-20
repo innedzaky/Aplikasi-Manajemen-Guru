@@ -277,7 +277,7 @@ export const SiswaModal: React.FC<SiswaModalProps> = ({
             <button
               type="submit"
               disabled={isSaving}
-              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-emerald-600/20 flex items-center gap-2 transition-colors disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:scale-98 text-white text-xs sm:text-sm font-semibold shadow-xs flex items-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
             >
               {isSaving ? (
                 <>

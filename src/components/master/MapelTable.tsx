@@ -52,7 +52,7 @@ export const MapelTable: React.FC<MapelTableProps> = ({
                   {/* NAMA MATA PELAJARAN */}
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/60 border border-amber-100 dark:border-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400 font-bold text-xs shrink-0">
+                      <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100 dark:border-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-xs shrink-0">
                         <BookMarked className="w-4 h-4" />
                       </div>
                       <div>
@@ -68,8 +68,8 @@ export const MapelTable: React.FC<MapelTableProps> = ({
 
                   {/* PENGAMPU TERDATA */}
                   <td className="py-3.5 px-4 text-center whitespace-nowrap">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-50/80 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200/60 dark:border-amber-900/40">
-                      <Users className="w-3 h-3 text-amber-600 dark:text-amber-400" />
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700">
+                      <Users className="w-3 h-3 text-slate-500 dark:text-slate-400" />
                       {totalGuru} Guru Pengampu
                     </span>
                   </td>
@@ -80,7 +80,7 @@ export const MapelTable: React.FC<MapelTableProps> = ({
                       <button
                         type="button"
                         onClick={() => onEdit(mapel)}
-                        className="p-2 rounded-xl text-slate-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/50 dark:hover:text-amber-400 transition-colors"
+                        className="p-2 rounded-xl text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 dark:hover:text-emerald-400 transition-colors cursor-pointer"
                         title="Edit Mata Pelajaran"
                       >
                         <Edit2 className="w-4 h-4" />

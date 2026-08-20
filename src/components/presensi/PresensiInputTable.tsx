@@ -144,7 +144,7 @@ export const PresensiInputTable: React.FC<PresensiInputTableProps> = ({
           <button
             type="button"
             onClick={() => handleSetAllStatus('Hadir')}
-            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <CheckCheck className="w-3.5 h-3.5" />
             Semua Hadir
@@ -152,21 +152,21 @@ export const PresensiInputTable: React.FC<PresensiInputTableProps> = ({
           <button
             type="button"
             onClick={() => handleSetAllStatus('Izin')}
-            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 hover:bg-amber-100 transition-colors cursor-pointer"
+            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
           >
             Semua Izin
           </button>
           <button
             type="button"
             onClick={() => handleSetAllStatus('Sakit')}
-            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 hover:bg-amber-100 transition-colors cursor-pointer"
+            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
           >
             Semua Sakit
           </button>
           <button
             type="button"
             onClick={() => handleSetAllStatus('Alpa')}
-            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 hover:bg-rose-100 transition-colors cursor-pointer"
+            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
           >
             Semua Alpa
           </button>
@@ -178,17 +178,17 @@ export const PresensiInputTable: React.FC<PresensiInputTableProps> = ({
             <span className="font-semibold text-slate-700 dark:text-slate-300">
               Total: <span className="font-mono font-bold">{total}</span>
             </span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-bold">
-              H: {hadirCount}
+            <span className="font-semibold text-slate-700 dark:text-slate-300">
+              H: <span className="font-mono font-bold">{hadirCount}</span>
             </span>
-            <span className="text-amber-600 dark:text-amber-400 font-bold">
-              I: {izinCount}
+            <span className="font-semibold text-slate-700 dark:text-slate-300">
+              I: <span className="font-mono font-bold">{izinCount}</span>
             </span>
-            <span className="text-amber-700 dark:text-amber-300 font-bold">
-              S: {sakitCount}
+            <span className="font-semibold text-slate-700 dark:text-slate-300">
+              S: <span className="font-mono font-bold">{sakitCount}</span>
             </span>
-            <span className="text-rose-600 dark:text-rose-400 font-bold">
-              A: {alpaCount}
+            <span className="font-semibold text-slate-700 dark:text-slate-300">
+              A: <span className="font-mono font-bold">{alpaCount}</span>
             </span>
           </div>
 
