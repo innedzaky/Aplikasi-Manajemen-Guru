@@ -24,11 +24,18 @@ Sistem menggunakan 1 Google Spreadsheet sebagai database cloud serverless. Ikuti
 ### Langkah Pembuatan Spreadsheet:
 1. Buka [Google Sheets](https://sheets.new) di browser Anda dengan akun Google institusi/sekolah.
 2. Beri nama Spreadsheet, misalnya: `DB_SISTEM_MANAJEMEN_GURU`.
-3. Buat 7 Sheet (Tab) dengan nama persis sesuai tabel berikut:
+3. Buat 8 Sheet (Tab) dengan nama persis sesuai tabel berikut:
 
 ### Struktur Tabel & Kolom (Baris 1 sebagai Header):
 
-#### 1. Sheet: `Guru`
+#### 1. Sheet: `Admin`
+| Kolom A | Kolom B | Kolom C | Kolom D | Kolom E | Kolom F | Kolom G | Kolom H |
+|---|---|---|---|---|---|---|---|
+| `ID_ADMIN` | `USERNAME` | `NAMA_LENGKAP` | `PASSWORD` | `EMAIL` | `ROLE` | `CREATED_AT` | `STATUS` |
+*Contoh Baris 2 (Super Admin):* `ADM001` | `innedzaky` | `Inne Dzaky (Super Admin)` | `1sampai7` | `innedzaky@gmail.com` | `superadmin` | `2026-01-01` | `aktif`  
+*Contoh Baris 3 (Admin Biasa):* `ADM002` | `admin` | `Administrator Sekolah` | `admin123` | `admin@sekolah.sch.id` | `admin` | `2026-01-15` | `aktif`
+
+#### 2. Sheet: `Guru`
 | Kolom A | Kolom B | Kolom C | Kolom D | Kolom E |
 |---|---|---|---|---|
 | `ID_GURU` | `NAMA_GURU` | `USERNAME` | `PASSWORD` | `MAPEL` |
@@ -40,29 +47,35 @@ Sistem menggunakan 1 Google Spreadsheet sebagai database cloud serverless. Ikuti
 | `NISN` | `NAMA` | `KELAS` | `JENIS_KELAMIN` |
 *Contoh Data Baris 2:* `0081234501` | `Aditya Pratama` | `X TKJ 1` | `L`
 
-#### 3. Sheet: `Kelas`
+#### 3. Sheet: `Siswa`
+| Kolom A | Kolom B | Kolom C | Kolom D |
+|---|---|---|---|
+| `NISN` | `NAMA` | `KELAS` | `JENIS_KELAMIN` |
+*Contoh Data Baris 2:* `0081234501` | `Aditya Pratama` | `X TKJ 1` | `L`
+
+#### 4. Sheet: `Kelas`
 | Kolom A | Kolom B | Kolom C |
 |---|---|---|
 | `ID_KELAS` | `NAMA_KELAS` | `WALI_KELAS` |
 *Contoh Data Baris 2:* `K001` | `X TKJ 1` | `Budi Santoso, S.Pd.`
 
-#### 4. Sheet: `Mapel`
+#### 5. Sheet: `Mapel`
 | Kolom A | Kolom B |
 |---|---|
 | `ID_MAPEL` | `NAMA_MATA_PELAJARAN` |
 *Contoh Data Baris 2:* `M001` | `Matematika`
 
-#### 5. Sheet: `Presensi`
+#### 6. Sheet: `Presensi`
 | Kolom A | Kolom B | Kolom C | Kolom D | Kolom E | Kolom F | Kolom G | Kolom H | Kolom I |
 |---|---|---|---|---|---|---|---|---|
 | `TIMESTAMP` | `TANGGAL` | `GURU` | `MAPEL` | `KELAS` | `PERTEMUAN` | `NAMA_SISWA` | `STATUS` | `CATATAN` |
 
-#### 6. Sheet: `Nilai`
+#### 7. Sheet: `Nilai`
 | Kolom A | Kolom B | Kolom C | Kolom D | Kolom E | Kolom F | Kolom G | Kolom H |
 |---|---|---|---|---|---|---|---|
 | `TIMESTAMP` | `GURU` | `MAPEL` | `KELAS` | `JENIS_PENILAIAN` | `NAMA_PENILAIAN` | `NAMA_SISWA` | `NILAI` |
 
-#### 7. Sheet: `Jurnal`
+#### 8. Sheet: `Jurnal`
 | Kolom A | Kolom B | Kolom C | Kolom D | Kolom E | Kolom F | Kolom G | Kolom H | Kolom I | Kolom J | Kolom K | Kolom L | Kolom M | Kolom N |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | `TIMESTAMP` | `TANGGAL` | `JAM` | `GURU` | `MAPEL` | `KELAS` | `MATERI` | `TUJUAN_PEMBELAJARAN` | `AKTIVITAS` | `METODE` | `MEDIA` | `REFLEKSI` | `CATATAN` | `STATUS` |
@@ -166,10 +179,20 @@ File siap di-deploy akan berada di folder `dist/`.
 
 ---
 
-### C. GitHub Pages (via GitHub Actions)
-1. Buka repository di GitHub > tab **Settings** > **Pages**.
-2. Di bagian **Build and deployment > Source**, pilih **GitHub Actions**.
-3. File `.github/workflows/deploy.yml` yang disertakan di repository akan otomatis melakukan build dan deployment setiap kali Anda melakukan push ke branch `main`.
+### C. Cloudflare Pages & Workers (High Performance Edge)
+1. **Frontend (Cloudflare Pages)**:
+   - Hubungkan repository GitHub Anda (`sistem-manajemen-guru`) ke Cloudflare Pages.
+   - **Framework Preset**: Vite
+   - **Build Command**: `npm run build`
+   - **Build Output Directory**: `dist`
+   - **Environment Variables**:
+     - `VITE_GAS_URL`: URL Backend Worker atau Google Apps Script Anda.
+     - `VITE_APP_MODE`: `live`
+2. **Backend Engine (Cloudflare Workers)**:
+   - Konfigurasi Worker serverless berlokasi di direktori `/worker`.
+   - Gunakan `wrangler deploy` dari direktori `/worker` untuk mempublikasikan API berkecepatan tinggi dengan D1 Database / KV Cache.
+3. **Automated GitHub Repository Sync**:
+   - Pipeline `.github/workflows/sync.yml` secara otomatis menyinkronkan setiap perubahan branch `main` ke repository target (`github.com/dzakyinne-gif/sistem-manajemen-guru.git`) menggunakan secret token `SYNC_AI_TO_CLOUDFLARE`.
 
 ---
 

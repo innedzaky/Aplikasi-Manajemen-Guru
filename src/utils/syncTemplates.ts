@@ -5,12 +5,31 @@
  */
 
 export const D1_SQL_SCHEMA = `-- =========================================================================
--- CLOUDFLARE D1 SQL SCHEMA - SISTEM MANAJEMEN GURU, PRESENSI & NILAI
+-- CLOUDFLARE D1 SQL SCHEMA - SISTEM MANAJEMEN GURU, PRESENSI & NILAI (v2.4.0)
 -- Jalankan perintah ini di Console Cloudflare D1 atau via Wrangler CLI:
 -- npx wrangler d1 execute db-sekolah --file=./schema.sql
 -- =========================================================================
 
--- 1. Tabel Master Guru
+-- 1. Tabel Master Administrator
+CREATE TABLE IF NOT EXISTS admin (
+  id_admin TEXT PRIMARY KEY,
+  username TEXT UNIQUE NOT NULL,
+  nama_lengkap TEXT NOT NULL,
+  password TEXT NOT NULL DEFAULT 'admin123',
+  email TEXT DEFAULT '',
+  role TEXT CHECK(role IN ('superadmin', 'admin')) NOT NULL DEFAULT 'admin',
+  status TEXT CHECK(status IN ('aktif', 'nonaktif')) NOT NULL DEFAULT 'aktif',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Inisialisasi Akun Super Admin (innedzaky) & Admin Bawaan (admin)
+INSERT OR IGNORE INTO admin (id_admin, username, nama_lengkap, password, email, role, status)
+VALUES 
+  ('ADM001', 'innedzaky', 'Inne Dzaky (Super Admin)', '1sampai7', 'innedzaky@gmail.com', 'superadmin', 'aktif'),
+  ('ADM002', 'admin', 'Administrator Sekolah', 'admin123', 'admin@sekolah.sch.id', 'admin', 'aktif');
+
+-- 2. Tabel Master Guru
 CREATE TABLE IF NOT EXISTS guru (
   id_guru TEXT PRIMARY KEY,
   nama_guru TEXT NOT NULL,
@@ -21,7 +40,7 @@ CREATE TABLE IF NOT EXISTS guru (
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 2. Tabel Master Siswa
+-- 3. Tabel Master Siswa
 CREATE TABLE IF NOT EXISTS siswa (
   nisn TEXT PRIMARY KEY,
   nama TEXT NOT NULL,
@@ -31,7 +50,7 @@ CREATE TABLE IF NOT EXISTS siswa (
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 3. Tabel Master Kelas
+-- 4. Tabel Master Kelas
 CREATE TABLE IF NOT EXISTS kelas (
   id_kelas TEXT PRIMARY KEY,
   nama_kelas TEXT NOT NULL,
@@ -39,14 +58,14 @@ CREATE TABLE IF NOT EXISTS kelas (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 4. Tabel Master Mapel
+-- 5. Tabel Master Mapel
 CREATE TABLE IF NOT EXISTS mapel (
   id_mapel TEXT PRIMARY KEY,
   nama_mapel TEXT NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 5. Tabel Transaksi Presensi Siswa
+-- 6. Tabel Transaksi Presensi Siswa
 CREATE TABLE IF NOT EXISTS presensi (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -62,7 +81,7 @@ CREATE TABLE IF NOT EXISTS presensi (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 6. Tabel Transaksi Penilaian Siswa
+-- 7. Tabel Transaksi Penilaian Siswa
 CREATE TABLE IF NOT EXISTS nilai (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -79,7 +98,7 @@ CREATE TABLE IF NOT EXISTS nilai (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 7. Tabel Transaksi Jurnal Mengajar
+-- 8. Tabel Transaksi Jurnal Mengajar
 CREATE TABLE IF NOT EXISTS jurnal (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -100,7 +119,7 @@ CREATE TABLE IF NOT EXISTS jurnal (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 8. Tabel Audit Log Sinkronisasi
+-- 9. Tabel Audit Log Sinkronisasi
 CREATE TABLE IF NOT EXISTS sync_logs (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -119,11 +138,12 @@ CREATE INDEX IF NOT EXISTS idx_presensi_siswa ON presensi(nama_siswa, tanggal);
 CREATE INDEX IF NOT EXISTS idx_nilai_lookup ON nilai(kelas, mapel, nama_penilaian);
 CREATE INDEX IF NOT EXISTS idx_jurnal_lookup ON jurnal(tanggal, kelas, guru);
 CREATE INDEX IF NOT EXISTS idx_siswa_kelas ON siswa(kelas);
+CREATE INDEX IF NOT EXISTS idx_admin_username ON admin(username);
 `;
 
 export const CLOUDFLARE_WORKER_CODE = `/**
  * =========================================================================
- * Cloudflare Worker + D1 Backend & Google Apps Script Auto-Sync
+ * Cloudflare Worker + D1 Backend & Google Apps Script Auto-Sync (v2.4.0)
  * =========================================================================
  * File: worker.ts
  * Deploy dengan Cloudflare Wrangler:
@@ -172,8 +192,9 @@ export default {
         return new Response(
           JSON.stringify({
             success: true,
-            engine: "Cloudflare D1",
+            engine: "Cloudflare D1 & Worker Serverless",
             status: "online",
+            version: "v2.4.0",
             timestamp: new Date().toISOString(),
             d1Connected: Boolean(d1Test)
           }),
@@ -185,6 +206,33 @@ export default {
       if (request.method === "POST") {
         const body = await request.json().catch(() => ({}));
         const { action, data } = body as { action: string; data?: any };
+
+        // === ADMIN / AUTENTIKASI ===
+        if (action === "getAdmins") {
+          const res = await env.DB.prepare("SELECT id_admin as ID_ADMIN, username as USERNAME, nama_lengkap as NAMA_LENGKAP, email as EMAIL, role as ROLE, status as STATUS, created_at as CREATED_AT FROM admin ORDER BY id_admin ASC").all();
+          return new Response(JSON.stringify({ success: true, data: res.results }), { headers: corsHeaders });
+        }
+
+        if (action === "saveAdmin") {
+          const isSuper = data?.ROLE === "superadmin" || data?.USERNAME?.toLowerCase() === "innedzaky";
+          const role = isSuper ? "superadmin" : "admin";
+          const id = data?.ID_ADMIN || ("ADM" + String(Date.now()).slice(-4));
+          
+          await env.DB.prepare(
+            "INSERT INTO admin (id_admin, username, nama_lengkap, password, email, role, status, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP) ON CONFLICT(username) DO UPDATE SET nama_lengkap=excluded.nama_lengkap, email=excluded.email, role=excluded.role, status=excluded.status, password=COALESCE(excluded.password, admin.password), updated_at=CURRENT_TIMESTAMP"
+          ).bind(id, data.USERNAME, data.NAMA_LENGKAP, data.PASSWORD || "admin123", data.EMAIL || "", role, data.STATUS || "aktif").run();
+
+          return new Response(JSON.stringify({ success: true, message: "Akun administrator berhasil disimpan" }), { headers: corsHeaders });
+        }
+
+        if (action === "deleteAdmin") {
+          const username = String(data?.USERNAME || "").toLowerCase();
+          if (username === "innedzaky" || data?.ID_ADMIN === "ADM001" || data?.ROLE === "superadmin") {
+            return new Response(JSON.stringify({ success: false, message: "Akun Super Administrator dilindungi dan tidak dapat dihapus." }), { headers: corsHeaders });
+          }
+          await env.DB.prepare("DELETE FROM admin WHERE LOWER(username) = ? OR id_admin = ?").bind(username, data?.ID_ADMIN || "").run();
+          return new Response(JSON.stringify({ success: true, message: "Akun administrator berhasil dihapus" }), { headers: corsHeaders });
+        }
 
         // === PRESENSI ===
         if (action === "getPresensi") {
@@ -287,10 +335,11 @@ export default {
           }
 
           // Ambil seluruh data dari D1
-          const [presensi, nilai, jurnal, guru, siswa, kelas, mapel] = await Promise.all([
+          const [presensi, nilai, jurnal, adminList, guru, siswa, kelas, mapel] = await Promise.all([
             env.DB.prepare("SELECT timestamp as TIMESTAMP, tanggal as TANGGAL, guru as GURU, mapel as MAPEL, kelas as KELAS, pertemuan as PERTEMUAN, nama_siswa as NAMA_SISWA, status as STATUS, catatan as CATATAN FROM presensi").all(),
             env.DB.prepare("SELECT timestamp as TIMESTAMP, tanggal as TANGGAL, guru as GURU, mapel as MAPEL, kelas as KELAS, jenis_penilaian as JENIS_PENILAIAN, nama_penilaian as NAMA_PENILAIAN, nama_siswa as NAMA_SISWA, nilai as NILAI, catatan as CATATAN FROM nilai").all(),
             env.DB.prepare("SELECT timestamp as TIMESTAMP, tanggal as TANGGAL, jam as JAM, guru as GURU, mapel as MAPEL, kelas as KELAS, materi as MATERI, tujuan_pembelajaran as TUJUAN_PEMBELAJARAN, aktivitas as AKTIVITAS, metode as METODE, media as MEDIA, refleksi as REFLEKSI, catatan as CATATAN, status as STATUS FROM jurnal").all(),
+            env.DB.prepare("SELECT id_admin as ID_ADMIN, username as USERNAME, nama_lengkap as NAMA_LENGKAP, password as PASSWORD, email as EMAIL, role as ROLE, status as STATUS, created_at as CREATED_AT FROM admin").all(),
             env.DB.prepare("SELECT id_guru as ID_GURU, nama_guru as NAMA_GURU, username as USERNAME, password as PASSWORD, mapel as MAPEL FROM guru").all(),
             env.DB.prepare("SELECT nisn as NISN, nama as NAMA, kelas as KELAS, jenis_kelamin as JENIS_KELAMIN FROM siswa").all(),
             env.DB.prepare("SELECT id_kelas as ID_KELAS, nama_kelas as NAMA_KELAS, wali_kelas as WALI_KELAS FROM kelas").all(),
@@ -303,6 +352,7 @@ export default {
               presensi: presensi.results,
               nilai: nilai.results,
               jurnal: jurnal.results,
+              admin: adminList.results,
               guru: guru.results,
               siswa: siswa.results,
               kelas: kelas.results,
@@ -326,6 +376,7 @@ export default {
                 presensi: presensi.results.length,
                 nilai: nilai.results.length,
                 jurnal: jurnal.results.length,
+                admin: adminList.results.length,
                 master: guru.results.length + siswa.results.length + kelas.results.length + mapel.results.length
               }
             }),
@@ -375,14 +426,14 @@ async function forwardBackupToGoogleSheets(gasUrl: string, action: string, data:
 
 export const GOOGLE_APPS_SCRIPT_CODE = `/**
  * =========================================================================
- * GOOGLE APPS SCRIPT - BACKUP & REPLIKA OTOMATIS DATA SEKOLAH
+ * GOOGLE APPS SCRIPT - BACKUP & REPLIKA OTOMATIS DATA SEKOLAH (v2.4.0)
  * =========================================================================
  * Panduan Pemasangan:
  * 1. Buka Google Spreadsheet target backup (atau buat baru di sheets.new).
  * 2. Klik Extensions (Ekstensi) -> Apps Script.
  * 3. Hapus seluruh isi Code.gs dan tempel seluruh kode di bawah ini.
  * 4. Klik Deploy -> New Deployment -> Select Type: Web App:
- *    - Description: Backup v1
+ *    - Description: Backup v2.4.0
  *    - Execute as: Me (email Anda)
  *    - Who has access: Anyone (Siapa saja)
  * 5. Klik Deploy -> Berikan izin akun Google (Authorize access -> Allow).
@@ -406,6 +457,18 @@ function doPost(e) {
       var countPresensi = 0;
       var countNilai = 0;
       var countJurnal = 0;
+      var countAdmin = 0;
+
+      // Backup Admin
+      var adminItems = data.admin;
+      if (adminItems && Array.isArray(adminItems) && adminItems.length > 0) {
+        var sheetAdm = getOrCreateSheet(ss, "Admin", [
+          "ID_ADMIN", "USERNAME", "NAMA_LENGKAP", "PASSWORD", "EMAIL", "ROLE", "STATUS", "CREATED_AT"
+        ]);
+        countAdmin = syncTableData(sheetAdm, adminItems, [
+          "id_admin", "username", "nama_lengkap", "password", "email", "role", "status", "created_at"
+        ]);
+      }
 
       // Backup Presensi
       var presensiItems = data.presensi || (action === "createPresensiBatch" ? data.items : null);
@@ -440,20 +503,38 @@ function doPost(e) {
         ]);
       }
 
+      // Backup Master Guru, Siswa, Kelas, Mapel (jika dikirim)
+      if (data.guru && Array.isArray(data.guru)) {
+        var sheetG = getOrCreateSheet(ss, "Guru", ["ID_GURU", "NAMA_GURU", "USERNAME", "PASSWORD", "MAPEL"]);
+        syncTableData(sheetG, data.guru, ["id_guru", "nama_guru", "username", "password", "mapel"]);
+      }
+      if (data.siswa && Array.isArray(data.siswa)) {
+        var sheetS = getOrCreateSheet(ss, "Siswa", ["NISN", "NAMA", "KELAS", "JENIS_KELAMIN"]);
+        syncTableData(sheetS, data.siswa, ["nisn", "nama", "kelas", "jenis_kelamin"]);
+      }
+      if (data.kelas && Array.isArray(data.kelas)) {
+        var sheetK = getOrCreateSheet(ss, "Kelas", ["ID_KELAS", "NAMA_KELAS", "WALI_KELAS"]);
+        syncTableData(sheetK, data.kelas, ["id_kelas", "nama_kelas", "wali_kelas"]);
+      }
+      if (data.mapel && Array.isArray(data.mapel)) {
+        var sheetM = getOrCreateSheet(ss, "Mapel", ["ID_MAPEL", "NAMA_MATA_PELAJARAN"]);
+        syncTableData(sheetM, data.mapel, ["id_mapel", "nama_mapel"]);
+      }
+
       // Catat Log Riwayat Sinkronisasi
       var logSheet = getOrCreateSheet(ss, "Sync_Logs", ["TIMESTAMP", "AKSI", "STATUS", "RINCIAN"]);
       logSheet.appendRow([
         new Date().toISOString(),
         action,
         "SUKSES",
-        "Presensi: " + countPresensi + ", Nilai: " + countNilai + ", Jurnal: " + countJurnal
+        "Admin: " + countAdmin + ", Presensi: " + countPresensi + ", Nilai: " + countNilai + ", Jurnal: " + countJurnal
       ]);
 
       lock.releaseLock();
       return createJsonResponse({
         success: true,
         message: "Berhasil mencadangkan seluruh data ke Google Spreadsheet!",
-        counts: { presensi: countPresensi, nilai: countNilai, jurnal: countJurnal }
+        counts: { admin: countAdmin, presensi: countPresensi, nilai: countNilai, jurnal: countJurnal }
       });
     }
 
@@ -462,7 +543,7 @@ function doPost(e) {
       lock.releaseLock();
       return createJsonResponse({
         success: true,
-        message: "Google Apps Script Backup WebApp Aktif",
+        message: "Google Apps Script Backup WebApp Aktif (v2.4.0)",
         spreadsheetName: ss.getName(),
         timestamp: new Date().toISOString()
       });
@@ -479,7 +560,7 @@ function doPost(e) {
 function doGet(e) {
   return createJsonResponse({
     success: true,
-    message: "Google Apps Script Backup Endpoint Online",
+    message: "Google Apps Script Backup Endpoint Online (v2.4.0)",
     timestamp: new Date().toISOString()
   });
 }
@@ -525,3 +606,4 @@ function createJsonResponse(data) {
   return output;
 }
 `;
+

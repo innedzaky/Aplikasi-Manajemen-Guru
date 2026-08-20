@@ -7,6 +7,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Save,
+  Wand2,
   Sparkles,
   Users,
   AlertCircle,
@@ -252,7 +253,7 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
       <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-bold text-slate-500 dark:text-slate-400 mr-1 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+            <Wand2 className="w-3.5 h-3.5 text-emerald-500" />
             Set Cepat:
           </span>
           <button

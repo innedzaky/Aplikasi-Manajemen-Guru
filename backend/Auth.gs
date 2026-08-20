@@ -14,14 +14,14 @@ var Auth = {
 
   /**
    * Menghitung role pengguna berdasarkan username / ID_GURU
-   * Rule: Username 'admin' atau ID_GURU 'ADMIN' memiliki role 'admin'
+   * Rule: Username 'innedzaky' atau 'admin' memiliki role 'admin'
    * Pengguna lainnya memiliki role 'guru'
    */
   resolveRole: function(guruRecord) {
     if (!guruRecord) return 'guest';
     var username = String(guruRecord.USERNAME || '').toLowerCase();
     var idGuru = String(guruRecord.ID_GURU || '').toUpperCase();
-    if (username === 'admin' || idGuru === 'ADMIN' || idGuru === 'G000') {
+    if (username === 'innedzaky' || username === 'admin' || idGuru === 'ADMIN' || idGuru === 'ADM001' || idGuru === 'ADM002' || idGuru === 'G000') {
       return 'admin';
     }
     return 'guru';
@@ -134,14 +134,23 @@ var Auth = {
         }
       }
 
-      // Khusus akun default admin jika sheet masih belum memiliki baris admin
-      if (!matchedGuru && cleanUsername === 'admin') {
+      // Khusus akun default Super Admin (innedzaky) dan Admin Biasa (admin) jika sheet belum memiliki baris
+      if (!matchedGuru && cleanUsername === 'innedzaky') {
+        if (plainPassword === '1sampai7' || plainPassword === '1234567') {
+          matchedGuru = {
+            ID_GURU: 'ADM001',
+            NAMA_GURU: 'Inne Dzaky (Super Admin)',
+            USERNAME: 'innedzaky',
+            MAPEL: 'Semua Mapel'
+          };
+        }
+      } else if (!matchedGuru && cleanUsername === 'admin') {
         if (plainPassword === 'admin123' || plainPassword === 'password123') {
           matchedGuru = {
-            ID_GURU: 'G000',
-            NAMA_GURU: 'Administrator Sekolah',
+            ID_GURU: 'ADM002',
+            NAMA_GURU: 'Administrator Sekolah (Admin Biasa)',
             USERNAME: 'admin',
-            MAPEL: 'Semua'
+            MAPEL: 'Semua Mapel'
           };
         }
       }

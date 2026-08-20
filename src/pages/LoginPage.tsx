@@ -18,14 +18,11 @@ import {
   Database,
   BookOpen,
   CalendarCheck2,
-  Settings,
   Globe
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.tsx';
 import { useToast } from '../context/ToastContext.tsx';
 import { LoadingSpinner } from '../components/common/LoadingSpinner.tsx';
-import { SettingsModal } from '../components/layout/SettingsModal.tsx';
-import { ApiClient } from '../services/apiClient.ts';
 
 export const LoginPage: React.FC = () => {
   const { login } = useAuth();
@@ -36,13 +33,6 @@ export const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [apiMode, setApiMode] = useState<'demo' | 'live'>(ApiClient.getMode());
-
-  const handleSettingsClose = () => {
-    setIsSettingsOpen(false);
-    setApiMode(ApiClient.getMode());
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -272,30 +262,9 @@ export const LoginPage: React.FC = () => {
                 Gunakan Akun Demo Guru
               </button>
             </div>
-
-            {/* Connection Mode Indicator & Switcher */}
-            <div className="flex items-center justify-between pt-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700/80 text-[11px] font-mono tracking-tight shadow-2xs">
-                <span className={`w-2.5 h-2.5 rounded-full ${apiMode === 'live' ? 'bg-emerald-500 shadow-xs shadow-emerald-500/60 animate-pulse' : 'bg-amber-500'}`} />
-                <span>{apiMode === 'live' ? 'System: Online (Edge API)' : 'System: Demo (In-Memory)'}</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsSettingsOpen(true)}
-                className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer"
-              >
-                <Settings className="w-3.5 h-3.5" />
-                Ubah Mode / URL API
-              </button>
-            </div>
           </div>
         </div>
       </div>
-
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        onClose={handleSettingsClose}
-      />
     </div>
   );
 };
