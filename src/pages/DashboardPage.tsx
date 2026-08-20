@@ -125,7 +125,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
       {/* Control Bar & Quick Sync Hub Access */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
         <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-          <LayoutDashboard className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+          <LayoutDashboard className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           <span>
             Ringkasan data per tanggal{' '}
             <strong className="text-slate-700 dark:text-slate-200">
@@ -139,9 +139,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             <button
               type="button"
               onClick={() => onNavigate('sync')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800/60 text-blue-700 dark:text-blue-300 shadow-2xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 shadow-2xs transition-all cursor-pointer"
             >
-              <Database className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              <Database className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>Cloudflare D1 &amp; Sync Hub</span>
               <ArrowRight className="w-3 h-3 ml-0.5 opacity-70" />
             </button>
@@ -152,7 +152,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             disabled={isRefreshing}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 shadow-2xs transition-all cursor-pointer disabled:opacity-50"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-blue-600' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-emerald-600' : ''}`} />
             <span>{isRefreshing ? 'Memperbarui...' : 'Muat Ulang'}</span>
           </button>
         </div>

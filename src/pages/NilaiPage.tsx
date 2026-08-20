@@ -255,7 +255,7 @@ export const NilaiPage: React.FC = () => {
       {/* Main Content Body */}
       {isLoading ? (
         <div className="p-16 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
-          <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <div className="w-8 h-8 border-3 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
           <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
             Memuat Data Pembelajaran & Penilaian...
           </p>

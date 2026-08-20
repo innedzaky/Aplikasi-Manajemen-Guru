@@ -145,7 +145,7 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
       return {
         predikat: 'B',
         label: 'Baik',
-        badgeBg: 'bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800',
+        badgeBg: 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700',
         isTuntas: true
       };
     }
@@ -259,21 +259,21 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
           <button
             type="button"
             onClick={() => handleSetAllScore(80)}
-            className="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 transition-colors cursor-pointer"
+            className="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
           >
             Semua 80
           </button>
           <button
             type="button"
             onClick={() => handleSetAllScore(85)}
-            className="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 transition-colors cursor-pointer"
+            className="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
           >
             Semua 85
           </button>
           <button
             type="button"
             onClick={() => handleSetAllScore(90)}
-            className="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 transition-colors cursor-pointer"
+            className="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
           >
             Semua 90
           </button>
@@ -287,7 +287,7 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
           <button
             type="button"
             onClick={handleGenerateSampleScores}
-            className="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 hover:bg-purple-100 transition-colors cursor-pointer flex items-center gap-1"
+            className="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 transition-colors cursor-pointer flex items-center gap-1"
           >
             <Sparkles className="w-3 h-3" />
             Contoh Nilai Acak
@@ -307,7 +307,7 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
             <span className="font-semibold text-slate-700 dark:text-slate-300">
               Terisi: <strong className="font-mono">{filledCount}/{totalStudents}</strong>
             </span>
-            <span className="text-indigo-600 dark:text-indigo-400 font-bold">
+            <span className="text-slate-800 dark:text-slate-200 font-bold">
               Rata-rata: {averageScore}
             </span>
             <span className="text-emerald-600 dark:text-emerald-400 font-bold">
@@ -319,7 +319,7 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
             type="button"
             onClick={handleSave}
             disabled={isSaving}
-            className="px-5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 active:scale-98 text-white shadow-sm transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-800 active:scale-98 text-white shadow-xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {isSaving ? (
               <>
@@ -337,16 +337,16 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
       </div>
 
       {/* Analytics Highlights Card */}
-      <div className="p-4 rounded-2xl bg-gradient-to-r from-indigo-50/70 via-blue-50/50 to-slate-50 dark:from-indigo-950/30 dark:via-blue-950/20 dark:to-slate-900 border border-indigo-100/80 dark:border-indigo-900/60 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-        <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 shadow-xs">
+      <div className="p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+        <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 shadow-xs">
           <span className="text-[10px] uppercase font-bold text-slate-400">Rata-Rata Kelas</span>
-          <div className="text-lg font-bold font-mono text-indigo-600 dark:text-indigo-400 mt-0.5">
+          <div className="text-lg font-bold font-mono text-slate-800 dark:text-slate-200 mt-0.5">
             {averageScore}
           </div>
           <p className="text-[10px] text-slate-400 mt-0.5">Target KKM: 75</p>
         </div>
 
-        <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 shadow-xs">
+        <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 shadow-xs">
           <span className="text-[10px] uppercase font-bold text-slate-400">Nilai Tertinggi</span>
           <div className="text-lg font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-0.5">
             {highestScore}
@@ -354,7 +354,7 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
           <p className="text-[10px] text-slate-400 mt-0.5">Maksimum: 100</p>
         </div>
 
-        <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 shadow-xs">
+        <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 shadow-xs">
           <span className="text-[10px] uppercase font-bold text-slate-400">Nilai Terendah</span>
           <div className="text-lg font-bold font-mono text-amber-600 dark:text-amber-400 mt-0.5">
             {lowestScore}
@@ -362,9 +362,9 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
           <p className="text-[10px] text-slate-400 mt-0.5">Minimum: 0</p>
         </div>
 
-        <div className="p-3 rounded-xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 shadow-xs">
+        <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 shadow-xs">
           <span className="text-[10px] uppercase font-bold text-slate-400">Ketuntasan (≥ 75)</span>
-          <div className="text-lg font-bold font-mono text-blue-600 dark:text-blue-400 mt-0.5">
+          <div className="text-lg font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-0.5">
             {tuntasPercent}% <span className="text-xs font-normal text-slate-400">({tuntasCount}/{validScores.length || totalStudents})</span>
           </div>
           <p className="text-[10px] text-slate-400 mt-0.5">
@@ -409,8 +409,8 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
                         <div
                           className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-[11px] shrink-0 ${
                             item.jenisKelamin === 'L'
-                              ? 'bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300'
-                              : 'bg-pink-100 dark:bg-pink-950/80 text-pink-700 dark:text-pink-300'
+                              ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                              : 'bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300'
                           }`}
                         >
                           {item.nama.charAt(0).toUpperCase()}
@@ -439,12 +439,12 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
                           placeholder="0 - 100"
                           className={`w-full px-3 py-2 text-center text-sm font-bold font-mono rounded-xl border transition-all focus:outline-hidden focus:ring-2 ${
                             isBlank
-                              ? 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 focus:ring-indigo-500'
+                              ? 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 focus:ring-emerald-500'
                               : isOutOfRange
-                              ? 'bg-rose-50 dark:bg-rose-950/50 border-rose-300 dark:border-rose-800 text-rose-700 dark:text-rose-300 focus:ring-rose-500'
+                              ? 'border-rose-300 bg-rose-50/50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-200 focus:ring-rose-500'
                               : num >= 75
-                              ? 'bg-indigo-50/50 dark:bg-indigo-950/30 border-indigo-300 dark:border-indigo-700 text-indigo-800 dark:text-indigo-200 focus:ring-indigo-500'
-                              : 'bg-rose-50/50 dark:bg-rose-950/30 border-rose-300 dark:border-rose-700 text-rose-800 dark:text-rose-200 focus:ring-rose-500'
+                              ? 'bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-emerald-500'
+                              : 'border-rose-300 bg-rose-50/50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-200 focus:ring-rose-500'
                           }`}
                           required
                         />
@@ -475,7 +475,7 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
                         value={item.catatan}
                         onChange={(e) => handleCatatanChange(item.nisn, e.target.value)}
                         placeholder="Catatan guru (opsional)..."
-                        className="w-full px-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                       />
                     </td>
                   </tr>
@@ -488,7 +488,7 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
         {/* Footer Summary & Submit Button */}
         <div className="p-4 bg-slate-50/70 dark:bg-slate-800/50 border-t border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-indigo-500 shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
             <span>
               Penilaian: <strong className="text-slate-900 dark:text-white font-bold">{config.jenisPenilaian} - {config.namaPenilaian || '(Nama Penilaian Belum Diisi)'}</strong> ({config.kelas} • {config.mapel})
             </span>
@@ -499,7 +499,7 @@ export const NilaiInputTable: React.FC<NilaiInputTableProps> = ({
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="px-6 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 active:scale-98 text-white shadow-sm transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              className="px-6 py-2.5 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-800 active:scale-98 text-white shadow-xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isSaving ? (
                 <>

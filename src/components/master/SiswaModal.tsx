@@ -184,8 +184,8 @@ export const SiswaModal: React.FC<SiswaModalProps> = ({
                   disabled={isSaving}
                   className={`py-2 px-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
                     formData.JENIS_KELAMIN === 'L'
-                      ? 'bg-sky-50 dark:bg-sky-950/70 border-sky-300 dark:border-sky-700 text-sky-700 dark:text-sky-300 shadow-xs'
-                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50'
+                      ? 'bg-slate-100 dark:bg-slate-800 border-slate-400 dark:border-slate-600 text-slate-900 dark:text-white shadow-xs'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                   }`}
                 >
                   <span>Laki-laki (L)</span>
@@ -196,8 +196,8 @@ export const SiswaModal: React.FC<SiswaModalProps> = ({
                   disabled={isSaving}
                   className={`py-2 px-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
                     formData.JENIS_KELAMIN === 'P'
-                      ? 'bg-pink-50 dark:bg-pink-950/70 border-pink-300 dark:border-pink-700 text-pink-700 dark:text-pink-300 shadow-xs'
-                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50'
+                      ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300 shadow-xs'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                   }`}
                 >
                   <span>Perempuan (P)</span>

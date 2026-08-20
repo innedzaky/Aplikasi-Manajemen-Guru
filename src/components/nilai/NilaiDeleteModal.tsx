@@ -57,7 +57,7 @@ export const NilaiDeleteModal: React.FC<NilaiDeleteModalProps> = ({
             </div>
             <div className="flex justify-between">
               <span className="text-slate-400">Penilaian:</span>
-              <span className="font-semibold text-indigo-600 dark:text-indigo-400">
+              <span className="font-semibold text-slate-800 dark:text-slate-200">
                 {record.JENIS_PENILAIAN} • {record.NAMA_PENILAIAN}
               </span>
             </div>

@@ -32,7 +32,7 @@ export const MonthlyTrendChart: React.FC<MonthlyTrendChartProps> = ({ data }) =>
       {/* Card Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400">
+          <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400">
             <TrendingUp className="w-5 h-5" />
           </div>
           <div>
@@ -51,7 +51,7 @@ export const MonthlyTrendChart: React.FC<MonthlyTrendChartProps> = ({ data }) =>
             onClick={() => setViewMetric('aktivitas')}
             className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
               viewMetric === 'aktivitas'
-                ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-300 shadow-xs'
+                ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-300 shadow-xs'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
             }`}
           >
@@ -61,7 +61,7 @@ export const MonthlyTrendChart: React.FC<MonthlyTrendChartProps> = ({ data }) =>
             onClick={() => setViewMetric('nilai')}
             className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
               viewMetric === 'nilai'
-                ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 shadow-xs'
+                ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-300 shadow-xs'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
             }`}
           >
@@ -109,14 +109,14 @@ export const MonthlyTrendChart: React.FC<MonthlyTrendChartProps> = ({ data }) =>
                 <Bar
                   dataKey="presensi"
                   name="Presensi Siswa"
-                  fill="#2563eb"
+                  fill="#047857"
                   radius={[6, 6, 0, 0]}
                   barSize={18}
                 />
                 <Bar
                   dataKey="jurnal"
                   name="Jurnal Mengajar"
-                  fill="#10b981"
+                  fill="#64748b"
                   radius={[6, 6, 0, 0]}
                   barSize={18}
                 />
@@ -159,9 +159,9 @@ export const MonthlyTrendChart: React.FC<MonthlyTrendChartProps> = ({ data }) =>
                   type="monotone"
                   dataKey="rataRataNilai"
                   name="Rata-Rata Nilai Siswa"
-                  stroke="#6366f1"
+                  stroke="#047857"
                   strokeWidth={3}
-                  dot={{ fill: '#6366f1', strokeWidth: 2, r: 4 }}
+                  dot={{ fill: '#047857', strokeWidth: 2, r: 4 }}
                   activeDot={{ r: 6 }}
                 />
               </ComposedChart>

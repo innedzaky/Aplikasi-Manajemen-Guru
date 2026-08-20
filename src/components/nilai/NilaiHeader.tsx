@@ -1,18 +1,17 @@
 /**
  * =========================================================================
- * NilaiHeader.tsx - Academic Configuration & Assessment Parameters Bar
+ * NilaiHeader.tsx - Academic Filters & Header Configuration Bar for Nilai
+ * Minimalist Sage & Emerald Theme
  * =========================================================================
  */
 
 import React from 'react';
 import {
-  GraduationCap,
+  Award,
   ListFilter,
-  Layers,
   History,
   PlusCircle,
-  Award,
-  Sparkles
+  Wand2
 } from 'lucide-react';
 import { IKelas, IMapel } from '../../types.ts';
 
@@ -73,7 +72,7 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
       {/* Top Banner & Mode Switcher */}
       <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
-          <div className="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900 shrink-0">
+          <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/60 shrink-0">
             <Award className="w-6 h-6" />
           </div>
           <div>
@@ -81,7 +80,7 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
               <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white font-['Outfit'] tracking-tight">
                 Penilaian Siswa
               </h2>
-              <span className="text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300">
+              <span className="text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60">
                 Modul Nilai
               </span>
             </div>
@@ -97,7 +96,7 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
             onClick={() => onChangeTab('input')}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'input'
-                ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 shadow-xs'
+                ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-300 shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -108,14 +107,14 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
             onClick={() => onChangeTab('history')}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'history'
-                ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 shadow-xs'
+                ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-300 shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <History className="w-3.5 h-3.5" />
             <span>Rekap & Riwayat Nilai</span>
             {totalNilaiTersimpan > 0 && (
-              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 font-mono">
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-300 font-mono">
                 {totalNilaiTersimpan}
               </span>
             )}
@@ -127,14 +126,14 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
       <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-            <ListFilter className="w-4 h-4 text-indigo-600" />
+            <ListFilter className="w-4 h-4 text-emerald-600" />
             <span>Parameter Pembelajaran & Penilaian</span>
           </div>
 
           {/* Quick Preset Buttons */}
           <div className="hidden sm:flex items-center gap-1.5 text-xs">
             <span className="text-[11px] text-slate-400 font-medium mr-1 flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-amber-500" />
+              <Wand2 className="w-3 h-3 text-emerald-600" />
               Pilih Jenis:
             </span>
             {jenisPenilaianOptions.map((jenis) => {
@@ -146,8 +145,8 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
                   onClick={() => handleQuickPreset(jenis)}
                   className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 hover:text-indigo-600'
+                      ? 'bg-emerald-700 text-white shadow-xs'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/60 hover:text-emerald-700 dark:hover:text-emerald-300'
                   }`}
                 >
                   {jenis}
@@ -167,7 +166,7 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
               <select
                 value={config.tahunPelajaran}
                 onChange={(e) => onChangeConfig({ tahunPelajaran: e.target.value })}
-                className="w-full pl-3 pr-8 py-2 text-xs font-medium rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 appearance-none cursor-pointer"
+                className="w-full pl-3 pr-8 py-2 text-xs font-medium rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer"
               >
                 {tahunOptions.map((th) => (
                   <option key={th} value={th}>
@@ -190,7 +189,7 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
               <select
                 value={config.semester}
                 onChange={(e) => onChangeConfig({ semester: e.target.value as 'Ganjil' | 'Genap' })}
-                className="w-full pl-3 pr-8 py-2 text-xs font-medium rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 appearance-none cursor-pointer"
+                className="w-full pl-3 pr-8 py-2 text-xs font-medium rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer"
               >
                 <option value="Ganjil">Ganjil</option>
                 <option value="Genap">Genap</option>
@@ -210,7 +209,7 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
               <select
                 value={config.kelas}
                 onChange={(e) => onChangeConfig({ kelas: e.target.value })}
-                className="w-full pl-3 pr-8 py-2 text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-indigo-700 dark:text-indigo-300 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 appearance-none cursor-pointer"
+                className="w-full pl-3 pr-8 py-2 text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer"
               >
                 {kelasList.map((k) => (
                   <option key={k.ID_KELAS} value={k.NAMA_KELAS}>
@@ -233,7 +232,7 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
               <select
                 value={config.mapel}
                 onChange={(e) => onChangeConfig({ mapel: e.target.value })}
-                className="w-full pl-3 pr-8 py-2 text-xs font-medium rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 appearance-none cursor-pointer"
+                className="w-full pl-3 pr-8 py-2 text-xs font-medium rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer"
               >
                 {mapelList.map((m) => (
                   <option key={m.ID_MAPEL} value={m.NAMA_MATA_PELAJARAN}>
@@ -262,7 +261,7 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
                     namaPenilaian: config.namaPenilaian || `${newJenis} 1`
                   });
                 }}
-                className="w-full pl-3 pr-8 py-2 text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-indigo-700 dark:text-indigo-300 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 appearance-none cursor-pointer"
+                className="w-full pl-3 pr-8 py-2 text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer"
               >
                 {jenisPenilaianOptions.map((j) => (
                   <option key={j} value={j}>
@@ -286,7 +285,7 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
               value={config.namaPenilaian}
               onChange={(e) => onChangeConfig({ namaPenilaian: e.target.value })}
               placeholder="Contoh: Tugas 1 - SPLDV"
-              className="w-full px-3 py-2 text-xs font-medium rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 text-xs font-medium rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
               required
             />
           </div>
@@ -300,7 +299,7 @@ export const NilaiHeader: React.FC<NilaiHeaderProps> = ({
               type="date"
               value={config.tanggal}
               onChange={(e) => onChangeConfig({ tanggal: e.target.value })}
-              className="w-full px-3 py-2 text-xs font-medium rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+              className="w-full px-3 py-2 text-xs font-medium rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 cursor-pointer"
               required
             />
           </div>

@@ -297,7 +297,7 @@ export const LaporanPage: React.FC = () => {
       <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-blue-600/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-600/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
               <Printer className="w-6 h-6" />
             </div>
             <div>
@@ -305,7 +305,7 @@ export const LaporanPage: React.FC = () => {
                 <h1 className="text-xl font-black text-slate-900 dark:text-white font-['Outfit']">
                   Pusat Laporan & Ekspor Data
                 </h1>
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 flex items-center gap-1">
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
                   <Sparkles className="w-3 h-3" /> Siap Cetak
                 </span>
               </div>
@@ -328,7 +328,7 @@ export const LaporanPage: React.FC = () => {
             <button
               onClick={() => handleQuickExport('excel')}
               disabled={currentFilteredCount === 0 || isLoading}
-              className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
+              className="px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
             >
               <FileSpreadsheet className="w-4 h-4" />
               <span>Excel</span>
@@ -336,7 +336,7 @@ export const LaporanPage: React.FC = () => {
             <button
               onClick={() => handleQuickExport('csv')}
               disabled={currentFilteredCount === 0 || isLoading}
-              className="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
+              className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
             >
               <FileText className="w-4 h-4" />
               <span>CSV</span>
@@ -358,7 +358,7 @@ export const LaporanPage: React.FC = () => {
             onClick={() => handleTabChange('presensi')}
             className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-xs font-bold transition-all ${
               activeTab === 'presensi'
-                ? 'border-blue-600 text-blue-600 dark:text-blue-400'
+                ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400'
                 : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -373,7 +373,7 @@ export const LaporanPage: React.FC = () => {
             onClick={() => handleTabChange('nilai')}
             className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-xs font-bold transition-all ${
               activeTab === 'nilai'
-                ? 'border-blue-600 text-blue-600 dark:text-blue-400'
+                ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400'
                 : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -388,7 +388,7 @@ export const LaporanPage: React.FC = () => {
             onClick={() => handleTabChange('jurnal')}
             className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-xs font-bold transition-all ${
               activeTab === 'jurnal'
-                ? 'border-blue-600 text-blue-600 dark:text-blue-400'
+                ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400'
                 : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -462,7 +462,7 @@ export const LaporanPage: React.FC = () => {
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-950/50">
           <div className="flex items-center gap-2">
-            <Layers className="w-4 h-4 text-blue-600" />
+            <Layers className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <h2 className="text-sm font-bold text-slate-900 dark:text-white">
               Pratinjau Data Laporan ({currentFilteredCount} baris)
             </h2>
@@ -473,7 +473,7 @@ export const LaporanPage: React.FC = () => {
             className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             title="Muat Ulang Data"
           >
-            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-blue-600' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-emerald-600' : ''}`} />
           </button>
         </div>
 
@@ -508,11 +508,11 @@ export const LaporanPage: React.FC = () => {
                       <span
                         className={`inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
                           r.STATUS === 'Hadir'
-                            ? 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300'
+                            ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
                             : r.STATUS === 'Izin'
                             ? 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
                             : r.STATUS === 'Sakit'
-                            ? 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300'
+                            ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
                             : 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300'
                         }`}
                       >

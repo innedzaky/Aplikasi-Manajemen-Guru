@@ -123,7 +123,7 @@ export const ShellPlaceholder: React.FC<ShellPlaceholderProps> = ({
       <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start sm:items-center gap-4">
-            <div className="p-3.5 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-900 shadow-xs shrink-0">
+            <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900 shadow-xs shrink-0">
               <PageIcon className="w-7 h-7" />
             </div>
             <div>
@@ -131,7 +131,7 @@ export const ShellPlaceholder: React.FC<ShellPlaceholderProps> = ({
                 <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white font-['Outfit'] tracking-tight">
                   {meta.title}
                 </h2>
-                <span className="text-[10px] px-2 py-0.5 rounded-full font-medium bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300">
+                <span className="text-[10px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300">
                   Phase 4 UI Shell
                 </span>
               </div>
@@ -146,7 +146,7 @@ export const ShellPlaceholder: React.FC<ShellPlaceholderProps> = ({
             {currentPage === 'pengaturan' && (
               <button
                 onClick={onOpenSettings}
-                className="px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-xl shadow-xs transition-colors cursor-pointer"
+                className="px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-emerald-700 hover:bg-emerald-800 active:scale-98 rounded-xl shadow-xs transition-colors cursor-pointer"
               >
                 Buka Modal GAS
               </button>
@@ -198,7 +198,7 @@ export const ShellPlaceholder: React.FC<ShellPlaceholderProps> = ({
 
           <button
             onClick={triggerSimulatedLoading}
-            className="p-2.5 text-xs font-semibold rounded-xl bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 text-blue-700 dark:text-blue-300 transition-colors"
+            className="p-2.5 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 transition-colors"
           >
             Uji Spinner
           </button>
@@ -208,7 +208,7 @@ export const ShellPlaceholder: React.FC<ShellPlaceholderProps> = ({
               setShowEmptyState(!showEmptyState);
               setShowErrorState(false);
             }}
-            className="p-2.5 text-xs font-semibold rounded-xl bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 text-indigo-700 dark:text-indigo-300 transition-colors"
+            className="p-2.5 text-xs font-semibold rounded-xl bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 text-emerald-700 dark:text-emerald-300 transition-colors"
           >
             Toggle Empty State
           </button>
@@ -250,7 +250,7 @@ export const ShellPlaceholder: React.FC<ShellPlaceholderProps> = ({
             </span>
           </div>
           <div>
-            Route Terpilih: <code className="text-blue-600 dark:text-blue-400 font-mono font-bold">{currentPage}</code>
+            Route Terpilih: <code className="text-emerald-700 dark:text-emerald-400 font-mono font-bold">{currentPage}</code>
           </div>
         </div>
       </div>
@@ -278,7 +278,7 @@ export const ShellPlaceholder: React.FC<ShellPlaceholderProps> = ({
                 setTestModalOpen(false);
                 success('Aksi di dalam modal berhasil dieksekusi!');
               }}
-              className="px-4 py-2 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl"
+              className="px-4 py-2 font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-xl"
             >
               Simpan Aksi
             </button>

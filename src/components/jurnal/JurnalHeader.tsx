@@ -91,10 +91,10 @@ export const JurnalHeader: React.FC<JurnalHeaderProps> = ({
   return (
     <div id="jurnal-header-section" className="space-y-6">
       {/* Top Banner & Stats Overview */}
-      <div className="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 rounded-2xl p-6 sm:p-7 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 rounded-2xl p-6 sm:p-7 text-white shadow-lg relative overflow-hidden">
         {/* Subtle decorative circles */}
         <div className="absolute top-0 right-0 -mt-8 -mr-8 w-48 h-48 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 -mb-10 w-40 h-40 bg-teal-400/15 rounded-full blur-xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 -mb-10 w-40 h-40 bg-emerald-400/10 rounded-full blur-xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="space-y-2">

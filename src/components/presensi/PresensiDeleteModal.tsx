@@ -63,7 +63,7 @@ export const PresensiDeleteModal: React.FC<PresensiDeleteModalProps> = ({
             </div>
             <div className="flex justify-between">
               <span className="text-slate-400 font-semibold">Status:</span>
-              <span className="font-bold text-blue-600 dark:text-blue-400">{record.STATUS}</span>
+              <span className="font-bold text-slate-800 dark:text-slate-200">{record.STATUS}</span>
             </div>
           </div>
 

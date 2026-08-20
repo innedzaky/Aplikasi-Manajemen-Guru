@@ -121,7 +121,7 @@ export const AppShell: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleSelectPage('dashboard')}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-md transition-all"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold rounded-xl shadow-xs transition-all"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       Kembali ke Dashboard
@@ -145,7 +145,7 @@ export const AppShell: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleSelectPage('dashboard')}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-md transition-all"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold rounded-xl shadow-xs transition-all"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       Kembali ke Dashboard
@@ -175,7 +175,7 @@ export const AppShell: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleSelectPage('dashboard')}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-md transition-all"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold rounded-xl shadow-xs transition-all"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       Kembali ke Dashboard

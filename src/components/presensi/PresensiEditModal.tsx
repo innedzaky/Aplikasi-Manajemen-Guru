@@ -91,7 +91,7 @@ export const PresensiEditModal: React.FC<PresensiEditModalProps> = ({
                 type="date"
                 value={formData.TANGGAL}
                 onChange={(e) => setFormData({ ...formData, TANGGAL: e.target.value })}
-                className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                 required
               />
             </div>
@@ -105,7 +105,7 @@ export const PresensiEditModal: React.FC<PresensiEditModalProps> = ({
                 max="36"
                 value={formData.PERTEMUAN}
                 onChange={(e) => setFormData({ ...formData, PERTEMUAN: Number(e.target.value) })}
-                className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                 required
               />
             </div>
@@ -120,7 +120,7 @@ export const PresensiEditModal: React.FC<PresensiEditModalProps> = ({
               {[
                 { label: 'Hadir', icon: CheckCircle2, activeBg: 'bg-emerald-600 text-white', hoverBorder: 'hover:border-emerald-500' },
                 { label: 'Izin', icon: Clock, activeBg: 'bg-amber-500 text-white', hoverBorder: 'hover:border-amber-500' },
-                { label: 'Sakit', icon: HeartPulse, activeBg: 'bg-purple-600 text-white', hoverBorder: 'hover:border-purple-500' },
+                { label: 'Sakit', icon: HeartPulse, activeBg: 'bg-amber-600 text-white', hoverBorder: 'hover:border-amber-500' },
                 { label: 'Alpa', icon: XCircle, activeBg: 'bg-rose-600 text-white', hoverBorder: 'hover:border-rose-500' }
               ].map((st) => {
                 const Icon = st.icon;
@@ -154,7 +154,7 @@ export const PresensiEditModal: React.FC<PresensiEditModalProps> = ({
               value={formData.CATATAN || ''}
               onChange={(e) => setFormData({ ...formData, CATATAN: e.target.value })}
               placeholder="Contoh: Izin urusan keluarga, surat dokter terlampir..."
-              className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 resize-none"
+              className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 resize-none"
             />
           </div>
 
@@ -170,7 +170,7 @@ export const PresensiEditModal: React.FC<PresensiEditModalProps> = ({
             <button
               type="submit"
               disabled={isSaving}
-              className="px-5 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 active:scale-98 text-white shadow-sm transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-800 active:scale-98 text-white shadow-xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isSaving ? (
                 <>

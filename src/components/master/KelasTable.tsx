@@ -53,7 +53,7 @@ export const KelasTable: React.FC<KelasTableProps> = ({
                   {/* NAMA KELAS */}
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-purple-50 dark:bg-purple-950/60 border border-purple-100 dark:border-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold text-xs shrink-0">
+                      <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 font-bold text-xs shrink-0">
                         <School className="w-4 h-4" />
                       </div>
                       <div>
@@ -71,7 +71,7 @@ export const KelasTable: React.FC<KelasTableProps> = ({
                   <td className="py-3.5 px-4">
                     {kelas.WALI_KELAS ? (
                       <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200 font-medium">
-                        <UserCheck className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0" />
+                        <UserCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                         <span>{kelas.WALI_KELAS}</span>
                       </div>
                     ) : (
@@ -95,7 +95,7 @@ export const KelasTable: React.FC<KelasTableProps> = ({
                       <button
                         type="button"
                         onClick={() => onEdit(kelas)}
-                        className="p-2 rounded-xl text-slate-500 hover:text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-950/50 dark:hover:text-purple-400 transition-colors"
+                        className="p-2 rounded-xl text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 dark:hover:text-emerald-400 transition-colors cursor-pointer"
                         title="Edit Kelas"
                       >
                         <Edit2 className="w-4 h-4" />

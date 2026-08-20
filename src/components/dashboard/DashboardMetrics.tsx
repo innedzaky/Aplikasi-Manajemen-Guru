@@ -34,10 +34,7 @@ export const DashboardMetrics: React.FC<DashboardMetricsProps> = ({
       suffix: 'Siswa',
       desc: 'Tercatat hadir & izin hari ini',
       icon: CalendarCheck2,
-      color: 'blue',
-      bgLight: 'bg-blue-50 dark:bg-blue-950/40',
-      textLight: 'text-blue-600 dark:text-blue-400',
-      borderColor: 'border-blue-100 dark:border-blue-900/60'
+      dotColor: 'bg-emerald-500'
     },
     {
       id: 'jurnal-today',
@@ -46,10 +43,7 @@ export const DashboardMetrics: React.FC<DashboardMetricsProps> = ({
       suffix: 'Sesi',
       desc: 'Modul ajar telah didokumentasikan',
       icon: BookOpen,
-      color: 'emerald',
-      bgLight: 'bg-emerald-50 dark:bg-emerald-950/40',
-      textLight: 'text-emerald-600 dark:text-emerald-400',
-      borderColor: 'border-emerald-100 dark:border-emerald-900/60'
+      dotColor: 'bg-emerald-600'
     },
     {
       id: 'total-kelas',
@@ -58,10 +52,7 @@ export const DashboardMetrics: React.FC<DashboardMetricsProps> = ({
       suffix: 'Rombel',
       desc: 'Kelas terdaftar aktif di sistem',
       icon: School,
-      color: 'indigo',
-      bgLight: 'bg-indigo-50 dark:bg-indigo-950/40',
-      textLight: 'text-indigo-600 dark:text-indigo-400',
-      borderColor: 'border-indigo-100 dark:border-indigo-900/60'
+      dotColor: 'bg-slate-500'
     },
     {
       id: 'total-siswa',
@@ -70,10 +61,7 @@ export const DashboardMetrics: React.FC<DashboardMetricsProps> = ({
       suffix: 'Orang',
       desc: `Terbagi dalam ${summary.totalKelas} rombongan belajar`,
       icon: Users,
-      color: 'violet',
-      bgLight: 'bg-violet-50 dark:bg-violet-950/40',
-      textLight: 'text-violet-600 dark:text-violet-400',
-      borderColor: 'border-violet-100 dark:border-violet-900/60'
+      dotColor: 'bg-emerald-600'
     }
   ];
 
@@ -84,7 +72,7 @@ export const DashboardMetrics: React.FC<DashboardMetricsProps> = ({
         return (
           <div
             key={card.id}
-            className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between"
+            className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs hover:border-emerald-500/40 dark:hover:border-emerald-500/40 transition-all duration-200 flex flex-col justify-between"
           >
             <div className="flex items-start justify-between">
               <div>
@@ -100,12 +88,13 @@ export const DashboardMetrics: React.FC<DashboardMetricsProps> = ({
                   </span>
                 </div>
               </div>
-              <div className={`p-3 rounded-xl ${card.bgLight} ${card.textLight} border ${card.borderColor} shrink-0`}>
-                <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+              <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-700/60 shrink-0">
+                <Icon className="w-5 h-5" />
               </div>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+              <span className={`w-1.5 h-1.5 rounded-full ${card.dotColor}`} />
               <span className="truncate">{card.desc}</span>
             </div>
           </div>

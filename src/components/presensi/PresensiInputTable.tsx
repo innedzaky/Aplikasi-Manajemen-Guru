@@ -159,7 +159,7 @@ export const PresensiInputTable: React.FC<PresensiInputTableProps> = ({
           <button
             type="button"
             onClick={() => handleSetAllStatus('Sakit')}
-            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 hover:bg-purple-100 transition-colors cursor-pointer"
+            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 hover:bg-amber-100 transition-colors cursor-pointer"
           >
             Semua Sakit
           </button>
@@ -184,7 +184,7 @@ export const PresensiInputTable: React.FC<PresensiInputTableProps> = ({
             <span className="text-amber-600 dark:text-amber-400 font-bold">
               I: {izinCount}
             </span>
-            <span className="text-purple-600 dark:text-purple-400 font-bold">
+            <span className="text-amber-700 dark:text-amber-300 font-bold">
               S: {sakitCount}
             </span>
             <span className="text-rose-600 dark:text-rose-400 font-bold">
@@ -196,7 +196,7 @@ export const PresensiInputTable: React.FC<PresensiInputTableProps> = ({
             type="button"
             onClick={handleSave}
             disabled={isSaving}
-            className="px-5 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 active:scale-98 text-white shadow-sm transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-800 active:scale-98 text-white shadow-xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {isSaving ? (
               <>
@@ -243,8 +243,8 @@ export const PresensiInputTable: React.FC<PresensiInputTableProps> = ({
                         <div
                           className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-[11px] shrink-0 ${
                             item.jenisKelamin === 'L'
-                              ? 'bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300'
-                              : 'bg-pink-100 dark:bg-pink-950/80 text-pink-700 dark:text-pink-300'
+                              ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                              : 'bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300'
                           }`}
                         >
                           {item.nama.charAt(0).toUpperCase()}
@@ -297,8 +297,8 @@ export const PresensiInputTable: React.FC<PresensiInputTableProps> = ({
                           onClick={() => handleUpdateStudentStatus(item.nisn, 'Sakit')}
                           className={`px-3 py-1.5 rounded-xl font-bold transition-all text-xs flex items-center gap-1.5 cursor-pointer ${
                             item.status === 'Sakit'
-                              ? 'bg-purple-600 text-white shadow-xs scale-102'
-                              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-purple-50 dark:hover:bg-purple-950/40 hover:text-purple-600'
+                              ? 'bg-amber-600 text-white shadow-xs scale-102'
+                              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 hover:text-amber-600'
                           }`}
                         >
                           <HeartPulse className="w-3.5 h-3.5" />
@@ -328,7 +328,7 @@ export const PresensiInputTable: React.FC<PresensiInputTableProps> = ({
                         value={item.catatan}
                         onChange={(e) => handleUpdateStudentCatatan(item.nisn, e.target.value)}
                         placeholder="Keterangan / alasan (opsional)..."
-                        className="w-full px-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                       />
                     </td>
                   </tr>
@@ -352,7 +352,7 @@ export const PresensiInputTable: React.FC<PresensiInputTableProps> = ({
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="px-6 py-2.5 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 active:scale-98 text-white shadow-sm transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              className="px-6 py-2.5 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-800 active:scale-98 text-white shadow-xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isSaving ? (
                 <>

@@ -48,7 +48,7 @@ export const GuruTable: React.FC<GuruTableProps> = ({
                 {/* NAMA GURU */}
                 <td className="py-3.5 px-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-100 dark:border-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold shrink-0 text-xs">
+                    <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 font-bold shrink-0 text-xs">
                       {guru.NAMA_GURU.charAt(0).toUpperCase()}
                     </div>
                     <div>
@@ -90,7 +90,7 @@ export const GuruTable: React.FC<GuruTableProps> = ({
                     <button
                       type="button"
                       onClick={() => onEdit(guru)}
-                      className="p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/50 dark:hover:text-blue-400 transition-colors"
+                      className="p-2 rounded-xl text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 dark:hover:text-emerald-400 transition-colors cursor-pointer"
                       title="Edit Guru"
                     >
                       <Edit2 className="w-4 h-4" />

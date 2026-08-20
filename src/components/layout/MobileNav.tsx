@@ -43,7 +43,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
             onClick={() => onSelectPage(tab.id)}
             className={`flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all ${
               isActive
-                ? 'text-blue-600 dark:text-blue-400 font-semibold'
+                ? 'text-emerald-700 dark:text-emerald-400 font-semibold'
                 : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 font-normal'
             }`}
           >

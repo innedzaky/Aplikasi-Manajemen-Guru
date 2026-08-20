@@ -141,7 +141,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               }}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-slate-300 peer-focus:outline-hidden rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            <div className="w-11 h-6 bg-slate-300 peer-focus:outline-hidden rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
           </label>
         </div>
 
@@ -156,7 +156,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                 type="button"
                 onClick={handleTestConnection}
                 disabled={isTesting || !gasUrl.trim()}
-                className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 cursor-pointer disabled:opacity-50"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isTesting ? 'animate-spin' : ''}`} />
                 {isTesting ? 'Menguji...' : 'Uji Koneksi'}
@@ -179,8 +179,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               disabled={!isLive}
               className={`w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900 border rounded-xl text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-hidden focus:ring-2 disabled:opacity-50 disabled:bg-slate-100 dark:disabled:bg-slate-800 ${
                 urlError
-                  ? 'border-red-500 focus:ring-red-500'
-                  : 'border-slate-300 dark:border-slate-800 focus:ring-blue-600'
+                  ? 'border-rose-500 focus:ring-rose-500'
+                  : 'border-slate-300 dark:border-slate-800 focus:ring-emerald-500'
               }`}
             />
           </div>
@@ -207,7 +207,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
           )}
 
           {urlError ? (
-            <p className="text-[11px] text-red-500 dark:text-red-400 mt-1.5 flex items-center gap-1">
+            <p className="text-[11px] text-rose-500 dark:text-rose-400 mt-1.5 flex items-center gap-1">
               <AlertCircle className="w-3.5 h-3.5 shrink-0" />
               {urlError}
             </p>
@@ -231,7 +231,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
           <button
             type="button"
             onClick={handleSave}
-            className="flex items-center gap-2 px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-xl shadow-md shadow-blue-500/20 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-emerald-700 hover:bg-emerald-800 active:scale-98 rounded-xl shadow-xs transition-all cursor-pointer"
           >
             <Check className="w-4 h-4" />
             Simpan Konfigurasi

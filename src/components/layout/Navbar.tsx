@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, currentPageTitl
             onClick={() => setShowProfileMenu(!showProfileMenu)}
             className="flex items-center gap-2 p-1.5 pl-2 sm:pl-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all focus:outline-hidden"
           >
-            <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
+            <div className="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
               {user?.NAMA_GURU ? user.NAMA_GURU.charAt(0) : 'G'}
             </div>
             <div className="hidden md:block text-left pr-1">
@@ -127,9 +127,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, currentPageTitl
                   </span>
                   <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium capitalize ${
                     isSuperAdmin
-                      ? 'bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300'
+                      ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900'
                       : isAdmin
-                      ? 'bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300'
+                      ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
                       : 'bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300'
                   }`}>
                     {isSuperAdmin ? 'Super Admin' : user?.role}

@@ -244,7 +244,7 @@ export const PresensiPage: React.FC = () => {
               ? 'bg-emerald-50 dark:bg-emerald-950/90 text-emerald-900 dark:text-emerald-100 border-emerald-200 dark:border-emerald-800'
               : toast.type === 'error'
               ? 'bg-rose-50 dark:bg-rose-950/90 text-rose-900 dark:text-rose-100 border-rose-200 dark:border-rose-800'
-              : 'bg-blue-50 dark:bg-blue-950/90 text-blue-900 dark:text-blue-100 border-blue-200 dark:border-blue-800'
+              : 'bg-slate-900 dark:bg-slate-900 text-slate-100 dark:text-slate-100 border-slate-700 dark:border-slate-800'
           }`}
         >
           <div className="flex items-center gap-2.5 text-xs font-semibold">
@@ -253,7 +253,7 @@ export const PresensiPage: React.FC = () => {
             ) : toast.type === 'error' ? (
               <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
             ) : (
-              <Info className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
+              <Info className="w-4 h-4 text-slate-300 dark:text-slate-300 shrink-0" />
             )}
             <span>{toast.message}</span>
           </div>

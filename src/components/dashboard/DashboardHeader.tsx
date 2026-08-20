@@ -49,16 +49,16 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
       : 'Selamat Malam';
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 p-6 sm:p-8 text-white shadow-lg shadow-blue-500/10">
+    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-950 p-6 sm:p-8 text-white shadow-md shadow-emerald-950/20">
       {/* Background Decorative Pattern */}
-      <div className="absolute -right-12 -bottom-12 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none" />
-      <div className="absolute top-0 right-1/4 w-32 h-32 bg-blue-400/20 rounded-full blur-xl pointer-events-none" />
+      <div className="absolute -right-12 -bottom-12 w-64 h-64 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-32 h-32 bg-emerald-400/10 rounded-full blur-xl pointer-events-none" />
 
       <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         {/* Left Side: Greeting, Teacher Name, and Date */}
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-xs font-medium text-blue-100 border border-white/20">
-            <Calendar className="w-3.5 h-3.5 text-blue-200" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-medium text-emerald-100 border border-white/15">
+            <Calendar className="w-3.5 h-3.5 text-emerald-200" />
             <span>{formattedDate}</span>
           </div>
 
@@ -66,7 +66,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             {greeting}, {namaGuru}
           </h1>
 
-          <p className="text-xs sm:text-sm text-blue-100/90 max-w-xl">
+          <p className="text-xs sm:text-sm text-emerald-100/90 max-w-xl">
             {role === 'admin'
               ? 'Selamat datang di Panel Manajemen Sekolah. Anda memiliki akses penuh terhadap seluruh master data dan rekapan kelas.'
               : `Pengampu mata pelajaran ${mapel || 'Terdaftar'}. Pantau progres presensi, input nilai rapor, dan pencatatan jurnal mengajar harian.`}
@@ -78,9 +78,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           {/* Quick Action Presensi */}
           <button
             onClick={() => onNavigate('presensi')}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-blue-700 hover:bg-blue-50 active:bg-blue-100 font-semibold text-xs sm:text-sm shadow-md transition-all duration-150 group cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-emerald-800 hover:bg-emerald-50 active:bg-emerald-100 font-semibold text-xs sm:text-sm shadow-xs transition-all duration-150 group cursor-pointer"
           >
-            <CalendarCheck2 className="w-4 h-4 text-blue-600 transition-transform group-hover:scale-110" />
+            <CalendarCheck2 className="w-4 h-4 text-emerald-700 transition-transform group-hover:scale-110" />
             <span>Presensi</span>
             <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:translate-x-0.5 transition-transform" />
           </button>
@@ -88,9 +88,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           {/* Quick Action Nilai */}
           <button
             onClick={() => onNavigate('nilai')}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 active:bg-white/30 text-white font-semibold text-xs sm:text-sm border border-white/25 backdrop-blur-md transition-all duration-150 group cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 text-white font-semibold text-xs sm:text-sm border border-white/20 backdrop-blur-md transition-all duration-150 group cursor-pointer"
           >
-            <GraduationCap className="w-4 h-4 text-blue-200 transition-transform group-hover:scale-110" />
+            <GraduationCap className="w-4 h-4 text-emerald-200 transition-transform group-hover:scale-110" />
             <span>Nilai</span>
             <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:translate-x-0.5 transition-transform" />
           </button>
@@ -98,9 +98,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           {/* Quick Action Jurnal */}
           <button
             onClick={() => onNavigate('jurnal')}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 active:bg-white/30 text-white font-semibold text-xs sm:text-sm border border-white/25 backdrop-blur-md transition-all duration-150 group cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 text-white font-semibold text-xs sm:text-sm border border-white/20 backdrop-blur-md transition-all duration-150 group cursor-pointer"
           >
-            <BookOpen className="w-4 h-4 text-blue-200 transition-transform group-hover:scale-110" />
+            <BookOpen className="w-4 h-4 text-emerald-200 transition-transform group-hover:scale-110" />
             <span>Jurnal</span>
             <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:translate-x-0.5 transition-transform" />
           </button>

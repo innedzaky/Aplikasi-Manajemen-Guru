@@ -20,10 +20,10 @@ interface AttendanceChartProps {
 }
 
 const COLORS = {
-  Hadir: '#2563eb', // Blue
-  Izin: '#f59e0b',  // Amber
-  Sakit: '#8b5cf6', // Violet
-  Alpa: '#ef4444'   // Rose/Red
+  Hadir: '#047857', // Emerald 700
+  Izin: '#d97706',  // Amber 600
+  Sakit: '#64748b', // Slate 500
+  Alpa: '#e11d48'   // Rose 600
 };
 
 export const AttendanceChart: React.FC<AttendanceChartProps> = ({ distribution }) => {
@@ -47,7 +47,7 @@ export const AttendanceChart: React.FC<AttendanceChartProps> = ({ distribution }
       {/* Card Header */}
       <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400">
+          <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400">
             <PieIcon className="w-5 h-5" />
           </div>
           <div>

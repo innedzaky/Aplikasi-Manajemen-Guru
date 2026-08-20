@@ -84,7 +84,7 @@ export const MasterTabsNav: React.FC<MasterTabsNavProps> = ({
             <Icon
               className={`w-4 h-4 ${
                 isActive
-                  ? 'text-blue-600 dark:text-blue-400'
+                  ? 'text-emerald-600 dark:text-emerald-400'
                   : 'text-slate-400 dark:text-slate-500'
               }`}
             />
@@ -93,7 +93,7 @@ export const MasterTabsNav: React.FC<MasterTabsNavProps> = ({
               <span
                 className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
                   isActive
-                    ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300'
+                    ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300'
                     : 'bg-slate-200/70 dark:bg-slate-700/60 text-slate-600 dark:text-slate-400'
                 }`}
               >

@@ -49,11 +49,7 @@ export const SiswaTable: React.FC<SiswaTableProps> = ({
                 <td className="py-3.5 px-4">
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 border ${
-                        siswa.JENIS_KELAMIN === 'L'
-                          ? 'bg-sky-50 text-sky-600 border-sky-100 dark:bg-sky-950/60 dark:text-sky-400 dark:border-sky-900/50'
-                          : 'bg-pink-50 text-pink-600 border-pink-100 dark:bg-pink-950/60 dark:text-pink-400 dark:border-pink-900/50'
-                      }`}
+                      className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 border bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700"
                     >
                       {siswa.NAMA.charAt(0).toUpperCase()}
                     </div>
@@ -79,11 +75,11 @@ export const SiswaTable: React.FC<SiswaTableProps> = ({
                 {/* JENIS KELAMIN */}
                 <td className="py-3.5 px-4 whitespace-nowrap">
                   {siswa.JENIS_KELAMIN === 'L' ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                       Laki-laki (L)
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-pink-50 text-pink-700 dark:bg-pink-950/60 dark:text-pink-300">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">
                       Perempuan (P)
                     </span>
                   )}

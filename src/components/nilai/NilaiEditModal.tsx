@@ -133,7 +133,7 @@ export const NilaiEditModal: React.FC<NilaiEditModalProps> = ({
                 type="date"
                 value={formData.TANGGAL || '2026-08-10'}
                 onChange={(e) => setFormData({ ...formData, TANGGAL: e.target.value })}
-                className="w-full px-3 py-2 text-xs rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 text-xs rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                 required
               />
             </div>
@@ -145,7 +145,7 @@ export const NilaiEditModal: React.FC<NilaiEditModalProps> = ({
               <select
                 value={formData.JENIS_PENILAIAN}
                 onChange={(e) => setFormData({ ...formData, JENIS_PENILAIAN: e.target.value as JenisPenilaianType })}
-                className="w-full px-3 py-2 text-xs font-bold rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-indigo-700 dark:text-indigo-300 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+                className="w-full px-3 py-2 text-xs font-bold rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500 cursor-pointer"
                 required
               >
                 {jenisOptions.map((j) => (
@@ -167,7 +167,7 @@ export const NilaiEditModal: React.FC<NilaiEditModalProps> = ({
               value={formData.NAMA_PENILAIAN}
               onChange={(e) => setFormData({ ...formData, NAMA_PENILAIAN: e.target.value })}
               placeholder="Contoh: Tugas 1 - SPLDV"
-              className="w-full px-3 py-2 text-xs rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 text-xs rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
               required
             />
           </div>
@@ -190,7 +190,7 @@ export const NilaiEditModal: React.FC<NilaiEditModalProps> = ({
                 step="1"
                 value={formData.NILAI}
                 onChange={(e) => setFormData({ ...formData, NILAI: Number(e.target.value) })}
-                className="w-full px-4 py-2.5 text-sm font-bold font-mono rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-4 py-2.5 text-sm font-bold font-mono rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                 required
               />
             </div>
@@ -206,7 +206,7 @@ export const NilaiEditModal: React.FC<NilaiEditModalProps> = ({
               value={formData.CATATAN || ''}
               onChange={(e) => setFormData({ ...formData, CATATAN: e.target.value })}
               placeholder="Contoh: Tuntas dengan nilai sangat baik..."
-              className="w-full px-3 py-2 text-xs rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 resize-none"
+              className="w-full px-3 py-2 text-xs rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 resize-none"
             />
           </div>
 
@@ -222,7 +222,7 @@ export const NilaiEditModal: React.FC<NilaiEditModalProps> = ({
             <button
               type="submit"
               disabled={isSaving}
-              className="px-5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 active:scale-98 text-white shadow-sm transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-800 active:scale-98 text-white shadow-xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isSaving ? (
                 <>

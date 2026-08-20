@@ -151,7 +151,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder={searchPlaceholder}
-              className="w-full pl-10 pr-9 py-2.5 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:ring-2 focus:ring-blue-500/80 focus:border-blue-500 transition-all"
+              className="w-full pl-10 pr-9 py-2.5 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500 transition-all"
             />
             {searchTerm && (
               <button
@@ -172,7 +172,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           {/* Result Count Indicator */}
           {filteredCount !== undefined && totalCount !== undefined && (
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300 text-xs font-medium border border-slate-200/60 dark:border-slate-700/60">
-              <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>
                 Menampilkan <strong className="font-bold text-slate-900 dark:text-white">{filteredCount}</strong> dari {totalCount} {itemLabel}
               </span>
@@ -225,7 +225,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                       type="date"
                       value={filters[field.key] || ''}
                       onChange={(e) => onFilterChange(field.key, e.target.value)}
-                      className="w-full px-2.5 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-blue-500/80 cursor-pointer"
+                      className="w-full px-2.5 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/80 cursor-pointer"
                     />
                     {filters[field.key] && (
                       <button
@@ -257,7 +257,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     id={`filter-${field.key}`}
                     value={currentValue}
                     onChange={(e) => onFilterChange(field.key, e.target.value)}
-                    className="w-full pl-2.5 pr-6 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-blue-500/80 cursor-pointer appearance-none truncate"
+                    className="w-full pl-2.5 pr-6 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/80 cursor-pointer appearance-none truncate"
                   >
                     <option key={`filter-${field.key}-all`} value="ALL">
                       {field.placeholder || `Semua ${field.label.replace(/^Semua\s+/i, '')}`}
@@ -285,13 +285,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           </span>
 
           {hasActiveSearch && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 text-[11px] font-medium">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-[11px] font-medium">
               <span>Pencarian: "{searchTerm}"</span>
               {onSearchChange && (
                 <button
                   type="button"
                   onClick={() => onSearchChange('')}
-                  className="hover:text-blue-900 dark:hover:text-white"
+                  className="hover:text-emerald-900 dark:hover:text-white"
                 >
                   <X className="w-3 h-3" />
                 </button>

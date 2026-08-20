@@ -215,7 +215,7 @@ export const DatabaseSyncPage: React.FC = () => {
               ? 'bg-emerald-50 dark:bg-emerald-950/90 text-emerald-800 dark:text-emerald-200 border-emerald-200 dark:border-emerald-800'
               : notification.type === 'error'
               ? 'bg-rose-50 dark:bg-rose-950/90 text-rose-800 dark:text-rose-200 border-rose-200 dark:border-rose-800'
-              : 'bg-blue-50 dark:bg-blue-950/90 text-blue-800 dark:text-blue-200 border-blue-200 dark:border-blue-800'
+              : 'bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 border-slate-200 dark:border-slate-800'
           }`}
         >
           {notification.type === 'success' ? (
@@ -223,25 +223,25 @@ export const DatabaseSyncPage: React.FC = () => {
           ) : notification.type === 'error' ? (
             <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
           ) : (
-            <Activity className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
+            <Activity className="w-4 h-4 text-slate-600 dark:text-slate-400 shrink-0" />
           )}
           <span>{notification.message}</span>
         </div>
       )}
 
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 rounded-2xl p-6 text-white shadow-md relative overflow-hidden">
+      <div className="bg-gradient-to-r from-emerald-800 via-emerald-700 to-slate-900 rounded-2xl p-6 text-white shadow-md relative overflow-hidden">
         <div className="absolute top-0 right-0 -mt-8 -mr-8 w-64 h-64 bg-white/5 rounded-full blur-2xl pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/10 text-blue-200 text-[11px] font-semibold tracking-wide backdrop-blur-xs">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/10 text-emerald-100 text-[11px] font-semibold tracking-wide backdrop-blur-xs border border-white/15">
               <Zap className="w-3.5 h-3.5 text-amber-300" />
               Arsitektur Cloud Hybrid: D1 Primary + Google Sheets Backup
             </div>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight font-['Outfit']">
-              Pusat Automasi & Sinkronisasi Database
+              Pusat Automasi &amp; Sinkronisasi Database
             </h1>
-            <p className="text-xs sm:text-sm text-blue-100/80 leading-relaxed">
+            <p className="text-xs sm:text-sm text-emerald-100/80 leading-relaxed">
               Jalankan sinkronisasi data presensi, nilai, dan jurnal dari database berkecepatan tinggi Cloudflare D1 ke Google Spreadsheet secara otomatis maupun manual.
             </p>
           </div>
@@ -251,13 +251,13 @@ export const DatabaseSyncPage: React.FC = () => {
               type="button"
               onClick={() => handleTriggerSync('d1_to_sheets')}
               disabled={isSyncing}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs transition-all shadow-md ${
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs transition-all shadow-xs ${
                 isSyncing
-                  ? 'bg-blue-400 text-white cursor-not-allowed opacity-80'
-                  : 'bg-white text-blue-800 hover:bg-blue-50 active:scale-95'
+                  ? 'bg-emerald-900/60 text-emerald-200 cursor-not-allowed opacity-80'
+                  : 'bg-white text-emerald-800 hover:bg-emerald-50 active:scale-95'
               }`}
             >
-              <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin text-blue-600' : 'text-blue-600'}`} />
+              <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin text-emerald-700' : 'text-emerald-700'}`} />
               <span>{isSyncing ? 'Sedang Sinkronisasi...' : 'Sinkronkan Sekarang'}</span>
             </button>
 
@@ -279,7 +279,7 @@ export const DatabaseSyncPage: React.FC = () => {
         {isSyncing && (
           <div className="mt-6 pt-4 border-t border-white/15 animate-in fade-in duration-200">
             <div className="flex items-center justify-between text-xs mb-1.5 font-medium">
-              <span className="flex items-center gap-2 text-blue-200">
+              <span className="flex items-center gap-2 text-emerald-100">
                 <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                 {syncProgress.stage}
               </span>
@@ -301,10 +301,10 @@ export const DatabaseSyncPage: React.FC = () => {
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-xl bg-orange-50 dark:bg-orange-950/60 border border-orange-200 dark:border-orange-800/60 flex items-center justify-center text-orange-600 dark:text-orange-400">
+              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300">
                 <Database className="w-5 h-5" />
               </div>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-orange-50 dark:bg-orange-950/60 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-orange-800/50">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                 Database Utama (Primary)
               </span>
             </div>
@@ -312,7 +312,7 @@ export const DatabaseSyncPage: React.FC = () => {
               Cloudflare D1 SQL
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Penyimpanan transaksional latensi rendah (&lt;50ms) untuk presensi & nilai.
+              Penyimpanan transaksional latensi rendah (&lt;50ms) untuk presensi &amp; nilai.
             </p>
           </div>
 
@@ -325,13 +325,13 @@ export const DatabaseSyncPage: React.FC = () => {
         </div>
 
         {/* Card 2: Sync Engine Intermediary */}
-        <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-5 shadow-xs flex flex-col justify-between relative overflow-hidden">
+        <div className="bg-slate-900 text-white rounded-2xl p-5 border border-slate-800 shadow-xs flex flex-col justify-between relative overflow-hidden">
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300">
+              <div className="w-10 h-10 rounded-xl bg-emerald-950/60 border border-emerald-800/60 flex items-center justify-center text-emerald-400">
                 <ArrowLeftRight className="w-5 h-5" />
               </div>
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-950/60 text-emerald-300 border border-emerald-800/60">
                 <CheckCircle2 className="w-3 h-3" /> Auto-Mirror
               </span>
             </div>
@@ -340,7 +340,7 @@ export const DatabaseSyncPage: React.FC = () => {
             </h3>
             <p className="text-xs text-slate-300 mt-1">
               Jadwal:{' '}
-              <span className="font-semibold text-blue-300">
+              <span className="font-semibold text-emerald-300">
                 {config.syncSchedule === 'hourly'
                   ? 'Setiap 1 Jam'
                   : config.syncSchedule === 'realtime'
@@ -395,12 +395,12 @@ export const DatabaseSyncPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2.5">
-                <Sliders className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                <Sliders className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 <h2 className="text-sm font-bold text-slate-900 dark:text-white">
-                  Konfigurasi Endpoint & Jadwal
+                  Konfigurasi Endpoint &amp; Jadwal
                 </h2>
               </div>
-              <span className="text-[11px] px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-semibold">
+              <span className="text-[11px] px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-semibold border border-emerald-200 dark:border-emerald-800/40">
                 Otomatis
               </span>
             </div>
@@ -417,7 +417,7 @@ export const DatabaseSyncPage: React.FC = () => {
                     placeholder="https://api-sekolah.nama-akun.workers.dev"
                     value={formWorkerUrl}
                     onChange={(e) => setFormWorkerUrl(e.target.value)}
-                    className="flex-1 px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-900 dark:text-white"
+                    className="flex-1 px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-slate-900 dark:text-white"
                   />
                   <button
                     type="button"
@@ -443,7 +443,7 @@ export const DatabaseSyncPage: React.FC = () => {
                   placeholder="Bearer token jika diatur di worker"
                   value={formApiToken}
                   onChange={(e) => setFormApiToken(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-900 dark:text-white"
+                  className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-slate-900 dark:text-white"
                 />
               </div>
 
@@ -458,7 +458,7 @@ export const DatabaseSyncPage: React.FC = () => {
                     placeholder="https://script.google.com/macros/s/.../exec"
                     value={formGasUrl}
                     onChange={(e) => setFormGasUrl(e.target.value)}
-                    className="flex-1 px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-900 dark:text-white"
+                    className="flex-1 px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-slate-900 dark:text-white"
                   />
                   <button
                     type="button"
@@ -482,7 +482,7 @@ export const DatabaseSyncPage: React.FC = () => {
                 <select
                   value={formSchedule}
                   onChange={(e) => setFormSchedule(e.target.value as any)}
-                  className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-900 dark:text-white font-medium"
+                  className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-slate-900 dark:text-white font-medium"
                 >
                   <option value="hourly">Setiap 1 Jam (Rekomendasi Jam Belajar)</option>
                   <option value="realtime">Realtime (Langsung saat input data)</option>
@@ -498,7 +498,7 @@ export const DatabaseSyncPage: React.FC = () => {
                     type="checkbox"
                     checked={formAutoMutation}
                     onChange={(e) => setFormAutoMutation(e.target.checked)}
-                    className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500"
+                    className="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 accent-emerald-600"
                   />
                   <span>Otomatis kirim backup saat input presensi / nilai batch</span>
                 </label>
@@ -507,7 +507,7 @@ export const DatabaseSyncPage: React.FC = () => {
                     type="checkbox"
                     checked={formAutoSync}
                     onChange={(e) => setFormAutoSync(e.target.checked)}
-                    className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500"
+                    className="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 accent-emerald-600"
                   />
                   <span>Aktifkan daemon automasi sinkronisasi background</span>
                 </label>
@@ -516,7 +516,7 @@ export const DatabaseSyncPage: React.FC = () => {
               <div className="pt-3">
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-md transition-all"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold rounded-xl shadow-xs transition-all"
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   <span>Simpan Pengaturan Sinkronisasi</span>
@@ -535,13 +535,13 @@ export const DatabaseSyncPage: React.FC = () => {
               type="button"
               onClick={() => handleTriggerSync('d1_to_sheets')}
               disabled={isSyncing}
-              className="w-full flex items-center justify-between p-3.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/50 hover:bg-blue-100/70 dark:hover:bg-blue-900/60 text-blue-700 dark:text-blue-300 transition-all text-xs font-semibold shadow-xs"
+              className="w-full flex items-center justify-between p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700/80 text-slate-800 dark:text-slate-200 transition-all text-xs font-semibold shadow-xs"
             >
               <div className="flex items-center gap-2.5">
-                <Send className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <Send className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>Cadangkan Data Sekarang (D1 → Google Sheets)</span>
               </div>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
             </button>
           </div>
         </div>
@@ -551,13 +551,13 @@ export const DatabaseSyncPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
             <div className="p-5 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50 dark:bg-slate-950/40">
               <div className="flex items-center gap-2.5">
-                <Code2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                <Code2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 <div>
                   <h2 className="text-sm font-bold text-slate-900 dark:text-white">
-                    Skrip & Panduan Deployment Siap Pakai
+                    Skrip &amp; Panduan Deployment Siap Pakai
                   </h2>
                   <p className="text-[11px] text-slate-400">
-                    Salin skrip berikut untuk setup di Cloudflare & Google Apps Script.
+                    Salin skrip berikut untuk setup di Cloudflare &amp; Google Apps Script.
                   </p>
                 </div>
               </div>
@@ -569,7 +569,7 @@ export const DatabaseSyncPage: React.FC = () => {
                   onClick={() => setActiveCodeTab('worker')}
                   className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeCodeTab === 'worker'
-                      ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-white shadow-xs'
+                      ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-400 shadow-xs'
                       : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
                   }`}
                 >
@@ -580,7 +580,7 @@ export const DatabaseSyncPage: React.FC = () => {
                   onClick={() => setActiveCodeTab('sql')}
                   className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeCodeTab === 'sql'
-                      ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-white shadow-xs'
+                      ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-400 shadow-xs'
                       : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
                   }`}
                 >
@@ -591,7 +591,7 @@ export const DatabaseSyncPage: React.FC = () => {
                   onClick={() => setActiveCodeTab('gas')}
                   className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeCodeTab === 'gas'
-                      ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-white shadow-xs'
+                      ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-400 shadow-xs'
                       : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
                   }`}
                 >
@@ -620,7 +620,7 @@ export const DatabaseSyncPage: React.FC = () => {
                         : GOOGLE_APPS_SCRIPT_CODE;
                     handleCopyCode(code, activeCodeTab);
                   }}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900/60 text-blue-700 dark:text-blue-300 rounded-lg text-xs font-semibold transition-all"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-lg text-xs font-semibold transition-all"
                 >
                   {copiedTab === activeCodeTab ? (
                     <>
@@ -647,7 +647,7 @@ export const DatabaseSyncPage: React.FC = () => {
               {/* Quick 3-Step Setup Guide */}
               <div className="mt-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60">
                 <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 mb-2 flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-blue-600" />
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   Petunjuk Penerapan Cepat (3 Langkah):
                 </h4>
                 <ol className="text-xs text-slate-600 dark:text-slate-400 space-y-1.5 list-decimal pl-4">
@@ -672,7 +672,7 @@ export const DatabaseSyncPage: React.FC = () => {
         <div className="p-5 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Clock className="w-4 h-4 text-blue-600" />
+              <Clock className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               Riwayat Audit Log Sinkronisasi
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400">

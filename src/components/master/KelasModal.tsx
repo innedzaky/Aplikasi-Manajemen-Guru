@@ -117,7 +117,7 @@ export const KelasModal: React.FC<KelasModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/60 border border-purple-100 dark:border-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-400">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100 dark:border-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
               <School className="w-5 h-5" />
             </div>
             <div>
@@ -161,7 +161,7 @@ export const KelasModal: React.FC<KelasModalProps> = ({
                     ? 'bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-300 dark:border-slate-700 cursor-not-allowed'
                     : errors.ID_KELAS
                     ? 'border-rose-400 bg-rose-50/30 dark:bg-rose-950/30 focus:ring-2 focus:ring-rose-400'
-                    : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-purple-500'
+                    : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500'
                 }`}
               />
               {errors.ID_KELAS && (
@@ -186,7 +186,7 @@ export const KelasModal: React.FC<KelasModalProps> = ({
                 className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm font-bold text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none transition-all ${
                   errors.NAMA_KELAS
                     ? 'border-rose-400 bg-rose-50/30 dark:bg-rose-950/30 focus:ring-2 focus:ring-rose-400'
-                    : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-purple-500'
+                    : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500'
                 }`}
               />
               {errors.NAMA_KELAS && (
@@ -211,7 +211,7 @@ export const KelasModal: React.FC<KelasModalProps> = ({
                 onChange={(e) => setFormData({ ...formData, WALI_KELAS: e.target.value })}
                 disabled={isSaving}
                 placeholder="Pilih atau ketik nama guru wali kelas..."
-                className="w-full px-3.5 py-2.5 rounded-xl border bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 text-xs sm:text-sm focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all"
               />
               <datalist id="guru-wali-options">
                 {guruList.map((g) => (
@@ -230,14 +230,14 @@ export const KelasModal: React.FC<KelasModalProps> = ({
               type="button"
               onClick={onClose}
               disabled={isSaving}
-              className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs sm:text-sm font-semibold transition-colors disabled:opacity-50"
+              className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs sm:text-sm font-semibold transition-colors disabled:opacity-50 cursor-pointer"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={isSaving}
-              className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 active:bg-purple-700 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-purple-600/20 flex items-center gap-2 transition-colors disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:scale-98 text-white text-xs sm:text-sm font-semibold shadow-xs flex items-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
             >
               {isSaving ? (
                 <>
