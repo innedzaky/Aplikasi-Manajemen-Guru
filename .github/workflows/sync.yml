@@ -19,5 +19,4 @@ jobs:
         env:
           DEST_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
-          git remote add target "https://dzakyinne-gif:${DEST_TOKEN}@github.com/dzakyinne-gif/sistem-manajemen-guru.git"
-          git push --force --prune target main:main
+          git push --force --prune "https://x-access-token:${DEST_TOKEN}@github.com/dzakyinne-gif/sistem-manajemen-guru.git" main:main
