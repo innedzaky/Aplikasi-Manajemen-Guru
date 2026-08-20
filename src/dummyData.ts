@@ -40,16 +40,16 @@ export const DUMMY_MAPEL: IMapel[] = [
 ];
 
 export const DUMMY_SISWA: ISiswa[] = [
-  { NISN: '0081234501', NAMA: 'Aditya Pratama', KELAS: 'X TKJ 1', JENIS_KELAMIN: 'L' },
-  { NISN: '0081234502', NAMA: 'Anisa Rahmawati', KELAS: 'X TKJ 1', JENIS_KELAMIN: 'P' },
-  { NISN: '0081234503', NAMA: 'Bagus Setiawan', KELAS: 'X TKJ 1', JENIS_KELAMIN: 'L' },
-  { NISN: '0081234504', NAMA: 'Citra Dewi', KELAS: 'X TKJ 1', JENIS_KELAMIN: 'P' },
-  { NISN: '0081234505', NAMA: 'Dimas Anggara', KELAS: 'X TKJ 1', JENIS_KELAMIN: 'L' },
-  { NISN: '0081234506', NAMA: 'Eka Lestari', KELAS: 'X TKJ 2', JENIS_KELAMIN: 'P' },
-  { NISN: '0081234507', NAMA: 'Fajar Nugraha', KELAS: 'X TKJ 2', JENIS_KELAMIN: 'L' },
-  { NISN: '0081234508', NAMA: 'Gilang Ramadhan', KELAS: 'XI RPL 1', JENIS_KELAMIN: 'L' },
-  { NISN: '0081234509', NAMA: 'Hana Fitria', KELAS: 'XI RPL 1', JENIS_KELAMIN: 'P' },
-  { NISN: '0081234510', NAMA: 'Indra Gunawan', KELAS: 'XII MM 1', JENIS_KELAMIN: 'L' }
+  { NISN: '0081234501', NAMA: 'Aditya Pratama', KELAS: 'X TKJ 1', JENIS_KELAMIN: 'L', STATUS: 'Aktif' },
+  { NISN: '0081234502', NAMA: 'Anisa Rahmawati', KELAS: 'X TKJ 1', JENIS_KELAMIN: 'P', STATUS: 'Aktif' },
+  { NISN: '0081234503', NAMA: 'Bagus Setiawan', KELAS: 'X TKJ 1', JENIS_KELAMIN: 'L', STATUS: 'Aktif' },
+  { NISN: '0081234504', NAMA: 'Citra Dewi', KELAS: 'X TKJ 1', JENIS_KELAMIN: 'P', STATUS: 'Aktif' },
+  { NISN: '0081234505', NAMA: 'Dimas Anggara', KELAS: 'X TKJ 1', JENIS_KELAMIN: 'L', STATUS: 'Aktif' },
+  { NISN: '0081234506', NAMA: 'Eka Lestari', KELAS: 'X TKJ 2', JENIS_KELAMIN: 'P', STATUS: 'Aktif' },
+  { NISN: '0081234507', NAMA: 'Fajar Nugraha', KELAS: 'X TKJ 2', JENIS_KELAMIN: 'L', STATUS: 'Aktif' },
+  { NISN: '0081234508', NAMA: 'Gilang Ramadhan', KELAS: 'XI RPL 1', JENIS_KELAMIN: 'L', STATUS: 'Aktif' },
+  { NISN: '0081234509', NAMA: 'Hana Fitria', KELAS: 'XI RPL 1', JENIS_KELAMIN: 'P', STATUS: 'Aktif' },
+  { NISN: '0081234510', NAMA: 'Indra Gunawan', KELAS: 'XII MM 1', JENIS_KELAMIN: 'L', STATUS: 'Aktif' }
 ];
 
 export const DUMMY_PRESENSI: IPresensi[] = [

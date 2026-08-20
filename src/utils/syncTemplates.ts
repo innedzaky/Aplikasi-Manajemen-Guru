@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS siswa (
   nama TEXT NOT NULL,
   kelas TEXT NOT NULL,
   jenis_kelamin TEXT CHECK(jenis_kelamin IN ('L', 'P')) NOT NULL,
+  status TEXT CHECK(status IN ('Aktif', 'Pindah', 'Lulus', 'Keluar')) NOT NULL DEFAULT 'Aktif',
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -341,7 +342,7 @@ export default {
             env.DB.prepare("SELECT timestamp as TIMESTAMP, tanggal as TANGGAL, jam as JAM, guru as GURU, mapel as MAPEL, kelas as KELAS, materi as MATERI, tujuan_pembelajaran as TUJUAN_PEMBELAJARAN, aktivitas as AKTIVITAS, metode as METODE, media as MEDIA, refleksi as REFLEKSI, catatan as CATATAN, status as STATUS FROM jurnal").all(),
             env.DB.prepare("SELECT id_admin as ID_ADMIN, username as USERNAME, nama_lengkap as NAMA_LENGKAP, password as PASSWORD, email as EMAIL, role as ROLE, status as STATUS, created_at as CREATED_AT FROM admin").all(),
             env.DB.prepare("SELECT id_guru as ID_GURU, nama_guru as NAMA_GURU, username as USERNAME, password as PASSWORD, mapel as MAPEL FROM guru").all(),
-            env.DB.prepare("SELECT nisn as NISN, nama as NAMA, kelas as KELAS, jenis_kelamin as JENIS_KELAMIN FROM siswa").all(),
+            env.DB.prepare("SELECT nisn as NISN, nama as NAMA, kelas as KELAS, jenis_kelamin as JENIS_KELAMIN, status as STATUS FROM siswa").all(),
             env.DB.prepare("SELECT id_kelas as ID_KELAS, nama_kelas as NAMA_KELAS, wali_kelas as WALI_KELAS FROM kelas").all(),
             env.DB.prepare("SELECT id_mapel as ID_MAPEL, nama_mapel as NAMA_MATA_PELAJARAN FROM mapel").all()
           ]);
@@ -509,8 +510,8 @@ function doPost(e) {
         syncTableData(sheetG, data.guru, ["id_guru", "nama_guru", "username", "password", "mapel"]);
       }
       if (data.siswa && Array.isArray(data.siswa)) {
-        var sheetS = getOrCreateSheet(ss, "Siswa", ["NISN", "NAMA", "KELAS", "JENIS_KELAMIN"]);
-        syncTableData(sheetS, data.siswa, ["nisn", "nama", "kelas", "jenis_kelamin"]);
+        var sheetS = getOrCreateSheet(ss, "Siswa", ["NISN", "NAMA", "KELAS", "JENIS_KELAMIN", "STATUS"]);
+        syncTableData(sheetS, data.siswa, ["nisn", "nama", "kelas", "jenis_kelamin", "status"]);
       }
       if (data.kelas && Array.isArray(data.kelas)) {
         var sheetK = getOrCreateSheet(ss, "Kelas", ["ID_KELAS", "NAMA_KELAS", "WALI_KELAS"]);

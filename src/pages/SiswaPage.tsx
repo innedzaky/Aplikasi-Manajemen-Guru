@@ -47,6 +47,7 @@ export const SiswaPage: React.FC<SiswaPageProps> = ({ onNavigateTab }) => {
   const [search, setSearch] = useState<string>('');
   const [selectedKelas, setSelectedKelas] = useState<string>('');
   const [selectedJk, setSelectedJk] = useState<string>('');
+  const [selectedStatus, setSelectedStatus] = useState<string>('');
 
   // Modal States
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -103,16 +104,20 @@ export const SiswaPage: React.FC<SiswaPageProps> = ({ onNavigateTab }) => {
       if (selectedJk && s.JENIS_KELAMIN !== selectedJk) {
         return false;
       }
+      if (selectedStatus && (s.STATUS || 'Aktif') !== selectedStatus) {
+        return false;
+      }
       if (search.trim()) {
         const q = search.toLowerCase();
         const matchName = s.NAMA.toLowerCase().includes(q);
         const matchNisn = s.NISN.includes(q);
         const matchKelas = s.KELAS.toLowerCase().includes(q);
-        if (!matchName && !matchNisn && !matchKelas) return false;
+        const matchStatus = (s.STATUS || 'Aktif').toLowerCase().includes(q);
+        if (!matchName && !matchNisn && !matchKelas && !matchStatus) return false;
       }
       return true;
     });
-  }, [siswaList, selectedKelas, selectedJk, search]);
+  }, [siswaList, selectedKelas, selectedJk, selectedStatus, search]);
 
   // Unique Kelas options from Kelas master + Siswa list
   const kelasOptions = useMemo(() => {
@@ -132,7 +137,8 @@ export const SiswaPage: React.FC<SiswaPageProps> = ({ onNavigateTab }) => {
           NISN: data.NISN,
           NAMA: data.NAMA,
           KELAS: data.KELAS,
-          JENIS_KELAMIN: data.JENIS_KELAMIN
+          JENIS_KELAMIN: data.JENIS_KELAMIN,
+          STATUS: data.STATUS || 'Aktif'
         });
 
         if (res.success) {
@@ -278,7 +284,7 @@ export const SiswaPage: React.FC<SiswaPageProps> = ({ onNavigateTab }) => {
         {/* Search & Filter Controls */}
         <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
           {/* Live Search */}
-          <div className="sm:col-span-6 relative">
+          <div className="sm:col-span-12 md:col-span-4 relative">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
@@ -299,7 +305,7 @@ export const SiswaPage: React.FC<SiswaPageProps> = ({ onNavigateTab }) => {
           </div>
 
           {/* Filter Kelas */}
-          <div className="sm:col-span-3 relative">
+          <div className="sm:col-span-4 md:col-span-3 relative">
             <select
               value={selectedKelas}
               onChange={(e) => setSelectedKelas(e.target.value)}
@@ -316,15 +322,31 @@ export const SiswaPage: React.FC<SiswaPageProps> = ({ onNavigateTab }) => {
           </div>
 
           {/* Filter Jenis Kelamin */}
-          <div className="sm:col-span-3 relative">
+          <div className="sm:col-span-4 md:col-span-2 relative">
             <select
               value={selectedJk}
               onChange={(e) => setSelectedJk(e.target.value)}
               className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all appearance-none cursor-pointer"
             >
-              <option value="">Semua Gender (L/P)</option>
+              <option value="">Semua Gender</option>
               <option value="L">Laki-laki (L)</option>
               <option value="P">Perempuan (P)</option>
+            </select>
+            <Filter className="absolute right-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" />
+          </div>
+
+          {/* Filter Status Siswa */}
+          <div className="sm:col-span-4 md:col-span-3 relative">
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all appearance-none cursor-pointer"
+            >
+              <option value="">Semua Status</option>
+              <option value="Aktif">Status: Aktif</option>
+              <option value="Pindah">Status: Pindah</option>
+              <option value="Lulus">Status: Lulus</option>
+              <option value="Keluar">Status: Keluar</option>
             </select>
             <Filter className="absolute right-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" />
           </div>
@@ -346,25 +368,26 @@ export const SiswaPage: React.FC<SiswaPageProps> = ({ onNavigateTab }) => {
           </div>
           <div className="space-y-1">
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
-              {search || selectedKelas || selectedJk
+              {search || selectedKelas || selectedJk || selectedStatus
                 ? 'Tidak ada siswa yang sesuai'
                 : 'Belum Ada Data Siswa'}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              {search || selectedKelas || selectedJk
-                ? 'Coba sesuaikan kata kunci pencarian atau reset filter kelas / gender.'
+              {search || selectedKelas || selectedJk || selectedStatus
+                ? 'Coba sesuaikan kata kunci pencarian atau reset filter kelas, gender, atau status.'
                 : 'Mulai daftarkan peserta didik pertama Anda ke dalam sistem.'}
             </p>
           </div>
 
           <div className="flex items-center justify-center gap-3 pt-2">
-            {search || selectedKelas || selectedJk ? (
+            {search || selectedKelas || selectedJk || selectedStatus ? (
               <button
                 type="button"
                 onClick={() => {
                   setSearch('');
                   setSelectedKelas('');
                   setSelectedJk('');
+                  setSelectedStatus('');
                 }}
                 className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
               >

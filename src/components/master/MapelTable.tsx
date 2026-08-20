@@ -44,7 +44,7 @@ export const MapelTable: React.FC<MapelTableProps> = ({
                 >
                   {/* ID MAPEL */}
                   <td className="py-3.5 px-4 whitespace-nowrap">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700">
+                    <span className="inline-flex items-center px-3 py-1 rounded-lg text-[13px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700">
                       {mapel.ID_MAPEL}
                     </span>
                   </td>
@@ -52,14 +52,14 @@ export const MapelTable: React.FC<MapelTableProps> = ({
                   {/* NAMA MATA PELAJARAN */}
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100 dark:border-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-xs shrink-0">
+                      <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100 dark:border-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-sm shrink-0">
                         <BookMarked className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="font-bold text-slate-900 dark:text-slate-100">
+                        <div className="font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
                           {mapel.NAMA_MATA_PELAJARAN}
                         </div>
-                        <div className="text-[11px] text-slate-400">
+                        <div className="text-xs text-slate-400">
                           Kurikulum Aktif
                         </div>
                       </div>
@@ -68,8 +68,8 @@ export const MapelTable: React.FC<MapelTableProps> = ({
 
                   {/* PENGAMPU TERDATA */}
                   <td className="py-3.5 px-4 text-center whitespace-nowrap">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700">
-                      <Users className="w-3 h-3 text-slate-500 dark:text-slate-400" />
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[13px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700">
+                      <Users className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                       {totalGuru} Guru Pengampu
                     </span>
                   </td>

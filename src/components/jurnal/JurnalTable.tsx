@@ -36,23 +36,23 @@ export const JurnalTable: React.FC<JurnalTableProps> = ({
     switch (status) {
       case 'Terlaksana':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50/90 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-900/40">
-            <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[13px] font-semibold bg-emerald-50/90 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-900/40">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
             Terlaksana
           </span>
         );
       case 'Sebagian':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50/90 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-200/60 dark:border-amber-900/40">
-            <Clock className="w-3 h-3 text-amber-600 dark:text-amber-400" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[13px] font-semibold bg-amber-50/90 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-200/60 dark:border-amber-900/40">
+            <Clock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
             Sebagian
           </span>
         );
       case 'Tidak terlaksana':
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50/90 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-200/60 dark:border-rose-900/40">
-            <AlertCircle className="w-3 h-3 text-rose-600 dark:text-rose-400" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[13px] font-semibold bg-rose-50/90 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-200/60 dark:border-rose-900/40">
+            <AlertCircle className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
             Tidak Terlaksana
           </span>
         );
@@ -62,9 +62,9 @@ export const JurnalTable: React.FC<JurnalTableProps> = ({
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse text-xs sm:text-sm">
+        <table className="w-full text-left border-collapse text-[13px] sm:text-sm">
           <thead>
-            <tr className="bg-slate-50 dark:bg-slate-800/90 border-b border-slate-200 dark:border-slate-700/80 text-slate-600 dark:text-slate-300 font-bold uppercase tracking-wider text-[11px]">
+            <tr className="bg-slate-50 dark:bg-slate-800/90 border-b border-slate-200 dark:border-slate-700/80 text-slate-600 dark:text-slate-300 font-bold uppercase tracking-wider text-xs">
               <th className="py-3.5 px-4">Tanggal & Jam</th>
               <th className="py-3.5 px-4">Kelas & Mapel</th>
               <th className="py-3.5 px-4 min-w-[200px]">Materi & Aktivitas</th>
@@ -81,13 +81,13 @@ export const JurnalTable: React.FC<JurnalTableProps> = ({
               >
                 {/* Tanggal & Jam */}
                 <td className="py-3.5 px-4 whitespace-nowrap">
-                  <div className="font-semibold text-slate-800 dark:text-slate-100 font-mono text-xs">{formatIndoDate(record.TANGGAL)}</div>
+                  <div className="font-semibold text-slate-800 dark:text-slate-100 font-mono text-[13px]">{formatIndoDate(record.TANGGAL)}</div>
                   <div className="text-xs text-slate-400 dark:text-slate-500">{record.JAM}</div>
                 </td>
 
                 {/* Kelas & Mapel */}
                 <td className="py-3.5 px-4 whitespace-nowrap">
-                  <div className="font-bold text-emerald-700 dark:text-emerald-400">{record.KELAS}</div>
+                  <div className="font-bold text-emerald-700 dark:text-emerald-400 font-mono text-[13px]">{record.KELAS}</div>
                   <div className="text-xs text-slate-500 dark:text-slate-400">{record.MAPEL}</div>
                 </td>
 
@@ -95,7 +95,7 @@ export const JurnalTable: React.FC<JurnalTableProps> = ({
                 <td className="py-3.5 px-4">
                   <div
                     onClick={() => onViewDetail(record)}
-                    className="font-bold text-slate-800 dark:text-slate-100 hover:text-emerald-600 dark:hover:text-emerald-400 cursor-pointer line-clamp-1"
+                    className="font-bold text-slate-800 dark:text-slate-100 hover:text-emerald-600 dark:hover:text-emerald-400 cursor-pointer line-clamp-1 text-[13px] sm:text-sm"
                   >
                     {record.MATERI}
                   </div>
@@ -109,10 +109,10 @@ export const JurnalTable: React.FC<JurnalTableProps> = ({
 
                 {/* Metode & Media */}
                 <td className="py-3.5 px-4">
-                  <div className="text-xs text-slate-700 dark:text-slate-300 truncate max-w-[150px]">
+                  <div className="text-[13px] text-slate-700 dark:text-slate-300 truncate max-w-[150px]">
                     {record.METODE || '-'}
                   </div>
-                  <div className="text-[11px] text-slate-400 truncate max-w-[150px]">
+                  <div className="text-xs text-slate-400 truncate max-w-[150px]">
                     {record.MEDIA || '-'}
                   </div>
                 </td>

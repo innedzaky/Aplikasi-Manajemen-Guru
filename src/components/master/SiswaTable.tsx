@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { Edit2, Trash2, User, School } from 'lucide-react';
-import { ISiswa } from '../../types.ts';
+import { ISiswa, STATUS_SISWA_OPTIONS, StatusSiswa } from '../../types.ts';
 
 interface SiswaTableProps {
   records: ISiswa[];
@@ -19,6 +19,26 @@ export const SiswaTable: React.FC<SiswaTableProps> = ({
   onEdit,
   onDelete
 }) => {
+  const getStatusBadge = (status?: StatusSiswa) => {
+    const s = status || 'Aktif';
+    const option = STATUS_SISWA_OPTIONS.find((opt) => opt.value === s);
+    if (!option) {
+      return (
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[13px] font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-900/40">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          Aktif
+        </span>
+      );
+    }
+
+    return (
+      <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[13px] font-semibold border ${option.badgeBg}`}>
+        <span className={`w-1.5 h-1.5 rounded-full ${option.dotBg}`} />
+        {option.label}
+      </span>
+    );
+  };
+
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
       <div className="overflow-x-auto">
@@ -29,6 +49,7 @@ export const SiswaTable: React.FC<SiswaTableProps> = ({
               <th className="py-3.5 px-4 min-w-[200px]">Nama Siswa</th>
               <th className="py-3.5 px-4">Kelas</th>
               <th className="py-3.5 px-4">Jenis Kelamin</th>
+              <th className="py-3.5 px-4 text-center">Status</th>
               <th className="py-3.5 px-4 text-right">Aksi</th>
             </tr>
           </thead>
@@ -40,7 +61,7 @@ export const SiswaTable: React.FC<SiswaTableProps> = ({
               >
                 {/* NISN */}
                 <td className="py-3.5 px-4 whitespace-nowrap">
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700">
+                  <span className="inline-flex items-center px-3 py-1 rounded-lg text-[13px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700">
                     {siswa.NISN}
                   </span>
                 </td>
@@ -49,15 +70,15 @@ export const SiswaTable: React.FC<SiswaTableProps> = ({
                 <td className="py-3.5 px-4">
                   <div className="flex items-center gap-3">
                     <div
-                      className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 border bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700"
+                      className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 border bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700"
                     >
                       {siswa.NAMA.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <div className="font-bold text-slate-900 dark:text-slate-100">
+                      <div className="font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
                         {siswa.NAMA}
                       </div>
-                      <div className="text-[11px] text-slate-400">
+                      <div className="text-xs text-slate-400">
                         Peserta Didik
                       </div>
                     </div>
@@ -66,8 +87,8 @@ export const SiswaTable: React.FC<SiswaTableProps> = ({
 
                 {/* KELAS */}
                 <td className="py-3.5 px-4 whitespace-nowrap">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-900/40">
-                    <School className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[13px] font-semibold bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-900/40">
+                    <School className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     {siswa.KELAS}
                   </span>
                 </td>
@@ -75,14 +96,19 @@ export const SiswaTable: React.FC<SiswaTableProps> = ({
                 {/* JENIS KELAMIN */}
                 <td className="py-3.5 px-4 whitespace-nowrap">
                   {siswa.JENIS_KELAMIN === 'L' ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[13px] font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700">
                       Laki-laki (L)
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[13px] font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-900/40">
                       Perempuan (P)
                     </span>
                   )}
+                </td>
+
+                {/* STATUS */}
+                <td className="py-3.5 px-4 whitespace-nowrap text-center">
+                  {getStatusBadge(siswa.STATUS)}
                 </td>
 
                 {/* ACTIONS */}

@@ -841,12 +841,16 @@ export class ApiClient {
         if (data?.nisn) {
           list = list.filter(s => s.NISN === String(data.nisn));
         }
+        if (data?.status) {
+          list = list.filter(s => (s.STATUS || 'Aktif').toLowerCase() === String(data.status).toLowerCase());
+        }
         if (data?.search) {
           const q = String(data.search).toLowerCase();
           list = list.filter(s =>
             s.NAMA.toLowerCase().includes(q) ||
             s.NISN.includes(q) ||
-            s.KELAS.toLowerCase().includes(q)
+            s.KELAS.toLowerCase().includes(q) ||
+            (s.STATUS || 'Aktif').toLowerCase().includes(q)
           );
         }
         return { success: true, message: 'Data Siswa berhasil diambil', data: list as unknown as T };
@@ -859,9 +863,13 @@ export class ApiClient {
         if (existing) {
           return { success: false, message: `Siswa dengan NISN ${data.NISN} sudah terdaftar` };
         }
-        mockSiswa.push(data);
+        const newSiswa: ISiswa = {
+          ...data,
+          STATUS: data.STATUS || 'Aktif'
+        };
+        mockSiswa.push(newSiswa);
         saveMockData(MOCK_STORAGE_KEYS.SISWA, mockSiswa);
-        return { success: true, message: 'Siswa berhasil ditambahkan', data: data as T };
+        return { success: true, message: 'Siswa berhasil ditambahkan', data: newSiswa as unknown as T };
       }
       case 'updateSiswa': {
         if (!data.NISN) {
@@ -874,6 +882,7 @@ export class ApiClient {
         if (data.NAMA !== undefined) mockSiswa[idx].NAMA = data.NAMA;
         if (data.KELAS !== undefined) mockSiswa[idx].KELAS = data.KELAS;
         if (data.JENIS_KELAMIN !== undefined) mockSiswa[idx].JENIS_KELAMIN = data.JENIS_KELAMIN;
+        if (data.STATUS !== undefined) mockSiswa[idx].STATUS = data.STATUS;
         saveMockData(MOCK_STORAGE_KEYS.SISWA, mockSiswa);
         return { success: true, message: 'Data Siswa berhasil diperbarui', data: mockSiswa[idx] as unknown as T };
       }

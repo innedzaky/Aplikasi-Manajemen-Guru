@@ -13,7 +13,7 @@ import {
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';
-import { ISiswa, IKelas } from '../../types.ts';
+import { ISiswa, IKelas, STATUS_SISWA_OPTIONS, StatusSiswa } from '../../types.ts';
 
 interface SiswaModalProps {
   isOpen: boolean;
@@ -38,7 +38,8 @@ export const SiswaModal: React.FC<SiswaModalProps> = ({
     NISN: '',
     NAMA: '',
     KELAS: '',
-    JENIS_KELAMIN: 'L'
+    JENIS_KELAMIN: 'L',
+    STATUS: 'Aktif'
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -49,14 +50,16 @@ export const SiswaModal: React.FC<SiswaModalProps> = ({
         NISN: siswa.NISN || '',
         NAMA: siswa.NAMA || '',
         KELAS: siswa.KELAS || '',
-        JENIS_KELAMIN: siswa.JENIS_KELAMIN || 'L'
+        JENIS_KELAMIN: siswa.JENIS_KELAMIN || 'L',
+        STATUS: siswa.STATUS || 'Aktif'
       });
     } else {
       setFormData({
         NISN: '',
         NAMA: '',
         KELAS: kelasList.length > 0 ? kelasList[0].NAMA_KELAS : '',
-        JENIS_KELAMIN: 'L'
+        JENIS_KELAMIN: 'L',
+        STATUS: 'Aktif'
       });
     }
     setErrors({});
@@ -99,7 +102,8 @@ export const SiswaModal: React.FC<SiswaModalProps> = ({
       NISN: formData.NISN.trim(),
       NAMA: formData.NAMA.trim(),
       KELAS: formData.KELAS.trim(),
-      JENIS_KELAMIN: formData.JENIS_KELAMIN
+      JENIS_KELAMIN: formData.JENIS_KELAMIN,
+      STATUS: formData.STATUS || 'Aktif'
     });
   };
 
@@ -262,6 +266,34 @@ export const SiswaModal: React.FC<SiswaModalProps> = ({
                 {errors.KELAS}
               </p>
             )}
+          </div>
+
+          {/* STATUS SISWA */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              Status Siswa <span className="text-rose-500">*</span>
+            </label>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {STATUS_SISWA_OPTIONS.map((opt) => {
+                const isSelected = (formData.STATUS || 'Aktif') === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, STATUS: opt.value })}
+                    disabled={isSaving}
+                    className={`py-2 px-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+                      isSelected
+                        ? `${opt.badgeBg} shadow-xs font-bold ring-1 ring-current`
+                        : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                    }`}
+                  >
+                    <span className={`w-2 h-2 rounded-full ${isSelected ? opt.dotBg : 'bg-slate-400'}`} />
+                    <span>{opt.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Footer Actions */}

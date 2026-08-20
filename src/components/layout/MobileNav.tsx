@@ -48,7 +48,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
             }`}
           >
             <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'scale-110' : ''} transition-transform`} />
-            <span className="text-[10px] tracking-tight">{tab.label}</span>
+            <span className="text-[11px] font-medium tracking-tight">{tab.label}</span>
           </button>
         );
       })}
@@ -59,7 +59,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
         className="flex flex-col items-center justify-center py-1 px-3 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
       >
         <Menu className="w-5 h-5 mb-0.5" />
-        <span className="text-[10px] tracking-tight">Lainnya</span>
+        <span className="text-[11px] font-medium tracking-tight">Lainnya</span>
       </button>
     </nav>
   );

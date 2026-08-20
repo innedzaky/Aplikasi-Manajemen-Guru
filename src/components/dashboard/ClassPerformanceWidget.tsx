@@ -58,17 +58,17 @@ export const ClassPerformanceWidget: React.FC<ClassPerformanceWidgetProps> = ({
                 <div key={item.kelas} className="py-3.5 first:pt-2 last:pb-1">
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-xs sm:text-sm text-slate-800 dark:text-slate-200">
+                      <span className="font-semibold text-sm text-slate-800 dark:text-slate-200 font-mono">
                         {item.kelas}
                       </span>
-                      <span className="text-[10px] text-slate-400">
+                      <span className="text-xs text-slate-400">
                         ({item.totalSiswaDinilai} data nilai)
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2">
                       <span
-                        className={`text-xs font-extrabold px-2.5 py-0.5 rounded-lg border font-mono ${
+                        className={`text-[13px] font-extrabold px-3 py-0.5 rounded-lg border font-mono ${
                           score >= 75
                             ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200/60 dark:border-emerald-900/40'
                             : score > 0

@@ -20,11 +20,12 @@ export const DATABASE_SCHEMA: Record<string, SheetSchema> = {
   },
   Siswa: {
     sheetName: 'Siswa',
-    columns: ['NISN', 'NAMA', 'KELAS', 'JENIS_KELAMIN'],
+    columns: ['NISN', 'NAMA', 'KELAS', 'JENIS_KELAMIN', 'STATUS'],
     requiredColumns: ['NISN', 'NAMA', 'KELAS', 'JENIS_KELAMIN'],
     primaryKey: 'NISN',
     allowedValues: {
-      JENIS_KELAMIN: ['L', 'P']
+      JENIS_KELAMIN: ['L', 'P'],
+      STATUS: ['Aktif', 'Pindah', 'Lulus', 'Keluar']
     }
   },
   Kelas: {
@@ -89,11 +90,48 @@ export interface IGuru {
   MAPEL?: string;
 }
 
+export type StatusSiswa = 'Aktif' | 'Pindah' | 'Lulus' | 'Keluar';
+
+export interface IStatusSiswaOption {
+  value: StatusSiswa;
+  label: string;
+  badgeBg: string;
+  dotBg: string;
+}
+
+export const STATUS_SISWA_OPTIONS: IStatusSiswaOption[] = [
+  {
+    value: 'Aktif',
+    label: 'Aktif',
+    badgeBg: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200/60 dark:border-emerald-900/40',
+    dotBg: 'bg-emerald-500'
+  },
+  {
+    value: 'Pindah',
+    label: 'Pindah',
+    badgeBg: 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200/60 dark:border-amber-900/40',
+    dotBg: 'bg-amber-500'
+  },
+  {
+    value: 'Lulus',
+    label: 'Lulus',
+    badgeBg: 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200/60 dark:border-blue-900/40',
+    dotBg: 'bg-blue-500'
+  },
+  {
+    value: 'Keluar',
+    label: 'Keluar',
+    badgeBg: 'bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border-rose-200/60 dark:border-rose-900/40',
+    dotBg: 'bg-rose-500'
+  }
+];
+
 export interface ISiswa {
   NISN: string;
   NAMA: string;
   KELAS: string;
   JENIS_KELAMIN: 'L' | 'P';
+  STATUS?: StatusSiswa;
 }
 
 export interface IKelas {

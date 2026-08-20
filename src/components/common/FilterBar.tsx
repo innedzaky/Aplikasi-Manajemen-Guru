@@ -214,9 +214,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 <div key={field.key} className={field.colSpan || 'col-span-1'}>
                   <label
                     htmlFor={`filter-${field.key}`}
-                    className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 mb-1"
+                    className="flex items-center gap-1 text-[11px] uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 mb-1"
                   >
-                    {Icon && <Icon className="w-3 h-3 text-slate-400" />}
+                    {Icon && <Icon className="w-3.5 h-3.5 text-slate-400" />}
                     <span>{field.label}</span>
                   </label>
                   <div className="relative">
@@ -225,7 +225,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                       type="date"
                       value={filters[field.key] || ''}
                       onChange={(e) => onFilterChange(field.key, e.target.value)}
-                      className="w-full px-2.5 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/80 cursor-pointer"
+                      className="w-full px-2.5 py-1.5 text-[13px] rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/80 cursor-pointer"
                     />
                     {filters[field.key] && (
                       <button
@@ -234,7 +234,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                         className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                         title="Hapus filter tanggal"
                       >
-                        <X className="w-3 h-3" />
+                        <X className="w-3.5 h-3.5" />
                       </button>
                     )}
                   </div>
@@ -247,9 +247,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               <div key={field.key} className={field.colSpan || 'col-span-1'}>
                 <label
                   htmlFor={`filter-${field.key}`}
-                  className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 mb-1"
+                  className="flex items-center gap-1 text-[11px] uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 mb-1"
                 >
-                  {Icon && <Icon className="w-3 h-3 text-slate-400" />}
+                  {Icon && <Icon className="w-3.5 h-3.5 text-slate-400" />}
                   <span className="truncate">{field.label}</span>
                 </label>
                 <div className="relative">
@@ -257,7 +257,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     id={`filter-${field.key}`}
                     value={currentValue}
                     onChange={(e) => onFilterChange(field.key, e.target.value)}
-                    className="w-full pl-2.5 pr-6 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/80 cursor-pointer appearance-none truncate"
+                    className="w-full pl-2.5 pr-6 py-1.5 text-[13px] rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/80 cursor-pointer appearance-none truncate"
                   >
                     <option key={`filter-${field.key}-all`} value="ALL">
                       {field.placeholder || `Semua ${field.label.replace(/^Semua\s+/i, '')}`}
@@ -279,13 +279,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       {/* Active Filter Pills (Interactive badges with quick remove) */}
       {hasActiveFilters && (
         <div className="flex items-center gap-1.5 flex-wrap pt-1 border-t border-slate-100 dark:border-slate-800/80 text-xs">
-          <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 mr-1 flex items-center gap-1">
-            <Filter className="w-3 h-3" />
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 mr-1 flex items-center gap-1">
+            <Filter className="w-3.5 h-3.5" />
             <span>Filter Aktif:</span>
           </span>
 
           {hasActiveSearch && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-[11px] font-medium">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-medium">
               <span>Pencarian: "{searchTerm}"</span>
               {onSearchChange && (
                 <button
@@ -305,7 +305,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             return (
               <span
                 key={key}
-                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11px] font-medium"
+                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-medium"
               >
                 <span className="text-slate-400">{label}:</span>
                 <span className="font-semibold">{String(val)}</span>
