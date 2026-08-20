@@ -216,7 +216,7 @@ export const PengaturanPage: React.FC = () => {
       return;
     }
 
-    if (adm.ROLE === 'superadmin' || adm.USERNAME === 'innedzaky' || adm.ID_ADMIN === 'ADM001') {
+    if (adm.ROLE === 'superadmin' || adm.USERNAME?.toLowerCase() === 'innedzaky') {
       showToast('warning', 'Akun Super Administrator tidak dapat dihapus.');
       toastError('Akun Super Administrator (innedzaky) dilindungi dan tidak dapat dihapus.', 'Penolakan Sistem');
       return;
@@ -607,7 +607,7 @@ export const PengaturanPage: React.FC = () => {
                     </tr>
                   ) : (
                     filteredAdmins.map((adm) => {
-                      const isMasterAdmin = adm.ROLE === 'superadmin' || adm.USERNAME === 'innedzaky' || adm.ID_ADMIN === 'ADM001';
+                      const isMasterAdmin = adm.ROLE === 'superadmin' || adm.USERNAME?.toLowerCase() === 'innedzaky';
                       const isCurrentSessionUser = currentAuthUser?.USERNAME === adm.USERNAME;
 
                       // Wewenang Edit: Super Admin boleh edit semua akun; Admin Biasa HANYA boleh edit akunnya sendiri

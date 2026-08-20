@@ -71,28 +71,37 @@ function loadAdminMockData(): IAdminAccount[] {
   try {
     const raw = localStorage.getItem(MOCK_STORAGE_KEYS.ADMINS);
     if (raw) {
-      const list: IAdminAccount[] = JSON.parse(raw);
+      let list: IAdminAccount[] = JSON.parse(raw);
       if (Array.isArray(list) && list.length > 0) {
         // Migrasi data otomatis: Pastikan innedzaky terdaftar sebagai Super Admin
         let inne = list.find(a => a.USERNAME?.toLowerCase() === 'innedzaky');
         if (!inne) {
-          list.unshift({ ...DEFAULT_ADMINS[0] });
+          inne = { ...DEFAULT_ADMINS[0] };
+          list.unshift(inne);
         } else {
           inne.ROLE = 'superadmin';
+          inne.ID_ADMIN = 'ADM001';
           if (!inne.PASSWORD || inne.PASSWORD === 'admin123') {
             inne.PASSWORD = '1sampai7';
           }
         }
 
-        // Pastikan admin diatur sebagai Admin Biasa
+        // Pastikan admin diatur sebagai Admin Biasa dan ID tidak bentrok dengan Super Admin
         let adm = list.find(a => a.USERNAME?.toLowerCase() === 'admin');
-        if (!adm) {
-          list.push({ ...DEFAULT_ADMINS[1] });
-        } else {
+        if (adm) {
           adm.ROLE = 'admin';
+          if (adm.ID_ADMIN === 'ADM001') {
+            adm.ID_ADMIN = 'ADM002';
+          }
           if (!adm.PASSWORD) {
             adm.PASSWORD = 'admin123';
           }
+        }
+
+        try {
+          localStorage.setItem(MOCK_STORAGE_KEYS.ADMINS, JSON.stringify(list));
+        } catch {
+          // ignore
         }
 
         return list;
@@ -1395,7 +1404,7 @@ export class ApiClient {
           return { success: false, message: 'Akun Administrator tidak ditemukan' };
         }
 
-        if (targetAdmin.ROLE === 'superadmin' || targetAdmin.USERNAME === 'innedzaky' || targetAdmin.ID_ADMIN === 'ADM001') {
+        if (targetAdmin.ROLE === 'superadmin' || targetAdmin.USERNAME?.toLowerCase() === 'innedzaky') {
           return { success: false, message: 'Akun Super Administrator (innedzaky) dilindungi dan tidak dapat dihapus demi keamanan sistem.' };
         }
 
