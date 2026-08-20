@@ -17,6 +17,6 @@ jobs:
 
       - name: Push to Repo B
         env:
-          DEST_TOKEN: ${{ secrets.SYNC_TOKEN }}
+          DEST_TOKEN: ${{ secrets.SYNC_AI_TO_CLOUDFLARE }}
         run: |
-          git push --force --prune "https://x-access-token:${DEST_TOKEN}@github.com/dzakyinne-gif/sistem-manajemen-guru.git" main:main
+          git -c http.extraheader="AUTHORIZATION: basic $(echo -n "dzakyinne-gif:${DEST_TOKEN}" | base64)" push --force --prune https://github.com/dzakyinne-gif/sistem-manajemen-guru.git main:main
