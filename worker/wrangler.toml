@@ -11,7 +11,7 @@ CORS_ORIGIN = "http://localhost:3000,http://localhost:5173"
 [[d1_databases]]
 binding = "DB"
 database_name = "db_guru_dev"
-database_id = "d1-dev-local-id"
+database_id = "7c56e9ca-1384-4877-94f0-9e08ad54694e"
 migrations_dir = "migrations"
 
 [observability]
