@@ -1,4 +1,4 @@
-name = "sistem-manajemen-guru-api"
+name = "api-sekolah-d1"
 main = "src/index.ts"
 compatibility_date = "2024-04-01"
 compatibility_flags = ["nodejs_compat"]
