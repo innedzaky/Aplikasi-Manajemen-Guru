@@ -4,6 +4,7 @@
   "description": "Cloudflare Worker REST API Layer for Sistem Manajemen Guru with D1 Database",
   "main": "src/index.ts",
   "scripts": {
+    "build": "tsc --noEmit",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "d1:migrate": "wrangler d1 migrations apply db_sistem_manajemen_guru"
