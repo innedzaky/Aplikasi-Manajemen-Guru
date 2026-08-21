@@ -110,16 +110,17 @@ export const KelasPage: React.FC<KelasPageProps> = ({ onNavigateTab }) => {
 
   // Filtered Kelas List
   const filteredKelas = useMemo(() => {
-    return kelasList.filter((k) => {
+    return (kelasList || []).filter((k) => {
+      if (!k) return false;
       if (selectedTingkat) {
-        if (!k.NAMA_KELAS.startsWith(selectedTingkat)) {
+        if (!k.NAMA_KELAS || !k.NAMA_KELAS.startsWith(selectedTingkat)) {
           return false;
         }
       }
       if (search.trim()) {
         const q = search.toLowerCase();
-        const matchName = k.NAMA_KELAS.toLowerCase().includes(q);
-        const matchId = k.ID_KELAS.toLowerCase().includes(q);
+        const matchName = (k.NAMA_KELAS || '').toLowerCase().includes(q);
+        const matchId = (k.ID_KELAS || '').toLowerCase().includes(q);
         const matchWali = k.WALI_KELAS ? k.WALI_KELAS.toLowerCase().includes(q) : false;
         if (!matchName && !matchId && !matchWali) return false;
       }

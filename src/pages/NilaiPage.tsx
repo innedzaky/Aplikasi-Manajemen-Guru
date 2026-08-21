@@ -116,7 +116,7 @@ export const NilaiPage: React.FC = () => {
   // Filter students for the current selected class
   const classStudents = useMemo(() => {
     if (!config.kelas) return [];
-    return allSiswa.filter((s) => s.KELAS.toLowerCase() === config.kelas.toLowerCase());
+    return (allSiswa || []).filter((s) => (s.KELAS || '').toLowerCase() === config.kelas.toLowerCase());
   }, [allSiswa, config.kelas]);
 
   // Handle configuration changes

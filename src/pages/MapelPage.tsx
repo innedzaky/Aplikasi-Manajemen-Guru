@@ -102,11 +102,12 @@ export const MapelPage: React.FC<MapelPageProps> = ({ onNavigateTab }) => {
 
   // Filtered Mapel List
   const filteredMapel = useMemo(() => {
-    return mapelList.filter((m) => {
+    return (mapelList || []).filter((m) => {
+      if (!m) return false;
       if (search.trim()) {
         const q = search.toLowerCase();
-        const matchName = m.NAMA_MATA_PELAJARAN.toLowerCase().includes(q);
-        const matchId = m.ID_MAPEL.toLowerCase().includes(q);
+        const matchName = (m.NAMA_MATA_PELAJARAN || '').toLowerCase().includes(q);
+        const matchId = (m.ID_MAPEL || '').toLowerCase().includes(q);
         if (!matchName && !matchId) return false;
       }
       return true;

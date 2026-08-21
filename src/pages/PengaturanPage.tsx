@@ -125,14 +125,15 @@ export const PengaturanPage: React.FC = () => {
   // FILTERED ADMIN LIST
   // ---------------------------------------------------------------------------
   const filteredAdmins = useMemo(() => {
-    return adminList.filter((adm) => {
+    return (adminList || []).filter((adm) => {
+      if (!adm) return false;
       if (adminRoleFilter !== 'all' && adm.ROLE !== adminRoleFilter) {
         return false;
       }
       if (adminSearch.trim()) {
         const q = adminSearch.toLowerCase().trim();
-        const matchName = adm.NAMA_LENGKAP.toLowerCase().includes(q);
-        const matchUser = adm.USERNAME.toLowerCase().includes(q);
+        const matchName = (adm.NAMA_LENGKAP || '').toLowerCase().includes(q);
+        const matchUser = (adm.USERNAME || '').toLowerCase().includes(q);
         const matchEmail = (adm.EMAIL || '').toLowerCase().includes(q);
         return matchName || matchUser || matchEmail;
       }
@@ -637,11 +638,11 @@ export const PengaturanPage: React.FC = () => {
                           <td className="py-4 px-6">
                             <div className="flex items-center gap-3">
                               <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center font-bold text-xs uppercase shadow-2xs border border-slate-200 dark:border-slate-700">
-                                {adm.NAMA_LENGKAP.charAt(0) || 'A'}
+                                {(adm.NAMA_LENGKAP || adm.USERNAME || 'A').charAt(0).toUpperCase()}
                               </div>
                               <div>
                                 <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                                <span>@{adm.USERNAME}</span>
+                                <span>@{adm.USERNAME || 'admin'}</span>
                                 {isCurrentSessionUser && (
                                   <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
                                     Anda
@@ -657,7 +658,7 @@ export const PengaturanPage: React.FC = () => {
 
                         <td className="py-4 px-6">
                           <span className="font-semibold text-slate-900 dark:text-white">
-                            {adm.NAMA_LENGKAP}
+                            {adm.NAMA_LENGKAP || adm.USERNAME || '-'}
                           </span>
                         </td>
 
@@ -968,7 +969,9 @@ export const PengaturanPage: React.FC = () => {
         }}
         onConfirm={handleConfirmDeleteAdmin}
         title="Hapus Akun Administrator"
-        message={`Apakah Anda yakin ingin menghapus akun administrator @${deletingAdmin?.USERNAME} (${deletingAdmin?.NAMA_LENGKAP})? Tindakan ini akan mencabut seluruh hak akses pengelolaan sistem.`}
+        itemName={deletingAdmin?.NAMA_LENGKAP || (deletingAdmin?.USERNAME ? `@${deletingAdmin.USERNAME}` : 'Administrator')}
+        itemType="Akun Administrator"
+        message={deletingAdmin ? `Apakah Anda yakin ingin menghapus akun administrator @${deletingAdmin.USERNAME || ''} (${deletingAdmin.NAMA_LENGKAP || ''})? Tindakan ini akan mencabut seluruh hak akses pengelolaan sistem.` : undefined}
         isDeleting={isDeletingAdmin}
       />
     </div>

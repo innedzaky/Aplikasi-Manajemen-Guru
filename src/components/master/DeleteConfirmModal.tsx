@@ -12,8 +12,9 @@ interface DeleteConfirmModalProps {
   onClose: () => void;
   onConfirm: () => void;
   title: string;
-  itemName: string;
-  itemType: string;
+  itemName?: string;
+  itemType?: string;
+  message?: string;
   isDeleting: boolean;
   extraWarning?: string;
 }
@@ -25,6 +26,7 @@ export const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
   title,
   itemName,
   itemType,
+  message,
   isDeleting,
   extraWarning
 }) => {
@@ -61,13 +63,21 @@ export const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">
               {title}
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-              Apakah Anda yakin ingin menghapus {itemType.toLowerCase()}{' '}
-              <strong className="text-slate-900 dark:text-white font-semibold">
-                "{itemName}"
-              </strong>
-              ?
-            </p>
+            {message ? (
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                {message}
+              </p>
+            ) : (
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Apakah Anda yakin ingin menghapus {(itemType || 'data').toLowerCase()}{' '}
+                {itemName && (
+                  <strong className="text-slate-900 dark:text-white font-semibold">
+                    "{itemName}"
+                  </strong>
+                )}
+                ?
+              </p>
+            )}
             {extraWarning && (
               <div className="p-3 bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-900/40 rounded-xl text-xs text-amber-800 dark:text-amber-300">
                 {extraWarning}

@@ -97,8 +97,9 @@ export const SiswaPage: React.FC<SiswaPageProps> = ({ onNavigateTab }) => {
 
   // Filtered Siswa List
   const filteredSiswa = useMemo(() => {
-    return siswaList.filter((s) => {
-      if (selectedKelas && s.KELAS.toLowerCase() !== selectedKelas.toLowerCase()) {
+    return (siswaList || []).filter((s) => {
+      if (!s) return false;
+      if (selectedKelas && (s.KELAS || '').toLowerCase() !== selectedKelas.toLowerCase()) {
         return false;
       }
       if (selectedJk && s.JENIS_KELAMIN !== selectedJk) {
@@ -109,9 +110,9 @@ export const SiswaPage: React.FC<SiswaPageProps> = ({ onNavigateTab }) => {
       }
       if (search.trim()) {
         const q = search.toLowerCase();
-        const matchName = s.NAMA.toLowerCase().includes(q);
-        const matchNisn = s.NISN.includes(q);
-        const matchKelas = s.KELAS.toLowerCase().includes(q);
+        const matchName = (s.NAMA || '').toLowerCase().includes(q);
+        const matchNisn = (s.NISN || '').includes(q);
+        const matchKelas = (s.KELAS || '').toLowerCase().includes(q);
         const matchStatus = (s.STATUS || 'Aktif').toLowerCase().includes(q);
         if (!matchName && !matchNisn && !matchKelas && !matchStatus) return false;
       }

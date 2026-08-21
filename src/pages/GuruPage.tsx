@@ -95,15 +95,16 @@ export const GuruPage: React.FC<GuruPageProps> = ({ onNavigateTab }) => {
 
   // Filtered Guru List
   const filteredGuru = useMemo(() => {
-    return guruList.filter((g) => {
-      if (selectedMapel && g.MAPEL?.toLowerCase() !== selectedMapel.toLowerCase()) {
+    return (guruList || []).filter((g) => {
+      if (!g) return false;
+      if (selectedMapel && (g.MAPEL || '').toLowerCase() !== selectedMapel.toLowerCase()) {
         return false;
       }
       if (search.trim()) {
         const q = search.toLowerCase();
-        const matchName = g.NAMA_GURU.toLowerCase().includes(q);
-        const matchUser = g.USERNAME.toLowerCase().includes(q);
-        const matchId = g.ID_GURU.toLowerCase().includes(q);
+        const matchName = (g.NAMA_GURU || '').toLowerCase().includes(q);
+        const matchUser = (g.USERNAME || '').toLowerCase().includes(q);
+        const matchId = (g.ID_GURU || '').toLowerCase().includes(q);
         const matchMapel = g.MAPEL ? g.MAPEL.toLowerCase().includes(q) : false;
         if (!matchName && !matchUser && !matchId && !matchMapel) return false;
       }

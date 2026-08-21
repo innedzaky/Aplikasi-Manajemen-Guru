@@ -195,6 +195,8 @@ export class ApiClient {
     return this.isLiveMode ? 'live' : 'demo';
   }
 
+  private static hasProxyEndpoint: boolean | null = null;
+
   /**
    * Mengirim request ke backend Cloudflare D1 (Primary) atau In-Memory Persistent Store
    */
@@ -220,15 +222,15 @@ export class ApiClient {
     }
 
     const executionPromise = (async (): Promise<ApiResponse<T>> => {
-      // 1. Prioritaskan Cloudflare D1 Worker sebagai Database Utama
+      // 1. Prioritaskan Cloudflare D1 Worker jika server proxy tersedia
       const d1WorkerUrl = typeof window !== 'undefined'
         ? (localStorage.getItem('manajemen_guru_d1_worker_url') || 'https://api-sekolah-d1.dzakyinne.workers.dev')
         : 'https://api-sekolah-d1.dzakyinne.workers.dev';
 
-      if (d1WorkerUrl) {
+      if (d1WorkerUrl && this.hasProxyEndpoint !== false) {
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout for D1
+          const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s timeout for D1
 
           const response = await fetch('/api/d1-proxy', {
             method: 'POST',
@@ -246,13 +248,16 @@ export class ApiClient {
           clearTimeout(timeoutId);
 
           if (response.ok) {
+            this.hasProxyEndpoint = true;
             const result: ApiResponse<T> = await response.json();
             if (result && result.success) {
               return result;
             }
+          } else if (response.status === 404 || response.status === 405) {
+            this.hasProxyEndpoint = false;
           }
-        } catch (d1Err) {
-          console.warn(`D1 request (${action}) dialihkan ke local persistent storage:`, d1Err);
+        } catch {
+          this.hasProxyEndpoint = false;
         }
       }
 

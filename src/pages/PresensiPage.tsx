@@ -110,8 +110,8 @@ export const PresensiPage: React.FC = () => {
   }, [fetchAllData]);
 
   // Siswa yang difilter untuk kelas yang sedang dipilih
-  const currentClassStudents = allSiswa.filter(
-    (s) => s.KELAS.toLowerCase() === config.kelas.toLowerCase()
+  const currentClassStudents = (allSiswa || []).filter(
+    (s) => s && (s.KELAS || '').toLowerCase() === (config.kelas || '').toLowerCase()
   );
 
   // Update Config Handler

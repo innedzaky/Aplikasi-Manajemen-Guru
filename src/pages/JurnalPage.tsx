@@ -152,23 +152,23 @@ export const JurnalPage: React.FC = () => {
         return false;
       }
       // Filter Kelas
-      if (filter.kelas && record.KELAS.toLowerCase() !== filter.kelas.toLowerCase()) {
+      if (filter.kelas && (record.KELAS || '').toLowerCase() !== filter.kelas.toLowerCase()) {
         return false;
       }
       // Filter Mapel
-      if (filter.mapel && record.MAPEL.toLowerCase() !== filter.mapel.toLowerCase()) {
+      if (filter.mapel && (record.MAPEL || '').toLowerCase() !== filter.mapel.toLowerCase()) {
         return false;
       }
       // Filter Status
-      if (filter.status && record.STATUS.toLowerCase() !== filter.status.toLowerCase()) {
+      if (filter.status && (record.STATUS || '').toLowerCase() !== filter.status.toLowerCase()) {
         return false;
       }
       // Search Query
       if (filter.search.trim()) {
         const query = filter.search.toLowerCase();
-        const matchMateri = record.MATERI.toLowerCase().includes(query);
-        const matchKelas = record.KELAS.toLowerCase().includes(query);
-        const matchMapel = record.MAPEL.toLowerCase().includes(query);
+        const matchMateri = (record.MATERI || '').toLowerCase().includes(query);
+        const matchKelas = (record.KELAS || '').toLowerCase().includes(query);
+        const matchMapel = (record.MAPEL || '').toLowerCase().includes(query);
         const matchGuru = record.GURU ? record.GURU.toLowerCase().includes(query) : false;
         const matchTP = record.TUJUAN_PEMBELAJARAN
           ? record.TUJUAN_PEMBELAJARAN.toLowerCase().includes(query)
