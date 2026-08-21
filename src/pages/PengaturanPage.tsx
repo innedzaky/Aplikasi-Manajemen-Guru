@@ -273,7 +273,7 @@ export const PengaturanPage: React.FC = () => {
       return;
     }
 
-    const validation = SecurityUtils.isValidGasUrl(trimmedUrl);
+    const validation = SecurityUtils.isValidBackendUrl(trimmedUrl);
     if (!validation.valid) {
       setUrlError(validation.reason || 'URL tidak valid');
       return;
@@ -283,27 +283,80 @@ export const PengaturanPage: React.FC = () => {
     setUrlError(null);
     setTestResult(null);
 
-    try {
-      const response = await fetch('/api/gas-proxy', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          targetUrl: trimmedUrl,
-          action: 'getGuru'
-        })
-      });
+    const isWorker = validation.isWorker || trimmedUrl.includes('workers.dev');
 
-      const json = await response.json();
-      if (json.success) {
-        setTestResult({
-          success: true,
-          message: 'Berhasil terhubung ke Cloudflare Workers / Google Apps Script API aktif!'
-        });
+    try {
+      if (isWorker) {
+        // Test Cloudflare Worker via proxy first, then direct
+        let success = false;
+        let msg = '';
+
+        try {
+          const res = await fetch('/api/d1-proxy', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              workerUrl: trimmedUrl,
+              action: 'health'
+            })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.success || data.data) {
+              success = true;
+              msg = 'Berhasil terhubung ke Cloudflare D1 Database & Worker API!';
+            }
+          }
+        } catch {
+          // Proxy might be unavailable on static pages, try direct
+        }
+
+        if (!success) {
+          const cleanUrl = trimmedUrl.replace(/\/+$/, '');
+          const directRes = await fetch(`${cleanUrl}/api/health`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          if (directRes.ok) {
+            success = true;
+            msg = 'Berhasil terhubung langsung ke Cloudflare D1 Worker & Database!';
+          }
+        }
+
+        if (success) {
+          setTestResult({
+            success: true,
+            message: msg || 'Berhasil terhubung ke Cloudflare D1 Worker API!'
+          });
+        } else {
+          setTestResult({
+            success: false,
+            message: 'Tidak dapat memperoleh respon sukses dari Cloudflare Worker API. Pastikan worker aktif dan URL sudah benar.'
+          });
+        }
       } else {
-        setTestResult({
-          success: false,
-          message: json.message || 'Respon gagal dari endpoint backend API.'
+        // Test Google Apps Script Endpoint
+        const response = await fetch('/api/gas-proxy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            targetUrl: trimmedUrl,
+            action: 'getGuru'
+          })
         });
+
+        const json = await response.json();
+        if (json.success) {
+          setTestResult({
+            success: true,
+            message: 'Berhasil terhubung ke Google Apps Script API aktif!'
+          });
+        } else {
+          setTestResult({
+            success: false,
+            message: json.message || 'Respon gagal dari endpoint backend API.'
+          });
+        }
       }
     } catch (err: any) {
       setTestResult({
@@ -319,7 +372,7 @@ export const PengaturanPage: React.FC = () => {
     const trimmedUrl = gasUrl.trim();
 
     if (isLive) {
-      const validation = SecurityUtils.isValidGasUrl(trimmedUrl);
+      const validation = SecurityUtils.isValidBackendUrl(trimmedUrl);
       if (!validation.valid) {
         setUrlError(validation.reason || 'URL endpoint tidak valid');
         showToast('error', validation.reason || 'URL endpoint tidak valid');
@@ -331,10 +384,14 @@ export const PengaturanPage: React.FC = () => {
     localStorage.setItem(GAS_URL_KEY, trimmedUrl);
     localStorage.setItem(GAS_MODE_KEY, isLive ? 'live' : 'demo');
 
+    if (trimmedUrl.includes('workers.dev') || !trimmedUrl.includes('script.google.com')) {
+      localStorage.setItem('manajemen_guru_d1_worker_url', trimmedUrl);
+    }
+
     ApiClient.configure(trimmedUrl, isLive);
 
     const msg = isLive
-      ? 'Mode Live API Cloud Database Aktif'
+      ? 'Mode Live Cloud Database Aktif'
       : 'Mode Demo Offline (In-Memory Database) Aktif';
     showToast('success', msg);
     toastSuccess(msg, 'Pengaturan Disimpan');

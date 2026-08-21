@@ -10,7 +10,11 @@
     "start": "node dist/server.cjs",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "cf:setup": "bash scripts/setup-cloudflare.sh",
+    "cf:setup-d1": "bash scripts/quick-setup-d1.sh",
+    "cf:deploy-worker": "cd worker && npx wrangler deploy",
+    "cf:deploy-pages": "npm run build:client && npx wrangler pages deploy dist --project-name=sistem-manajemen-guru --commit-dirty=true"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

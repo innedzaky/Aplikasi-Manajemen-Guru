@@ -87,7 +87,11 @@ async function startServer() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 20000);
 
-      const d1Response = await fetch(workerUrl, {
+      const targetEndpoint = workerUrl.endsWith('/api/rpc') || workerUrl.includes('/api/')
+        ? workerUrl
+        : `${workerUrl.replace(/\/+$/, '')}/api/rpc`;
+
+      const d1Response = await fetch(targetEndpoint, {
         method: "POST",
         signal: controller.signal,
         headers: {
@@ -96,7 +100,8 @@ async function startServer() {
         },
         body: JSON.stringify({
           action,
-          data
+          data,
+          token
         })
       });
 

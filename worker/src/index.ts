@@ -33,6 +33,10 @@ export default {
       // ----------------------------------------------------------------------
       // PUBLIC ROUTES (No Auth Required)
       // ----------------------------------------------------------------------
+      if ((path === '/api/health' || path === '/health') && (method === 'GET' || method === 'POST')) {
+        return await HealthController.check(env);
+      }
+
       if (path === '/api/auth/login' && method === 'POST') {
         const rateLimitResponse = RateLimiter.enforce(request, RATE_LIMIT_CONFIGS.LOGIN);
         if (rateLimitResponse) return rateLimitResponse;
@@ -40,8 +44,155 @@ export default {
         return await AuthController.login(req, env);
       }
 
-      if (path === '/api/health' && method === 'GET') {
-        return await HealthController.check(env);
+      // Handle RPC Dispatcher (Unified endpoint for Frontend Action queries)
+      if ((path === '/api/rpc' || path === '/api/action' || path === '/') && method === 'POST') {
+        let body: any = {};
+        try {
+          body = await request.clone().json();
+        } catch {
+          body = {};
+        }
+
+        const action = body?.action || '';
+        const data = body?.data || {};
+
+        if (action === 'health' || action === 'ping') {
+          return await HealthController.check(env);
+        }
+
+        if (action === 'login') {
+          const loginReq = new Request(request.url, {
+            method: 'POST',
+            headers: request.headers,
+            body: JSON.stringify(data)
+          }) as AuthenticatedRequest;
+          return await AuthController.login(loginReq, env);
+        }
+
+        // Authenticate for private actions
+        const authError = await authenticate(req, env);
+        if (authError) return authError;
+
+        if (action === 'checkSession' || action === 'me') {
+          return await AuthController.me(req, env);
+        }
+        if (action === 'logout') {
+          return await AuthController.logout(req, env);
+        }
+        if (action === 'getDashboard' || action === 'getDashboardStats' || action === 'getDashboardData') {
+          return await DashboardController.getSummary(req, env);
+        }
+        if (action === 'getGuru' || action === 'getTeachers') {
+          return await TeacherController.list(req, env);
+        }
+        if (action === 'createGuru') {
+          const actionReq = new Request(request.url, {
+            method: 'POST',
+            headers: request.headers,
+            body: JSON.stringify(data)
+          }) as AuthenticatedRequest;
+          actionReq.user = req.user;
+          return await TeacherController.create(actionReq, env);
+        }
+        if (action === 'updateGuru') {
+          const actionReq = new Request(request.url, {
+            method: 'PUT',
+            headers: request.headers,
+            body: JSON.stringify(data)
+          }) as AuthenticatedRequest;
+          actionReq.user = req.user;
+          return await TeacherController.update(actionReq, env, data.ID_GURU || data.id);
+        }
+        if (action === 'deleteGuru') {
+          return await TeacherController.delete(req, env, data.ID_GURU || data.id);
+        }
+        if (action === 'getSiswa' || action === 'getStudents') {
+          return await StudentController.list(req, env);
+        }
+        if (action === 'createSiswa') {
+          const actionReq = new Request(request.url, {
+            method: 'POST',
+            headers: request.headers,
+            body: JSON.stringify(data)
+          }) as AuthenticatedRequest;
+          actionReq.user = req.user;
+          return await StudentController.create(actionReq, env);
+        }
+        if (action === 'updateSiswa') {
+          const actionReq = new Request(request.url, {
+            method: 'PUT',
+            headers: request.headers,
+            body: JSON.stringify(data)
+          }) as AuthenticatedRequest;
+          actionReq.user = req.user;
+          return await StudentController.update(actionReq, env, data.NISN || data.id);
+        }
+        if (action === 'getKelas' || action === 'getClasses') {
+          return await ClassController.list(req, env);
+        }
+        if (action === 'createKelas') {
+          const actionReq = new Request(request.url, {
+            method: 'POST',
+            headers: request.headers,
+            body: JSON.stringify(data)
+          }) as AuthenticatedRequest;
+          actionReq.user = req.user;
+          return await ClassController.create(actionReq, env);
+        }
+        if (action === 'getMapel' || action === 'getSubjects') {
+          return await SubjectController.list(req, env);
+        }
+        if (action === 'createMapel') {
+          const actionReq = new Request(request.url, {
+            method: 'POST',
+            headers: request.headers,
+            body: JSON.stringify(data)
+          }) as AuthenticatedRequest;
+          actionReq.user = req.user;
+          return await SubjectController.create(actionReq, env);
+        }
+        if (action === 'getPresensi' || action === 'getAttendance') {
+          return await AttendanceController.list(req, env);
+        }
+        if (action === 'createPresensi' || action === 'createPresensiBatch') {
+          const actionReq = new Request(request.url, {
+            method: 'POST',
+            headers: request.headers,
+            body: JSON.stringify(data)
+          }) as AuthenticatedRequest;
+          actionReq.user = req.user;
+          return await AttendanceController.create(actionReq, env);
+        }
+        if (action === 'getNilai' || action === 'getAssessments') {
+          return await GradeController.listAssessments(req, env);
+        }
+        if (action === 'createNilai' || action === 'createNilaiBatch') {
+          const actionReq = new Request(request.url, {
+            method: 'POST',
+            headers: request.headers,
+            body: JSON.stringify(data)
+          }) as AuthenticatedRequest;
+          actionReq.user = req.user;
+          return await GradeController.saveBatchGrades(actionReq, env);
+        }
+        if (action === 'getJurnal' || action === 'getJournals') {
+          return await JournalController.list(req, env);
+        }
+        if (action === 'createJurnal') {
+          const actionReq = new Request(request.url, {
+            method: 'POST',
+            headers: request.headers,
+            body: JSON.stringify(data)
+          }) as AuthenticatedRequest;
+          actionReq.user = req.user;
+          return await JournalController.create(actionReq, env);
+        }
+        if (action === 'getSyncStatus') {
+          return await SyncController.getStatus(req, env);
+        }
+        if (action === 'triggerSync') {
+          return await SyncController.triggerBatch(req, env);
+        }
       }
 
       // ----------------------------------------------------------------------

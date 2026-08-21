@@ -222,11 +222,12 @@ export class ApiClient {
     }
 
     const executionPromise = (async (): Promise<ApiResponse<T>> => {
-      // 1. Prioritaskan Cloudflare D1 Worker jika server proxy tersedia
+      // 1. Dapatkan URL Cloudflare D1 Worker (Default ke api-sekolah-d1.dzakyinne.workers.dev)
       const d1WorkerUrl = typeof window !== 'undefined'
         ? (localStorage.getItem('manajemen_guru_d1_worker_url') || 'https://api-sekolah-d1.dzakyinne.workers.dev')
         : 'https://api-sekolah-d1.dzakyinne.workers.dev';
 
+      // 2. Coba lewat proxy Express terlebih dahulu jika server proxy tersedia
       if (d1WorkerUrl && this.hasProxyEndpoint !== false) {
         try {
           const controller = new AbortController();
@@ -236,12 +237,14 @@ export class ApiClient {
             method: 'POST',
             signal: controller.signal,
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              ...(this.sessionToken ? { Authorization: `Bearer ${this.sessionToken}` } : {})
             },
             body: JSON.stringify({
               workerUrl: d1WorkerUrl,
               action,
-              data
+              data,
+              token: this.sessionToken
             })
           });
 
@@ -250,7 +253,7 @@ export class ApiClient {
           if (response.ok) {
             this.hasProxyEndpoint = true;
             const result: ApiResponse<T> = await response.json();
-            if (result && result.success) {
+            if (result && (result.success || result.data !== undefined)) {
               return result;
             }
           } else if (response.status === 404 || response.status === 405) {
@@ -261,7 +264,41 @@ export class ApiClient {
         }
       }
 
-      // 2. Persistent Local Storage Fallback (Instan & Selalu Tersedia)
+      // 3. Direct Fetch ke Cloudflare D1 Worker (Aktif otomatis saat di Cloudflare Pages / Static Hosting)
+      if (d1WorkerUrl) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout for direct worker
+
+          const cleanWorkerUrl = d1WorkerUrl.replace(/\/+$/, '');
+          const response = await fetch(`${cleanWorkerUrl}/api/rpc`, {
+            method: 'POST',
+            signal: controller.signal,
+            headers: {
+              'Content-Type': 'application/json',
+              ...(this.sessionToken ? { Authorization: `Bearer ${this.sessionToken}` } : {})
+            },
+            body: JSON.stringify({
+              action,
+              data,
+              token: this.sessionToken
+            })
+          });
+
+          clearTimeout(timeoutId);
+
+          if (response.ok) {
+            const result: ApiResponse<T> = await response.json();
+            if (result && (result.success || result.data !== undefined)) {
+              return result;
+            }
+          }
+        } catch (directErr) {
+          // Direct fetch gagal atau offline, lanjut ke mode fallback
+        }
+      }
+
+      // 4. Persistent Local Storage Fallback (Instan, Cepat & Selalu Tersedia)
       return this.handleMockRequest<T>(action, data);
     })();
 

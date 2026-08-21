@@ -7,7 +7,10 @@
     "build": "echo 'Worker build ready'",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "d1:migrate": "wrangler d1 migrations apply db_sistem_manajemen_guru"
+    "d1:create": "wrangler d1 create db_sistem_manajemen_guru",
+    "d1:migrate": "wrangler d1 migrations apply db_sistem_manajemen_guru --remote",
+    "d1:migrate-local": "wrangler d1 migrations apply db_sistem_manajemen_guru --local",
+    "d1:seed": "wrangler d1 execute db_sistem_manajemen_guru --remote --file=./migrations/0003_seed.sql"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240405.0",

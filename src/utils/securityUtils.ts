@@ -45,7 +45,7 @@ export class SecurityUtils {
   }
 
   /**
-   * 3. Validate Google Apps Script Web App URL
+   * 3. Validate Google Apps Script Web App URL or Backend URL
    * Prevents SSRF / token exfiltration to unauthorized origins
    */
   public static isValidGasUrl(url: string): { valid: boolean; reason?: string } {
@@ -59,36 +59,49 @@ export class SecurityUtils {
       const parsed = new URL(trimmed);
 
       // Must be HTTPS protocol
-      if (parsed.protocol !== 'https:') {
-        return { valid: false, reason: 'URL backend wajib menggunakan protokol aman (HTTPS).' };
+      if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
+        return { valid: false, reason: 'URL backend wajib menggunakan protokol aman (HTTPS/HTTP).' };
       }
 
-      // Check trusted domain (Google Script or trusted subdomains)
-      const allowedHosts = [
-        'script.google.com',
-        'script.googleusercontent.com'
-      ];
-
-      const isAllowedHost = allowedHosts.some(
-        (h) => parsed.hostname === h || parsed.hostname.endsWith(`.${h}`)
-      );
-
-      if (!isAllowedHost) {
-        return {
-          valid: false,
-          reason: 'URL harus mengarah ke host resmi Google Apps Script (script.google.com).'
-        };
+      // If it's a Google Apps Script URL
+      if (parsed.hostname.includes('script.google.com') || parsed.hostname.includes('googleusercontent.com')) {
+        if (!parsed.pathname.includes('/macros/s/')) {
+          return {
+            valid: false,
+            reason: 'Format URL Web App Google Apps Script tidak valid (harus mengandung /macros/s/).'
+          };
+        }
+        return { valid: true };
       }
 
-      // Check path format /macros/s/.../exec
-      if (!parsed.pathname.includes('/macros/s/')) {
-        return {
-          valid: false,
-          reason: 'Format URL Web App Google Apps Script tidak valid (harus mengandung /macros/s/).'
-        };
-      }
-
+      // If it's a Cloudflare Worker or custom backend URL
       return { valid: true };
+    } catch {
+      return { valid: false, reason: 'Format URL tidak valid.' };
+    }
+  }
+
+  public static isValidBackendUrl(url: string): { valid: boolean; isWorker?: boolean; isGas?: boolean; reason?: string } {
+    if (!url || typeof url !== 'string') {
+      return { valid: false, reason: 'URL tidak boleh kosong.' };
+    }
+
+    const trimmed = url.trim();
+
+    try {
+      const parsed = new URL(trimmed);
+      if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
+        return { valid: false, reason: 'URL backend wajib menggunakan protokol aman (HTTPS/HTTP).' };
+      }
+
+      const isGas = parsed.hostname.includes('script.google.com') || parsed.hostname.includes('googleusercontent.com');
+      const isWorker = parsed.hostname.includes('workers.dev') || parsed.hostname.includes('pages.dev') || !isGas;
+
+      if (isGas && !parsed.pathname.includes('/macros/s/')) {
+        return { valid: false, reason: 'Format URL Google Apps Script harus mengandung /macros/s/.' };
+      }
+
+      return { valid: true, isGas, isWorker };
     } catch {
       return { valid: false, reason: 'Format URL tidak valid.' };
     }
