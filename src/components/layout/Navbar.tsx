@@ -20,6 +20,8 @@ import {
 import { useAuth } from '../../context/AuthContext.tsx';
 import { useTheme } from '../../context/ThemeContext.tsx';
 import { ApiClient } from '../../services/apiClient.ts';
+import { NetworkStatusBadge } from '../common/NetworkStatusBadge.tsx';
+import { PWAInstallPrompt } from '../common/PWAInstallPrompt.tsx';
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -70,6 +72,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, currentPageTitl
 
       {/* Right section: System Status, Theme Toggle, Profile */}
       <div className="flex items-center gap-2 sm:gap-3">
+        {/* Network Online/Offline Status Indicator */}
+        <NetworkStatusBadge />
+
+        {/* PWA Install Button */}
+        <PWAInstallPrompt />
+
         {/* Backend Mode Badge (Clickable to open settings) */}
         <button
           onClick={onOpenSettings}
