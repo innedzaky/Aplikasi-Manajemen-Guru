@@ -24,10 +24,10 @@ createRoot(document.getElementById('root')!).render(
 );
 
 // Registrasi Service Worker untuk PWA Offline Cache
-if (typeof window !== 'undefined' && 'serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+if (typeof window !== 'undefined' && 'serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('/sw.js')
+      .register('./sw.js')
       .then((reg) => {
         console.log('ServiceWorker registered:', reg.scope);
       })
